@@ -9,7 +9,15 @@ class Spellcastmanager(MycroftSkill):
     def handle_spellcastmanager(self, message):
         self.speak_dialog('spellcastmanager')
 
+    @intent_file_handler('spellcastmanager.readRuletext.intent')
+    def handle_spellcastmanager(self, message):
+        self.speak_dialog('spellcastmanager.readRuletext')
+
 
 def create_skill():
     return Spellcastmanager()
+
+
+
+ 
 
