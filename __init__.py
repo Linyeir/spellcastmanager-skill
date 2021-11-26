@@ -1,6 +1,7 @@
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
+from .src.intents.read_full_ruletext import _read_full_ruletext
 
 
 class Spellcastmanager(MycroftSkill):
@@ -28,11 +29,7 @@ class Spellcastmanager(MycroftSkill):
         .require('ruletext')
         .optionally('spell'))
     def handle_read_full_ruletext(self, message):
-        spell = message.data.get('spell')
-        if spell is not None:
-            self.speak_dialog('long.ruletext', {'spell': spell})
-        else:
-            self.speak_dialog('ruletext.fallback')
+        _read_full_ruletext(self, message)
 
     def stop(self):
         pass
