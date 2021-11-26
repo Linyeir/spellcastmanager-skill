@@ -26,13 +26,13 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('readFullRuletext')
         .require('long')
         .require('ruletext')
-        .require('spells'))
+        .optionally('spell'))
     def handle_read_full_ruletext(self, message):
-        spell = message.data.get('Spell')
+        spell = message.data.get('spell')
         if spell is not None:
-            self.speak_dialog('read.long.ruletext', {'Spell': spell})
+            self.speak_dialog('long.ruletext', {'spell': spell})
         else:
-            self.speak_dialog('read.ruletext.fallback')
+            self.speak_dialog('ruletext.fallback')
 
     def stop(self):
         pass

@@ -1,0 +1,1 @@
+.*(spell|rule).* (for|of|about) (?P<spell>.*).*
