@@ -1,4 +1,6 @@
+from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
+from mycroft import MycroftSkill, intent_handler
 
 
 class Spellcastmanager(MycroftSkill):
@@ -6,7 +8,7 @@ class Spellcastmanager(MycroftSkill):
     # the constructor
     def __init__(self):
         super().__init__()
-        self.learning = true
+        self.learning = True
 
     # after-construction-initialisation
     def initialize(self):
@@ -24,7 +26,7 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('readFullRuletext')
         .require('long')
         .require('ruletext')
-        .require('Spell'))
+        .require('spells'))
     def handle_read_full_ruletext(self, message):
         spell = message.data.get('Spell')
         if spell is not None:
