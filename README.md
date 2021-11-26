@@ -5,6 +5,7 @@ Helps you with spellcasting in D&D 5e
 ## About
 
 Guide you through casting a spell in the 5th edition of dungeons and dragons
+uses this api: https://www.dnd5eapi.co/ from u/adrpadua
 
 ## Examples
 
