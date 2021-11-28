@@ -26,8 +26,8 @@ class Spellcastmanager(MycroftSkill):
 
     # reads the full ruletext to user
     @intent_handler(IntentBuilder('readFullRuletext')
-        .require('long')
-        .require('ruletext')
+        .one_of('ruletext', 'description', 'explanation', 'what', 'tell_me_about')
+        .require('the_spell')
         .optionally('spell'))
     def handle_read_full_ruletext(self, message):
         _read_full_ruletext(self, message)
