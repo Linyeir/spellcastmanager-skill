@@ -19,7 +19,7 @@ Feature: spellcast manager read ruletext
         | rules for the spell druidcraft                                |
         | What does the spell divine favor do                           |
         | What does the spell revivify do exactly                       |
-        | What is the spell fireball exactly                            |
+        | What is the spell fireball                                    |
         | What is the spell burning hands                               |
         | Describe the spell eldritch blast                             |
         | Explain the spell acid splash                                 |

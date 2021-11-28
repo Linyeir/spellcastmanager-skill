@@ -1,2 +1,0 @@
-.*(spell|rule).* (for|of|about) (?P<spell>.*).*
-.*(description|explanation).* (for|of|about) (?P<spell>.*).*
