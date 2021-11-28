@@ -14,6 +14,6 @@ def _read_full_ruletext(self, message):
             if ruletext != 'empty':
                 self.speak_dialog('long.ruletext', {'ruletext': ruletext})
             else:
-                self.speak_dialog('ruletext.fallback')
+                self.speak_dialog('ruletext.invalid.spell', {'spell_name', spell_name})
         else:
             self.speak_dialog('ruletext.fallback')
