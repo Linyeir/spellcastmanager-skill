@@ -1,13 +1,11 @@
-# several tests for long ruletext
-
 Feature: spellcast manager read long ruletext
 
     # - different existing spells
     # - different utterances
     Scenario Outline: request long ruletext with existing spell
-        Given an englisch speaking user
+        Given an english speaking user
          When the user says "<request_long_ruletext_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with "long.ruletext.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "long.ruletext.dialog"
 
     Examples: request long ruletext with existing spell     
         | request_long_ruletext_with_existing_spell     |
@@ -22,9 +20,9 @@ Feature: spellcast manager read long ruletext
     # - different not existing spells
     # - different utterances
     Scenario Outline: request long ruletext with invalid spells
-        Given an englisch speaking user
-         When ther user says "<request_long_ruletext_with_invalid_spell>"
-         Then "spellcastmanager-skill" should reply with "ruletext.invalid.spell.dialog"
+        Given an english speaking user
+         When the user says "<request_long_ruletext_with_invalid_spell>"
+         Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
 
     Examples: request long ruletext with invalid spell            
         | request_long_ruletext_with_invalid_spell      |  
@@ -38,17 +36,17 @@ Feature: spellcast manager read long ruletext
 
     # - no spell mentioned
     # - different utterances
-    Scenario Outline: request without spell
-        Given an englisch speaking user
-         When the user says "give me the long ruletext for"
-         Then "spellcastmanager-skill" should reply with "You have to specify a spell"
+    Scenario: request without spell
+        Given an english speaking user
+         When the user says "request_long_ruletext_without_stating_spell"
+         Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
 
-    Examples: request long ruletext without stating spell       
-        | request_long_ruletext_without_stating_spell   |
-        | give me the long ruletext for                 |
-        | Give me a long ruletext                       |
-        | Long ruletext for                             |
-        | Explain the full rules                        |
+#    Examples: request long ruletext without stating spell       
+#        | request_long_ruletext_without_stating_spell   |
+#        | give me the long ruletext for                 |
+#        | Give me a long ruletext                       |
+#        | Long ruletext for                             |
+#        | Explain the full rules                        |
 
 
 
