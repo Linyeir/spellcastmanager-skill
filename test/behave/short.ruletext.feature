@@ -21,3 +21,27 @@ Feature: spellcast manager read short ruletext
         | short ruletext for the spell guardian of faith                    |
         | short version of the spell gust of wind                           |
         | short description of the spell heal                               |
+
+
+
+    Scenario Outline: request short ruletext with invalid spell
+        Given an english speaking user
+         When the user says "<request_short_ruletext_with_invalid_spell>"
+         Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
+
+    Examples: request short ruletext with invalid spell            
+        | request_short_ruletext_with_invalid_spell                         |
+        | Give me the details to the spell acid cloud                       |
+        | Tell me the details to the spell arcane                           |
+        | Read me the details to the spell banish                           |
+        | Give me a short version of the spell fire                         |
+        | Tell me the compact version of the spell kill                     |
+        | Read me the compact descripton of the spell hall                  |
+        | Give me a short explanation of the spell help                     |
+        | Give me the summary of the spell climate change                   |
+        | What does the spell heroin do in short                            |
+        | Explain the spell ice in short                                    |
+        | details for the spell protection                                  |
+        | short ruletext for the spell kill                                 |
+        | short version of the spell vaccination                            |
+        | short description of the spell arcane                             |
