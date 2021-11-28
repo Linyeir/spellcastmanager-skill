@@ -1,4 +1,4 @@
-Feature: short ruletext
+Feature: spellcast manager read short ruletext
     Scenario: short description of spell
         Given an English speaking user
          When the user says "ruletext for fireball"
