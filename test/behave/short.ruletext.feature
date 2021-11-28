@@ -45,3 +45,29 @@ Feature: spellcast manager read short ruletext
         | short ruletext for the spell kill                                 |
         | short version of the spell vaccination                            |
         | short description of the spell arcane                             |
+
+    
+
+    Scenario Outline: request short ruletext without stating spell
+        Given an english speaking user
+         When the user says "<request_short_ruletext_without_stating_spell>"
+         Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
+    
+    Examples: request short ruletext without stating spell
+        | request_short_ruletext_without_stating_spell                      |
+        | Give me the details to the spell                                  |
+        | Tell me the details to the spell                                  |
+        | Read me the details to the spell                                  |
+        | Give me a short version of the spell                              |
+        | Tell me the compact version of the spell                          |
+        | Read me the compact descripton of the spell                       |
+        | Give me a short explanation of the spell                          |
+        | Give me the summary of the spell                                  |
+        | What does the spell do in short                                   |
+        | Explain the spell in short                                        |
+        | details for the spell                                             |
+        | short ruletext for the spell                                      |
+        | short version of the spell                                        |
+        | short description of the spell                                    |
+
+        # unterscheidung zu detailfragen mit kontext?!?!
