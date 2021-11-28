@@ -8,13 +8,18 @@ Feature: spellcast manager read long ruletext
          Then "spellcastmanager-skill" should reply with dialog from "long.ruletext.dialog"
 
     Examples: request long ruletext with existing spell     
-        | request_long_ruletext_with_existing_spell     |
-        | Give me the full ruletext for fireball        |       
-        | Give me the whole description for fireball    |
-        | Long description of finger of death           |
-        | What does divine favor do in detail           |
-        | Long ruletext for eldritch blast              |
-        | Long rules for druidcraft                     |
+        | request_long_ruletext_with_existing_spell         |
+        | Give me the full ruletext for fireball            |
+        | Give me the detailed ruletext for light           | 
+        | Tell me the whole ruletext for healing word       |      
+        | Give me the whole description for chain lightning |
+        | Long description of finger of death               |
+        | Tell me the long spelltext for incendiary cloud   |
+        | Long ruletext for eldritch blast                  |
+        | Long rules for druidcraft                         |
+        | What does divine favor do in detail               |
+        | What does revivify do exactly                     |
+        | What is fireball exactly                          |
 
 
     # - different not existing spells
