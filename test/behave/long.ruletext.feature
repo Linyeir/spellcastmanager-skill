@@ -7,7 +7,7 @@ Feature: spellcast manager read ruletext
          When the user says "<request_ruletext_with_existing_spell>"
          Then "spellcastmanager-skill" should reply with dialog from "long.ruletext.dialog"
 
-    Examples: request long ruletext with existing spell     
+    Examples: request ruletext with existing spell     
         | request_ruletext_with_existing_spell                          |
         | Give me the ruletext for the spell fireball                   | 
         | Tell me the rules for the spell healing word                  |      
@@ -62,10 +62,10 @@ Feature: spellcast manager read ruletext
 
     Examples: request ruletext without stating spell       
         | request_ruletext_without_stating_spell        |
-        | give me the long ruletext for                 |
-        | Give me a long ruletext                       |
-        | Long ruletext for                             |
-        | Explain the full rules                        |
+        | What does the spell do                        |
+        | Explain the spell                             |
+        | Long ruletext for the spell                   |
+        | Tell me about the spell                       |
 
 
 
