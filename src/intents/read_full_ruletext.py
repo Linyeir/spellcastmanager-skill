@@ -8,12 +8,11 @@ from ..backend import spell_api_wrapper as spell_api
 """
 def _read_full_ruletext(self, message):
         spell_name = message.data.get('spellname')
-
         if spell_name is not None:
             ruletext = spell_api.get_full_ruletext(spell_name)
             if ruletext != 'empty':
                 self.speak_dialog('long.ruletext', {'ruletext': ruletext})
             else:
-                self.speak_dialog('ruletext.invalid.spell')
+                self.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name})
         else:
             self.speak_dialog('ruletext.fallback')

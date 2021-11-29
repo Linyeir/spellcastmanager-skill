@@ -23,7 +23,7 @@ Feature: spellcast manager read ruletext
         | What is the spell burning hands                               |
         | Describe the spell eldritch blast                             |
         | Explain the spell acid splash                                 |
-        | Tell me about the spell conjure lightning                     |
+        | Tell me about the spell dominate person                       |
 
 
     # - different not existing spells
@@ -34,7 +34,7 @@ Feature: spellcast manager read ruletext
          Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
 
     Examples: request ruletext with invalid spell            
-        | request_ruletext_with_existing_spell          |
+        | request_ruletext_with_invalid_spell          |
         | Give me the ruletext for the spell avocado    | 
         | Tell me the rules for the spell help          |      
         | Give me a description for the spell hass      |
