@@ -3,7 +3,7 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details with existing spell
         Given an english speaking user
          When the user says "<request_all_details_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "short.ruletext.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "all.details.dialog"
 
     Examples: request all details with existing spell            
         | request_all_details_with_existing_spell                               |
@@ -37,7 +37,6 @@ Feature: spellcast manager read all details
         | detailed version for the spell protection         |
 
 
-    
 
     Scenario Outline: request all details without stating spell
         Given an english speaking user
