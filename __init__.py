@@ -2,7 +2,7 @@ from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
 from .src.intents.read_full_ruletext import _read_full_ruletext
-from .src.intents.read_short_ruletext import _read_short_ruletext
+from .src.intents.read_all_details import _read_all_details
 
 
 class Spellcastmanager(MycroftSkill):
@@ -32,13 +32,11 @@ class Spellcastmanager(MycroftSkill):
     def handle_read_full_ruletext(self, message):
         _read_full_ruletext(self, message)
 
-    # reads the short ruletext to user
-    @intent_handler(IntentBuilder('readShortRuletext')
-        .require('short')
-        .one_of('ruletext', 'description', 'explanation')
+    # reads all details of spell to user
+    @intent_handler(IntentBuilder('readAllDetails')
         .optionally('spell'))
-    def handle_read_short_ruletext(self, message):
-        _read_short_ruletext(self, message)
+    def handle_read_all_details(self, message):
+        _read_all_details(self, message)
 
     def stop(self):
         pass

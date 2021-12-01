@@ -1,31 +1,28 @@
-'''
-def _read_short_ruletext(self, message):
-        spell = message.data.get('spell')
-        if spell is not None:
-            self.speak_dialog('short.ruletext', {'spell': spell})
+from ..backend import spell_api_wrapper
+
+def _read_all_details(self, message):
+    spell_name_input = message.data.get('spellname')
+    if spell_name_input is not None:
+        spell_name = self.spell_api.get_detail()    #######
+        if spell_name == 'empty':
+            self.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name_input})
         else:
-            self.speak_dialog('ruletext.fallback')
+            spell_range = self.spell_api.get_detail()
+            spell_components = self.spell_api.get_detail()
+            spell_material = self.spell_api.get_detail()
+            spell_ritual = self.spell_api.get_detail()
+            spell_duration = self.spell_api.get_detail()
+            spell_concentration = self.spell_api.get_detail()
+            spell_castingTime = self.spell_api.get_detail()
+            spell_level = self.spell_api.get_detail()
+            spell_damageType = self.spell_api.get_detail()
+            spell_damage = self.spell_api.get_detail()          ### automatic lowest level besides user is asking?!?!?!
+            spell_savingThrow = self.spell_api.get_detail()
+            spell_areaOfEffectType = self.spell_api.get_detail()
+            spell_size = self.spell_api.get_detail()
+            spell_school = self.spell_api.get_detail()
+    else:
+        self.speak_dialog('ruletext.fallback')
 
-
-
-
-from ..backend import spell_api_wrapper as spell_api
-
-"""
- actually handles the full ruletext intent
- - the api is queried with the extracted spellname
- - the replied ruletext is spoken aloud
- - if the spell s not found or the api threw an error, the fallback is read instead
-"""
-def _read_full_ruletext(self, message):
-        spell_name = message.data.get('spellname')
-        if spell_name is not None:
-            ruletext = spell_api.get_full_ruletext(spell_name)
-            if ruletext != 'empty':
-                self.speak_dialog('long.ruletext', {'ruletext': ruletext})
-            else:
-                self.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name})
-        else:
-            self.speak_dialog('ruletext.fallback')
-
-'''
+# ueberpruefe, name empty -> spell invalid
+#
