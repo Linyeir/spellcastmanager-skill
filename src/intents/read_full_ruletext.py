@@ -1,4 +1,4 @@
-from ..backend import spell_api_wrapper as spell_api
+from ..backend.spell_api_wrapper import Spell_api_wrapper
 
 """
  actually handles the full ruletext intent
@@ -6,13 +6,14 @@ from ..backend import spell_api_wrapper as spell_api
  - the replied ruletext is spoken aloud
  - if the spell s not found or the api threw an error, the fallback is read instead
 """
-def _read_full_ruletext(self, message):
+def _read_full_ruletext(intent, message):
         spell_name = message.data.get('spellname')
+        spell = Spell_api_wrapper(intent, spell_name)
         if spell_name is not None:
-            ruletext = spell_api.get_full_ruletext(spell_name)
+            ruletext = spell.get_detail('desc')
             if ruletext != 'empty':
-                self.speak_dialog('long.ruletext', {'ruletext': ruletext})
+                intent.speak_dialog('long.ruletext', {'ruletext': ruletext})
             else:
-                self.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name})
+                intent.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name})
         else:
-            self.speak_dialog('ruletext.fallback')
+            intent.speak_dialog('ruletext.fallback')

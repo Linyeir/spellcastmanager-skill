@@ -3,54 +3,80 @@ import json
 
 
 """
-returns true if api is reachable
-"""
-def reachable():
-    response = requests.get('https://www.dnd5eapi.co/api/spells/')
-    if response.status_code == 200:
-        return True
-    else:
-        return False
+A wrapper for the api on https://www.dnd5eapi.co/api/
+Only the spells/directory is used 
 
+Usage:
+    - Instantiate inside of your intent 
+    - get a detail via the get detail methode
 """
-a robust api request
-- spellname is resolved by url since queries result in multiple results
-"""
-def robust_request(spell_name, query=''):
-    try:
-        response = requests.get('https://www.dnd5eapi.co/api/spells/'+spell_name, params=query, timeout=5)
-        response.raise_for_status()
-        return response
-    except requests.exceptions.HTTPError as errh:
-        print(errh)
-    except requests.exceptions.ConnectionError as errc:
-        print(errc)
-    except requests.exceptions.Timeout as errt:
-        print(errt)
-    except requests.exceptions.RequestException as err:
-        print(err)
+class Spell_api_wrapper():
+    
+    def __init__(self, intent_in, spell_name_in):
+        self._intent = intent_in
+        self._api_path = 'https://www.dnd5eapi.co/api/spells/'
+        self._spell_name = spell_name_in.replace(' ', '-')
+        if self.api_reachable() == False:
+            raise 'api not availlable on path'
+
+    """
+    returns true if api is reachable
+    """
+    def api_reachable(self):
+        try:
+            response = requests.get(self._api_path, timeout=5)
+            response.raise_for_status()
+            self._intent.log.info('api availlable')
+            return True
+        except requests.exceptions.HTTPError as errh:
+            self._intent.log.exception(errh)
+            return False
+        except requests.exceptions.ConnectionError as errc:
+            self._intent.log.exception(errc)
+            return False
+        except requests.exceptions.Timeout as errt:
+            self._intent.log.exception(errt)
+            return False
+        except requests.exceptions.RequestException as err:
+            self._intent.log.exception(err)
+            return False
+
+    """
+    a robust api request
+    - spellname is resolved by url since queries result in multiple results
+    """
+    def api_request(self, query=''):
+        try:
+            response = requests.get(self._api_path + self._spell_name, params=query, timeout=5)
+            self._intent.log.exception(response)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.HTTPError as errh:
+            self._intent.log.exception(errh)
+        except requests.exceptions.ConnectionError as errc:
+            self._intent.log.exception(errc)
+        except requests.exceptions.Timeout as errt:
+            self._intent.log.exception(errt)
+        except requests.exceptions.RequestException as err:
+            self._intent.log.exception(err)
 
 
-"""
-prepares a query result for reading
-"""
-def clean_string(json_input):
-    output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
-    return output_string 
+    """
+    prepares a query result for reading
+    """
+    def clean_string(self, json_input):
+        output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
+        return output_string 
 
-"""
-returns the full ruletext
-- spell_name is reformattedt to match api format
-- ruletext is requested from api
-- ruletext is converted to a string and cleaned up
-"""
-def get_full_ruletext(spell_name):
-    spell_name = spell_name.replace(' ', '-')
-    response = robust_request(spell_name)
-    if response is not None:
-        response = response.json()
-        ruletext = clean_string(response['desc'])
-    else:
-        ruletext = 'empty'
+    """
+    returns the requested detail from the api
+    """
+    def get_detail(self, detail_in):
+        response = self.api_request()
+        if response is not None:
+            response = response.json()
+            detail = self.clean_string(response[detail_in])
+        else:
+            detail = 'empty'
 
-    return ruletext
+        return detail
