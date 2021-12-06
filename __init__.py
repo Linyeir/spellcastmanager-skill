@@ -34,7 +34,10 @@ class Spellcastmanager(MycroftSkill):
 
     # reads all details of spell to user
     @intent_handler(IntentBuilder('readAllDetails')
-        .optionally('spell'))
+        .optionally('spell')
+        .require('detail')
+        .require('theSpell')
+        )
     def handle_read_all_details(self, message):
         _read_all_details(self, message)
 
@@ -44,3 +47,16 @@ class Spellcastmanager(MycroftSkill):
 
 def create_skill():
     return Spellcastmanager()
+
+
+"""
+        | Give me the details to the spell fireball                             |
+        | Tell me all the details to the spell bless                            |
+        | Read me the details to the spell burning hands                        |
+        | Give me a detailed version of the spell confusion                     |
+        | Tell me the detailed version for the spell create or destroy water    |
+        | Read me the detailed version of the spell darkness                    |
+        | details for the spell guardian of faith                               |
+        | detailed version of the spell gust of wind                            |
+        | detailed version for the spell heal                                   |
+"""

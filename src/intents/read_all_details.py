@@ -4,7 +4,7 @@ def _read_all_details(self, message):
     spell_name_input = message.data.get('spellname')
     spell = Spell_api_wrapper(self, spell_name_input)
     if spell_name_input is not None:
-        spell_name = spell.get_detail()    #######
+        spell_name = spell.get_detail('name')    #######
         if spell_name == 'empty':
             self.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name_input})
         else:
