@@ -34,7 +34,7 @@ class Spellcastmanager(MycroftSkill):
 
     # reads all details of spell to user
     @intent_handler(IntentBuilder('readAllDetails')
-        .optionally('spell')
+        .optionally('spellname')
         .require('detail')
         .require('theSpell')
         )
