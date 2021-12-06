@@ -1,5 +1,10 @@
 Feature: spellcast manager read ruletext
 
+    Scenario Outline: Start Spellcastmanager for testing
+    Given an english speaking user
+     When the user says "Open the spellcast manager"
+     Then "spellcastmanager-skill" should reply with dialog from "spellcastmanager.started.dialog"
+
     # - different existing spells
     # - different utterances
     Scenario Outline: request ruletext with existing spell
@@ -24,7 +29,6 @@ Feature: spellcast manager read ruletext
         | Describe the spell eldritch blast                             |
         | Explain the spell acid splash                                 |
         | Tell me about the spell dominate person                       |
-
 
     # - different not existing spells
     # - different utterances
@@ -51,8 +55,6 @@ Feature: spellcast manager read ruletext
         | Explain the spell saurer regen                |
         | Tell me about the spell climate change        |
 
-
-
     # - no spell mentioned
     # - different utterances
     Scenario Outline: request ruletext without stating spell
@@ -67,7 +69,9 @@ Feature: spellcast manager read ruletext
         | Long ruletext for the spell                   |
         | Tell me about the spell                       |
 
-
-
+    Scenario Outline: Stopping Spellcastmanager for testing
+    Given an english speaking user
+     When the user says "Close the spellcast manager"
+     Then "spellcastmanager-skill" should reply with dialog from "spellcastmanager.stopped.dialog"
 
 
