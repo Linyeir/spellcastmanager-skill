@@ -17,7 +17,7 @@ def _read_all_details(self, message):
             spell_castingTime = spell.get_detail(('casting_time',))
             spell_level = spell.get_detail(('level',))
             spell_damageType = spell.get_detail(('damage', 'damage_type', 'name'))
-            spell_damage = spell.get_detail(('damage', 'damage_at_slot_level'))                 # automatic lowest level besides user is asking?, Damage type?
+            spell_damage = spell.get_detail(('damage', 'damage_at_slot_level'), 0)                 # automatic lowest level besides user is asking?, Damage type?
             spell_savingThrow = spell.get_detail(('dc', 'dc_type', 'name'))                     # dc_type, dc_success
             spell_areaOfEffectType = spell.get_detail(('area_of_effect', 'type')) 
             spell_size = spell.get_detail(('area_of_effect', 'size'))               

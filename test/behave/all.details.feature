@@ -25,7 +25,7 @@ Feature: spellcast manager read all details
          Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
 
     Examples: request all details with invalid spell            
-        | request_all_details_with_existing_spell           |
+        | request_all_details_with_invalid_spell            |
         | Give me the details to the spell acid cloud       |
         | Tell me all the details to the spell arcane       |
         | Read me the details to the spell banish           |
