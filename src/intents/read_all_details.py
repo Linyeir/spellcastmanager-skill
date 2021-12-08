@@ -10,7 +10,7 @@ def _read_all_details(self, message):
         else:
             spell_range = spell.get_detail(('range',))
             spell_components = spell.get_detail(('components',))
-            spell_material = spell.get_detail((('components',)))
+            spell_material = spell.get_detail((('material',)))
             spell_ritual = spell.get_detail(('ritual',))
             spell_duration = spell.get_detail(('duration',))
             spell_concentration = spell.get_detail(('concentration',))
