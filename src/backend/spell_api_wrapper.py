@@ -1,5 +1,6 @@
 import requests
 import json
+import functools
 
 
 """
@@ -15,7 +16,11 @@ class Spell_api_wrapper():
     def __init__(self, intent_in, spell_name_in):
         self._intent = intent_in
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
-        self._spell_name = spell_name_in.replace(' ', '-')
+        if spell_name_in is not None:
+            self._spell_name = spell_name_in.replace(' ', '-')
+        else:
+            self._spell_name = 'empty'
+            self._intent.log.warning('No Spellname specified')
         if self.api_reachable() == False:
             raise 'api not availlable on path'
 
@@ -68,15 +73,28 @@ class Spell_api_wrapper():
         output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
         return output_string 
 
+
     """
     returns the requested detail from the api
+    - expects a tuple for "key"
+    - if required, an index-/ range can be passed
     """
-    def get_detail(self, detail_in):
-        response = self.api_request()
-        if response is not None:
-            response = response.json()
-            detail = self.clean_string(response[detail_in])
-        else:
+    def get_detail(self, key, index_start = -1, index_stop = -1):
+        if self._spell_name == 'empty':
             detail = 'empty'
+        else:
+            response = self.api_request()
+            if response is not None:
+                response_json = response.json()
+                parsed_response = functools.reduce(dict.get, key, response_json)
+                if index_start is not -1:
+                    if index_stop is not -1:
+                        parsed_response = list(parsed_response.values())[index_start:index_stop]  
+                    else:  
+                        parsed_response = list(parsed_response.values())[index_start]
+                self._intent.log.exception(parsed_response)
+                detail = self.clean_string(parsed_response)
+            else:
+                detail = 'empty'
 
         return detail
