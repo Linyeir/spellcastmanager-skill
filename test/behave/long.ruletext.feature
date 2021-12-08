@@ -57,7 +57,7 @@ Feature: spellcast manager read ruletext
     # - different utterances
     Scenario Outline: request ruletext without stating spell
         Given an english speaking user
-         When the user says "request_ruletext_without_stating_spell"
+         When the user says "<request_ruletext_without_stating_spell>"
          Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
 
     Examples: request ruletext without stating spell       
