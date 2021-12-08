@@ -77,8 +77,9 @@ class Spell_api_wrapper():
     """
     returns the requested detail from the api
     - expects a tuple for "key"
+    - if required, an index-/ range can be passed
     """
-    def get_detail(self, key):
+    def get_detail(self, key, index_start = -1, index_stop = -1):
         if self._spell_name == 'empty':
             detail = 'empty'
         else:
@@ -86,6 +87,12 @@ class Spell_api_wrapper():
             if response is not None:
                 response_json = response.json()
                 parsed_response = functools.reduce(dict.get, key, response_json)
+                if index_start is not -1:
+                    if index_stop is not -1:
+                        parsed_response = list(parsed_response.values())[index_start:index_stop]  
+                    else:  
+                        parsed_response = list(parsed_response.values())[index_start]
+                self._intent.log.exception(parsed_response)
                 detail = self.clean_string(parsed_response)
             else:
                 detail = 'empty'
