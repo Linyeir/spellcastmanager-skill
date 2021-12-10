@@ -76,7 +76,7 @@ class Spell_api_wrapper():
     """
     def get_detail(self, key, index_start = -1, index_stop = -1):
         if self._spell_name == 'empty':
-            detail = 'empty'
+            parsed_response = 'empty'
         else:
             response = self.api_request()
             if response is not None:
@@ -87,8 +87,7 @@ class Spell_api_wrapper():
                         parsed_response = list(parsed_response.values())[index_start:index_stop]  
                     else:  
                         parsed_response = list(parsed_response.values())[index_start]
-                detail = self.clean_string(parsed_response)
             else:
-                detail = 'empty'
+                parsed_response = 'empty'
 
-        return detail
+        return parsed_response
