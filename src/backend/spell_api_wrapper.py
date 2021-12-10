@@ -13,14 +13,12 @@ Usage:
 """
 class Spell_api_wrapper():
     
-    def __init__(self, intent_in, spell_name_in):
-        self._intent = intent_in
+    def __init__(self, spell_name_in):
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
         if spell_name_in is not None:
             self._spell_name = spell_name_in.replace(' ', '-')
         else:
             self._spell_name = 'empty'
-            self._intent.log.warning('No Spellname specified')
         if self.api_reachable() == False:
             raise 'api not availlable on path'
 
@@ -31,19 +29,14 @@ class Spell_api_wrapper():
         try:
             response = requests.get(self._api_path, timeout=5)
             response.raise_for_status()
-            self._intent.log.info('api availlable')
             return True
         except requests.exceptions.HTTPError as errh:
-            self._intent.log.exception(errh)
             return False
         except requests.exceptions.ConnectionError as errc:
-            self._intent.log.exception(errc)
             return False
         except requests.exceptions.Timeout as errt:
-            self._intent.log.exception(errt)
             return False
         except requests.exceptions.RequestException as err:
-            self._intent.log.exception(err)
             return False
 
     """
@@ -53,17 +46,19 @@ class Spell_api_wrapper():
     def api_request(self, query=''):
         try:
             response = requests.get(self._api_path + self._spell_name, params=query, timeout=5)
-            self._intent.log.exception(response)
             response.raise_for_status()
             return response
+
+        # for later to implement !!!                ###############################################################
         except requests.exceptions.HTTPError as errh:
-            self._intent.log.exception(errh)
+            pass
         except requests.exceptions.ConnectionError as errc:
-            self._intent.log.exception(errc)
+            pass
         except requests.exceptions.Timeout as errt:
-            self._intent.log.exception(errt)
+            pass
         except requests.exceptions.RequestException as err:
-            self._intent.log.exception(err)
+            pass
+
 
 
     """
@@ -92,7 +87,6 @@ class Spell_api_wrapper():
                         parsed_response = list(parsed_response.values())[index_start:index_stop]  
                     else:  
                         parsed_response = list(parsed_response.values())[index_start]
-                self._intent.log.exception(parsed_response)
                 detail = self.clean_string(parsed_response)
             else:
                 detail = 'empty'

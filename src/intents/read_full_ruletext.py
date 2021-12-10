@@ -8,7 +8,7 @@ from ..backend.spell_api_wrapper import Spell_api_wrapper
 """
 def _read_full_ruletext(intent, message):
         spell_name = message.data.get('spellname')
-        spell = Spell_api_wrapper(intent, spell_name)
+        spell = Spell_api_wrapper(spell_name)
         if spell_name is not None:
             key = ('desc',)
             ruletext = spell.get_detail(key)
