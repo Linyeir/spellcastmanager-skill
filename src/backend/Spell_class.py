@@ -31,6 +31,9 @@ class Spell_class():
         self._school = self._api.get_detail(('school', 'name'))
 
 
+    
+
+
     @property
     def name(self):
         return self._name
