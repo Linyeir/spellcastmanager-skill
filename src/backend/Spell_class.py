@@ -30,9 +30,8 @@ class Spell_class():
         self._area_of_effect_size = self._api.get_detail(('area_of_effect', 'size'))
         self._school = self._api.get_detail(('school', 'name'))
 
-
     
-
+#region properties
 
     @property
     def name(self):
@@ -240,8 +239,10 @@ class Spell_class():
     def school(self, value):
         self._school = value
 
+#endregion
+
 
 spell = Spell_class('fireball')
 
-print(type(spell.damage_at_slot_level))
-print(spell.damage_at_slot_level)
+print(type(spell.range))
+print(spell.range)

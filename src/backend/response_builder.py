@@ -10,6 +10,13 @@ def build_response_get_single_detail(spell_name_in, spell_detail_in, slot_level 
         return 'empty'
     else:
         detail = getattr(spell, spell_detail_in)       # spell_detail_in is assumed to be correct -> solved somewhere else
+        
+        # slot too low or min -> min
+        # slot too high or max -> max
+        # slot inbetween -> specified slot
+
+        if 
+        
         return detail
 
         # logic for slot level not implemented yet 
