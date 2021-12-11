@@ -243,4 +243,5 @@ class Spell_class():
 
 spell = Spell_class('fireball')
 
-print(type(spell.components))
+print(type(spell.damage_at_slot_level))
+print(spell.damage_at_slot_level)
