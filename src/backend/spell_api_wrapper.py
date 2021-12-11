@@ -60,15 +60,6 @@ class Spell_api_wrapper():
             pass
 
 
-
-    """
-    prepares a query result for reading
-    """
-    def clean_string(self, json_input):
-        output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
-        return output_string 
-
-
     """
     returns the requested detail from the api
     - expects a tuple for "key"
@@ -82,6 +73,8 @@ class Spell_api_wrapper():
             if response is not None:
                 response_json = response.json()
                 parsed_response = functools.reduce(dict.get, key, response_json)
+                if parsed_response is None:
+                    parsed_response = 'empty'
             else:
                 parsed_response = 'empty'
 
