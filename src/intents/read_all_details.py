@@ -1,4 +1,3 @@
-from ..backend.spell_api_wrapper import Spell_api_wrapper
 from ..backend.response_builder import build_response_all_details
 
 def _read_all_details(self, message):
@@ -12,7 +11,3 @@ def _read_all_details(self, message):
             self.speak_dialog('all.details', {'all_details': spell_all_details})
     else:
         self.speak_dialog('ruletext.fallback')
-
-# ueberpruefe, name empty -> spell invalid
-#
-# different detail profile for spells

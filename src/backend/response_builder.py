@@ -1,6 +1,21 @@
 from requests.models import Response
 from Spell_class import Spell_class
 
+# for get_single_detail intent
+# for read_full_ruletext intent
+def build_response_get_single_detail(spell_name_in, spell_detail_in, slot_level = 0):
+    spell = Spell_class(spell_name_in)
+
+    if spell.name is 'empty':
+        return 'empty'
+    else:
+        detail = getattr(spell, spell_detail_in)       # spell_detail_in is assumed to be correct -> solved somewhere else
+        return detail
+
+        # logic for slot level not implemented yet 
+
+    
+
 
 def build_response_all_details(spell_name_in):
     spell = Spell_class(spell_name_in)
