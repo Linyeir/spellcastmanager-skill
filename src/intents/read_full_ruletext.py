@@ -1,8 +1,9 @@
-from ..backend.response_builder import build_response_get_single_detail
+from ..backend.reponse_builder.full_ruletext_response_builder import build_full_ruletext
+
 
 """
  actually handles the full ruletext intent
- - the api is queried with the extracted spellname
+ - the ruletext builder provides the ruletext for the given spellname
  - the replied ruletext is spoken aloud
  - if the spell s not found or the api threw an error, the fallback is read instead
 """
@@ -10,8 +11,7 @@ from ..backend.response_builder import build_response_get_single_detail
 def _read_full_ruletext(intent, message):
     spell_name = message.data.get('spellname')
     if spell_name is not None:
-        key = ('desc',)
-        ruletext = build_response_get_single_detail(spell_name, key)
+        ruletext = build_full_ruletext(spell_name)
         if ruletext != 'empty':
                 intent.speak_dialog('long.ruletext', {'ruletext': ruletext})
         else:

@@ -1,5 +1,9 @@
-from spell_api_wrapper import Spell_api_wrapper
+from .spell_api_wrapper import Spell_api_wrapper
 
+
+"""
+If instantiated with a valid spellname, this class provides an easy way to access the spells details.
+"""
 class Spell_class():
     def __init__(self, spell_name_in) -> None:
         self._api = Spell_api_wrapper(spell_name_in)
