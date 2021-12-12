@@ -1,4 +1,4 @@
-from .Spell_class import Spell_class
+from ..utils.Spell_class import Spell_class
 
 def build_response_all_details(spell_name_in):
     spell = Spell_class(spell_name_in)

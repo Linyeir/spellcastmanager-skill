@@ -1,4 +1,4 @@
-from .full_ruletext_response_builder import build_full_ruletext
+from ..response_builders.full_ruletext_response_builder import build_full_ruletext
 
 
 """

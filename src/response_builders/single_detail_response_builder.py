@@ -1,4 +1,4 @@
-from .Spell_class import Spell_class
+from ..utils.Spell_class import Spell_class
 
 
 # for single detail intent

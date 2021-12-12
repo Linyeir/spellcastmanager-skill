@@ -1,4 +1,4 @@
-from .all_details_response_builder import build_response_all_details
+from ..response_builders.all_details_response_builder import build_response_all_details
 
 def _read_all_details(self, message):
     spell_name_input = message.data.get('spellname')
