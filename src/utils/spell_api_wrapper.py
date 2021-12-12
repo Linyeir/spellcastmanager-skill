@@ -78,6 +78,9 @@ class Spell_api_wrapper():
                     parsed_response = functools.reduce(dict.get, key, response_json)
                 except:
                     parsed_response = 'empty'
+                    
+                if parsed_response is None:
+                    parsed_response = 'empty'
             else:
                 parsed_response = 'empty'
 
