@@ -35,7 +35,7 @@ class Spell_class():
         self.damage_at_slot_level = self._api.get_detail(('damage', 'damage_at_slot_level')) #additional parsing necessary - list 
         self.heal_at_slot_level = self._api.get_detail(('heal_at_slot_level',))             #additional parsing necessary - list
         self.damage_at_character_level = self._api.get_detail(('damage', 'damage_at_character_level'))
-        self.heal_at_character_level = self._api.get_detail(('damage', 'heal_at_character_level'))
+        self.heal_at_character_level = self._api.get_detail(('heal_at_character_level',))
         self.dc_type = self._api.get_detail(('dc', 'dc_type', 'name'))
         self.dc_success = self._api.get_detail(('dc', 'dc_success'))
         self.area_of_effect_type = self._api.get_detail(('area_of_effect', 'type'))
@@ -90,20 +90,23 @@ class Spell_class():
 
     @components.setter
     def components(self, value):
-        new_value = []
-        for entry in value:
-            if entry == 'V':
-                new_entry = entry.replace('V', 'verbal')
-            
-            if entry == 'S':
-                new_entry = entry.replace('S', 'somatic')
+        if value != 'empty':
+            new_value = []
+            for entry in value:
+                if entry == 'V':
+                    new_entry = entry.replace('V', 'verbal')
+                
+                if entry == 'S':
+                    new_entry = entry.replace('S', 'somatic')
 
-            if entry == 'M':
-                new_entry = entry.replace('M', 'material')
+                if entry == 'M':
+                    new_entry = entry.replace('M', 'material')
 
-            new_value.append(new_entry)
+                new_value.append(new_entry)
+            self._components = new_value
+        else:
+            self._components = ['empty']   
 
-        self._components = new_value
 
     # string
     @property

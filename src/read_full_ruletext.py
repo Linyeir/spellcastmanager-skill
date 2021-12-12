@@ -1,4 +1,4 @@
-from ..backend.reponse_builder.full_ruletext_response_builder import build_full_ruletext
+from .full_ruletext_response_builder import build_full_ruletext
 
 
 """
@@ -12,7 +12,7 @@ def _read_full_ruletext(intent, message):
     spell_name = message.data.get('spellname')
     if spell_name is not None:
         ruletext = build_full_ruletext(spell_name)
-        if ruletext != 'empty':
+        if ruletext != 'no spell':
                 intent.speak_dialog('long.ruletext', {'ruletext': ruletext})
         else:
             intent.speak_dialog('ruletext.invalid.spell', {'spellname': spell_name})

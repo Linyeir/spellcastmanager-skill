@@ -1,4 +1,4 @@
-from ..Spell_class import Spell_class
+from .Spell_class import Spell_class
 
 def build_response_all_details(spell_name_in):
     spell = Spell_class(spell_name_in)
@@ -7,7 +7,7 @@ def build_response_all_details(spell_name_in):
     # remove if statements from not optional attributes? which ones are not optional?
 
     if spell.name == 'empty':
-        return 'empty'
+        return 'no spell'
     else:
         response = 'Name ' + spell.name + '\n'
     

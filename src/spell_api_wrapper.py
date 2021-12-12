@@ -1,5 +1,4 @@
 import requests
-import json
 import functools
 
 
@@ -21,7 +20,7 @@ class Spell_api_wrapper():
             self._spell_name = 'empty'
         self._api_reachable = self.api_reachable()
         if self._api_reachable:
-            self.response = self.api_request()
+            self._response = self.api_request()
         else:
             raise 'api not availlable on path'
         
@@ -49,7 +48,7 @@ class Spell_api_wrapper():
     """
     def api_request(self, query=''):
         try:
-            response = requests.get(self._api_path + self._spell_name, params=query, timeout=5)
+            response = requests.get(self._api_path + self._spell_name, params=query, timeout=3)
             response.raise_for_status()
             return response
 
@@ -69,14 +68,15 @@ class Spell_api_wrapper():
     - expects a tuple for "key"
     - if required, an index-/ range can be passed
     """
-    def get_detail(self, key):
+    def get_detail(self, key, index_start = -1, index_stop = -1):
         if (self._spell_name == 'empty') or (not self._api_reachable):
             parsed_response = 'empty'
         else:
-            if self.response is not None:
-                response_json = self.response.json()
-                parsed_response = functools.reduce(dict.get, key, response_json)
-                if parsed_response is None:
+            if self._response is not None:
+                response_json = self._response.json()
+                try:
+                    parsed_response = functools.reduce(dict.get, key, response_json)
+                except:
                     parsed_response = 'empty'
             else:
                 parsed_response = 'empty'

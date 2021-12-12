@@ -1,4 +1,4 @@
-from ..Spell_class import Spell_class
+from .Spell_class import Spell_class
 
 
 def build_full_ruletext(spell_name_in):
@@ -6,7 +6,7 @@ def build_full_ruletext(spell_name_in):
     response = ''
 
     if spell.name == 'empty':
-        return 'empty'
+        return 'no spell'
     else:
         if spell.desc != 'empty':
             response = spell.desc

@@ -1,8 +1,8 @@
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
-from .src.intents.read_full_ruletext import _read_full_ruletext
-from .src.intents.read_all_details import _read_all_details
+from .src.read_full_ruletext import _read_full_ruletext
+from .src.read_all_details import _read_all_details
 
 
 class Spellcastmanager(MycroftSkill):
