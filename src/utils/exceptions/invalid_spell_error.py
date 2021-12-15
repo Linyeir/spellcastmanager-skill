@@ -1,4 +1,4 @@
-from intent_exception import IntentException
+from .intent_exception import IntentException
 
 
 class InvalidSpellError(IntentException):
@@ -12,4 +12,4 @@ class InvalidSpellError(IntentException):
     def __init__(self, spell_name, message="the entered spell name was not found"):
         self._spell_name = spell_name
         self._message = message
-        super().__init__(self.message)
+        super().__init__(self._message)

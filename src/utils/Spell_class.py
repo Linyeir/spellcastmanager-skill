@@ -1,5 +1,4 @@
 from .spell_api_wrapper import Spell_api_wrapper
-import exceptions
 
 """
 If instantiated with a valid spellname, this class provides an easy way to access the spells details.

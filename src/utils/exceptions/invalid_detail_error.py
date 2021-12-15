@@ -1,4 +1,4 @@
-from intent_exception import IntentException
+from .intent_exception import IntentException
 
 
 class InvalidDetailError(IntentException):
@@ -12,4 +12,4 @@ class InvalidDetailError(IntentException):
     def __init__(self, detail, message="the specified detail was not found"):
         self._detail = detail
         self._message = message
-        super().__init__(self.message)
+        super().__init__(self._message)

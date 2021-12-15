@@ -1,6 +1,5 @@
 import requests
 import functools
-import exceptions
 from src.utils.exceptions.api_not_reachable_error import APINotReachableError
 from src.utils.exceptions.intent_exception import IntentException
 from src.utils.exceptions.invalid_detail_error import InvalidDetailError
