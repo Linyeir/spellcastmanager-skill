@@ -1,22 +1,24 @@
 from .spell_api_wrapper import Spell_api_wrapper
-
+import exceptions
 
 """
 If instantiated with a valid spellname, this class provides an easy way to access the spells details.
 """
+
+
 class Spell_class():
     def __init__(self, spell_name_in) -> None:
         self._api = Spell_api_wrapper(spell_name_in)
         self._fill_attributes()
 
-
     """
     prepares a query result for reading
     """
-    def _clean_string(self, json_input):
-        output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
-        return output_string
 
+    def _clean_string(self, json_input):
+        output_string = str(json_input).replace(
+            '[', '').replace(']', '').replace('"', '').replace("'", '')
+        return output_string
 
     def _fill_attributes(self):
         self.name = self._api.get_detail(('name',))
@@ -31,21 +33,30 @@ class Spell_class():
         self.casting_time = self._api.get_detail(('casting_time',))
         self.level = self._api.get_detail(('level',))
         self.attack_type = self._api.get_detail(('attack_type',))
-        self.damage_type = self._api.get_detail(('damage', 'damage_type', 'name'))
-        self.damage_at_slot_level = self._api.get_detail(('damage', 'damage_at_slot_level')) #additional parsing necessary - list
-        self.heal_at_slot_level = self._api.get_detail(('heal_at_slot_level',))             #additional parsing necessary - list
-        self.damage_at_character_level = self._api.get_detail(('damage', 'damage_at_character_level'))
-        self.heal_at_character_level = self._api.get_detail(('heal_at_character_level',))
+        self.damage_type = self._api.get_detail(
+            ('damage', 'damage_type', 'name'))
+        self.damage_at_slot_level = self._api.get_detail(
+            ('damage', 'damage_at_slot_level'))  # additional parsing necessary - list
+        self.heal_at_slot_level = self._api.get_detail(
+            ('heal_at_slot_level',))  # additional parsing necessary - list
+        self.damage_at_character_level = self._api.get_detail(
+            ('damage', 'damage_at_character_level'))
+        self.heal_at_character_level = self._api.get_detail(
+            ('heal_at_character_level',))
         self.dc_type = self._api.get_detail(('dc', 'dc_type', 'name'))
         self.dc_success = self._api.get_detail(('dc', 'dc_success'))
-        self.area_of_effect_type = self._api.get_detail(('area_of_effect', 'type'))
-        self.area_of_effect_size = self._api.get_detail(('area_of_effect', 'size'))
+        self.area_of_effect_type = self._api.get_detail(
+            ('area_of_effect', 'type'))
+        self.area_of_effect_size = self._api.get_detail(
+            ('area_of_effect', 'size'))
         self.school = self._api.get_detail(('school', 'name'))
 
 
-#region properties
+# region properties
 
     # string
+
+
     @property
     def name(self):
         return self._name
@@ -54,8 +65,8 @@ class Spell_class():
     def name(self, value):
         self._name = self._clean_string(value)
 
-
     # string
+
     @property
     def desc(self):
         return self._desc
@@ -64,8 +75,8 @@ class Spell_class():
     def desc(self, value):
         self._desc = self._clean_string(value)
 
-
     # string
+
     @property
     def higher_level(self):
         return self._higher_level
@@ -107,8 +118,8 @@ class Spell_class():
         else:
             self._components = ['empty']
 
-
     # string
+
     @property
     def material(self):
         return self._material
@@ -261,4 +272,4 @@ class Spell_class():
     def school(self, value):
         self._school = self._clean_string(value)
 
-#endregion
+# endregion

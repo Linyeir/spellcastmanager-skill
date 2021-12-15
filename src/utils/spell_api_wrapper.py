@@ -1,87 +1,77 @@
 import requests
 import functools
+import exceptions
+from src.utils.exceptions.api_not_reachable_error import APINotReachableError
+from src.utils.exceptions.intent_exception import IntentException
+from src.utils.exceptions.invalid_detail_error import InvalidDetailError
+from src.utils.exceptions.invalid_spell_error import InvalidSpellError
+from src.utils.exceptions.no_specified_spell_error import NoSpecifiedSpellError
 
 
 """
 A wrapper for the api on https://www.dnd5eapi.co/api/
-Only the spells/directory is used 
+Only the spells/directory is used
 
 Usage:
-    - Instantiate inside of your intent 
+    - Instantiate inside of your intent
     - get a detail via the get detail methode
 """
+
+
 class Spell_api_wrapper():
-    
+
     def __init__(self, spell_name_in):
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
-        if spell_name_in is not None:
-            self._spell_name = spell_name_in.replace(' ', '-')
-        else:
-            self._spell_name = 'empty'
-        self._api_reachable = self.api_reachable()
-        if self._api_reachable:
+        if spell_name_in is None:
+            raise NoSpecifiedSpellError()
+        self._spell_name = spell_name_in.replace(' ', '-')
+        if self.api_reachable():
             self._response = self.api_request()
-        else:
-            raise 'api not availlable on path'
-        
 
     """
     returns true if api is reachable
     """
+
     def api_reachable(self):
         try:
             response = requests.get(self._api_path, timeout=3)
             response.raise_for_status()
             return True
         except requests.exceptions.HTTPError as errh:
-            return False
+            raise APINotReachableError(errh)
         except requests.exceptions.ConnectionError as errc:
-            return False
+            raise APINotReachableError(errc)
         except requests.exceptions.Timeout as errt:
-            return False
+            raise APINotReachableError(errt)
         except requests.exceptions.RequestException as err:
-            return False
+            raise APINotReachableError(err)
 
     """
     a robust api request
     - spellname is resolved by url since queries result in multiple results
     """
+
     def api_request(self, query=''):
         try:
-            response = requests.get(self._api_path + self._spell_name, params=query, timeout=3)
+            response = requests.get(
+                self._api_path + self._spell_name, params=query, timeout=3)
             response.raise_for_status()
             return response
-
-        # for later to implement !!!                ###############################################################
-        except requests.exceptions.HTTPError as errh:
-            pass
-        except requests.exceptions.ConnectionError as errc:
-            pass
-        except requests.exceptions.Timeout as errt:
-            pass
-        except requests.exceptions.RequestException as err:
-            pass
-
+        except:
+            raise InvalidSpellError(self._spell_name)
 
     """
     returns the requested detail from the api
     - expects a tuple for "key"
     - if required, an index-/ range can be passed
     """
-    def get_detail(self, key, index_start = -1, index_stop = -1):
-        if (self._spell_name == 'empty') or (not self._api_reachable):
-            parsed_response = 'empty'
-        else:
-            if self._response is not None:
-                response_json = self._response.json()
-                try:
-                    parsed_response = functools.reduce(dict.get, key, response_json)
-                except:
-                    parsed_response = 'empty'
-                    
-                if parsed_response is None:
-                    parsed_response = 'empty'
-            else:
-                parsed_response = 'empty'
 
+    def get_detail(self, key, index_start=-1, index_stop=-1):
+        response_json = self._response.json()
+        try:
+            parsed_response = functools.reduce(dict.get, key, response_json)
+        except:
+            parsed_response = 'empty'
+        if parsed_response is None:
+            parsed_response = 'empty'
         return parsed_response
