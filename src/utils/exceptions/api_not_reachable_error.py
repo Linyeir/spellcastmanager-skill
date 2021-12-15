@@ -1,4 +1,4 @@
-from intent_exception import IntentException
+from .intent_exception import IntentException
 
 
 class APINotReachableError(IntentException):
@@ -12,4 +12,4 @@ class APINotReachableError(IntentException):
     def __init__(self, value, message="The API does not answer your Requests"):
         self._value = value
         self._message = message
-        super().__init__(self.message)
+        super().__init__(self._message)

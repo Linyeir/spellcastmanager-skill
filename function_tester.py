@@ -1,4 +1,9 @@
-from src.response_builders.all_details_response_builder import build_response_all_details
+from src.response_builders.get_spell_description import ResponseBuilderGetSpellDescription
+from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 
 
-print(build_response_all_details('fireball'))
+try:
+    response = ResponseBuilderGetSpellDescription('fireboll')
+    print(response.get_response())
+except InvalidSpellError as err:
+    print('hass ' + str(err))
