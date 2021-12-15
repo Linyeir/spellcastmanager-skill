@@ -15,7 +15,7 @@ class Spell_class():
     """
     def _clean_string(self, json_input):
         output_string = str(json_input).replace('[','').replace(']','').replace('"','').replace("'", '')
-        return output_string 
+        return output_string
 
 
     def _fill_attributes(self):
@@ -32,7 +32,7 @@ class Spell_class():
         self.level = self._api.get_detail(('level',))
         self.attack_type = self._api.get_detail(('attack_type',))
         self.damage_type = self._api.get_detail(('damage', 'damage_type', 'name'))
-        self.damage_at_slot_level = self._api.get_detail(('damage', 'damage_at_slot_level')) #additional parsing necessary - list 
+        self.damage_at_slot_level = self._api.get_detail(('damage', 'damage_at_slot_level')) #additional parsing necessary - list
         self.heal_at_slot_level = self._api.get_detail(('heal_at_slot_level',))             #additional parsing necessary - list
         self.damage_at_character_level = self._api.get_detail(('damage', 'damage_at_character_level'))
         self.heal_at_character_level = self._api.get_detail(('heal_at_character_level',))
@@ -42,7 +42,7 @@ class Spell_class():
         self.area_of_effect_size = self._api.get_detail(('area_of_effect', 'size'))
         self.school = self._api.get_detail(('school', 'name'))
 
-    
+
 #region properties
 
     # string
@@ -95,7 +95,7 @@ class Spell_class():
             for entry in value:
                 if entry == 'V':
                     new_entry = entry.replace('V', 'verbal')
-                
+
                 if entry == 'S':
                     new_entry = entry.replace('S', 'somatic')
 
@@ -105,7 +105,7 @@ class Spell_class():
                 new_value.append(new_entry)
             self._components = new_value
         else:
-            self._components = ['empty']   
+            self._components = ['empty']
 
 
     # string
@@ -115,11 +115,11 @@ class Spell_class():
 
     @material.setter
     def material(self, value):
-        self._material = self._clean_string(value) 
+        self._material = self._clean_string(value)
 
     # bool
     @property
-    def ritual(self):              
+    def ritual(self):
         return self._ritual
 
     @ritual.setter
