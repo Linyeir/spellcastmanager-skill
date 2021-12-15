@@ -9,7 +9,7 @@ class IntentGetSpellDescription(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)
-            response = self._response_builder.get_response(('desc',))
+            response = self._response_builder.get_response('desc')
         except: # api wrapper not reachable
             Spellcastmanager.intent.speak_dialog('api.not.reachable.error.dialog')
         except: # no spell name stated
