@@ -33,8 +33,34 @@ class IntentGetAllDetails(IntentBase):
         except: # invalid spell name
             Spellcastmanager.intent.speak_dialog('invalid.spell.error.dialog', {'spellname': spell_name_input})
         else:
-            Spellcastmanager.intent.speak_dialog('get.all.details.dialog', {'spellname': response['']}) # add other details
+            Spellcastmanager.intent.speak_dialog('get.all.details.dialog', response)
 
+"""            
+            Spellcastmanager.intent.speak_dialog('get.all.details.dialog', {'name': response['name'], 
+                                                                            'desc': response['desc'], 
+                                                                            'higher_level': response['higher_level'],
+                                                                            'range': response['range'],
+                                                                            'components': response['components'],
+                                                                            'material': response['material'],
+                                                                            'ritual': response['ritual'],
+                                                                            'duration': response['duration'],
+                                                                            'concentration': response['concentration'],
+                                                                            'casting_time': response['casting_time'],
+                                                                            'level': response['level'],
+                                                                            'attack_type': response['attack_type'],
+                                                                            'damage_type': response['damage_type'],
+                                                                            'damage_at_slot_level': response['damage_at_slot_level'],
+                                                                            'heal_at_slot_level': response['heal_at_slot_level'],
+                                                                            'damage_at_character_level': response['damage_at_character_level'],
+                                                                            'heal_at_character_level': response['heal_at_character_level'],
+                                                                            'dc_type': response['dc_type'],
+                                                                            'dc_success': response['dc_success'],
+                                                                            'area_of_effect_type': response['area_of_effect_type'],
+                                                                            'area_of_effect_size': response['area_of_effect_size'],
+                                                                            'school': response['school']
+                                                                            }) 
+                                                                            
+"""
 
 
 
