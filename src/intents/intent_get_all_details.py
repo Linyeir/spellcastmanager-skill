@@ -5,6 +5,24 @@ class IntentGetAllDetails(IntentBase):
     def __init__(self):
         pass
 
+
+
+
+
+
+
+        # dont forget to change no spell name exception
+
+
+
+
+
+
+
+
+
+
+
     def _extract_casting_level(message):
         casting_level_input = message.data.get('casting_level')
         if casting_level_input == None:

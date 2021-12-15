@@ -2,6 +2,7 @@ from .intent_base import IntentBase
 from .response_builder_get_spell_description import ResponseBuilderGetSpellDescription
 from ..utils.exceptions.api_not_reachable_error import APINotReachableError
 from ..utils.exceptions.no_specified_spell_error import NoSpecifiedSpellError
+from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
 class IntentGetSpellDescription(IntentBase):
     def __init__(self):
@@ -18,7 +19,11 @@ class IntentGetSpellDescription(IntentBase):
         except NoSpecifiedSpellError as err:
             Spellcastmanager.log.info(err)
             Spellcastmanager.intent.speak_dialog('no.spell.specified.error.dialog')
-        except: # invalid spell name
+        except InvalidSpellError as err:
+            Spellcastmanager.log.info(err)
             Spellcastmanager.intent.speak_dialog('invalid.spell.error.dialog', {'spellname': spell_name_input})
-        else: # valid spell + response
+        else:
             Spellcastmanager.intent.speak_dialog('get.spell.description.dialog', {'description': response})
+
+
+
