@@ -11,6 +11,6 @@ class ResponseBuilderGetSpellDescription(ResponseBuilderBase):
             raise NoSpellSpecifiedError()
         self._spell = Spell(spell_name)
 
-    def get_response(self, detail: str, casting_level: str) -> dict:
+    def get_response(self) -> dict:
         response = {'desc': self._spell.desc}
         return response

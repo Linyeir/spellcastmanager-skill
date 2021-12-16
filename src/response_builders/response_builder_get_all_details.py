@@ -39,7 +39,7 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
             if self._spell.concentration is True:
                 response['concentration'] = 'concentration'
             if self._spell.concentration is False:
-                response = response + 'no concentration'
+                response['concentration'] = 'no concentration'
 
         if self._spell.casting_time != 'empty':
             response['casting_time'] = self._spell.casting_time
