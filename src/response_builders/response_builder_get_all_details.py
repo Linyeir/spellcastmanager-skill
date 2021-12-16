@@ -1,6 +1,6 @@
 from .response_builder_base import ResponseBuilderBase
 from ..utils.spell import Spell
-from src.utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
+from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 
 
 class ResponseBuilderGetAllDetails(ResponseBuilderBase):

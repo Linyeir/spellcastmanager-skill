@@ -22,18 +22,18 @@ class IntentGetAllDetails(IntentBase):
             response = self._response_builder.get_response()
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('api.not.reachable.error.dialog')
+            Spellcastmanager.speak_dialog('api.not.reachable.error')
         except NoSpellSpecifiedError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('no.spell.specified.error.dialog')
+            Spellcastmanager.speak_dialog('no.spell.specified.error')
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('invalid.spell.error.dialog', {'spellname': spell_name_input})
+            Spellcastmanager.speak_dialog('invalid.spell.error', {'spellname': spell_name_input})
         else:
-            Spellcastmanager.intent.speak_dialog('get.all.details.dialog', response)
+            Spellcastmanager.speak_dialog('get.all.details', response)
 
           
-            # Spellcastmanager.intent.speak_dialog('get.all.details.dialog', {'name': response['name'], 
+            # Spellcastmanager.speak_dialog('get.all.details.dialog', {'name': response['name'], 
             #                                                                 'desc': response['desc'], 
             #                                                                 'higher_level': response['higher_level'],
             #                                                                 'range': response['range'],

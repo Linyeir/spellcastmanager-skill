@@ -1,8 +1,8 @@
 import requests
 import functools
-from src.utils.exceptions.api_not_reachable_error import APINotReachableError
-from src.utils.exceptions.invalid_spell_error import InvalidSpellError
-from src.utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
+from .exceptions.api_not_reachable_error import APINotReachableError
+from .exceptions.invalid_spell_error import InvalidSpellError
+from .exceptions.no_spell_specified_error import NoSpellSpecifiedError
 
 
 """

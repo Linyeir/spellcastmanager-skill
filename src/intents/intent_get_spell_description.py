@@ -12,18 +12,20 @@ class IntentGetSpellDescription(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)
-            response = self._response_builder.get_response('desc')
+            response = self._response_builder.get_response()
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('api.not.reachable.error.dialog')
+            Spellcastmanager.speak_dialog('api.not.reachable.error')
         except NoSpellSpecifiedError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('no.spell.specified.error.dialog')
+            Spellcastmanager.speak_dialog('no.spell.specified.error')
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.intent.speak_dialog('invalid.spell.error.dialog', {'name': spell_name_input})                                                                       # maybe pass dict? right place?
+            Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})                                                                       # maybe pass dict? right place?
         else:
-            Spellcastmanager.intent.speak_dialog('get.spell.description.dialog', response)
+            Spellcastmanager.log.error(response)
+            Spellcastmanager.log.error(type(response))
+            Spellcastmanager.speak_dialog('get.spell.description',response)
 
 
 
