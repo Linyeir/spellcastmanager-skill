@@ -1,5 +1,6 @@
 from .intent_base import IntentBase
 from ..response_builders.response_builder_get_all_details import ResponseBuilderGetAllDetails
+from ..utils.spell_categorizer import SpellCategorizer
 from ..utils.exceptions.api_not_reachable_error import APINotReachableError
 from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
@@ -20,6 +21,8 @@ class IntentGetAllDetails(IntentBase):
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetAllDetails(spell_name_input)
             response = self._response_builder.get_response()
+            spell_categorizer = SpellCategorizer(response)
+            spell_category = spell_categorizer.get_categorie_from_details()
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -30,7 +33,14 @@ class IntentGetAllDetails(IntentBase):
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'spellname': spell_name_input})
         else:
-            Spellcastmanager.speak_dialog('get.all.details', response)
+            dialog = 'get.all.details.category.' + str(spell_category)
+            Spellcastmanager.speak_dialog(dialog, response)
+
+
+
+
+
+
 
           
             # Spellcastmanager.speak_dialog('get.all.details.dialog', {'name': response['name'], 
