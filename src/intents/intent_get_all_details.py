@@ -1,27 +1,9 @@
 from .intent_base import IntentBase
-from .response_builder_get_spell_description import ResponseBuilderGetSpellDescription
+from ..response_builders.response_builder_get_spell_description import ResponseBuilderGetSpellDescription
 
 class IntentGetAllDetails(IntentBase):
     def __init__(self):
         pass
-
-
-
-
-
-
-
-    # dont forget to change no spell name exception
-
-
-
-
-
-
-
-
-
-
 
     def _extract_casting_level(message):
         casting_level_input = message.data.get('casting_level')

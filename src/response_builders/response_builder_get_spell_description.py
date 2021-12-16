@@ -1,5 +1,5 @@
 
-from response_builder_base import ResponseBuilderBase
+from .response_builder_base import ResponseBuilderBase
 from ..utils.Spell_class import Spell_class
 
 
