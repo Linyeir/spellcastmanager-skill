@@ -1,8 +1,6 @@
 import requests
 import functools
 from src.utils.exceptions.api_not_reachable_error import APINotReachableError
-from src.utils.exceptions.intent_exception import IntentException
-from src.utils.exceptions.invalid_detail_error import InvalidDetailError
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 
@@ -17,7 +15,7 @@ Usage:
 """
 
 
-class Spell_api_wrapper():
+class APIWrapper():
 
     def __init__(self, spell_name_in):
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
