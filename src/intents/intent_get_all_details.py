@@ -1,5 +1,8 @@
 from .intent_base import IntentBase
-from ..response_builders.response_builder_get_spell_description import ResponseBuilderGetSpellDescription
+from ..response_builders.response_builder_get_all_details import ResponseBuilderGetAllDetails
+from ..utils.exceptions.api_not_reachable_error import APINotReachableError
+from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
+from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
 class IntentGetAllDetails(IntentBase):
     def __init__(self):
@@ -24,13 +27,16 @@ class IntentGetAllDetails(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             casting_level_input = self._extract_casting_level(message)
-            self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input, casting_level_input)
+            self._response_builder = ResponseBuilderGetAllDetails(spell_name_input, casting_level_input)
             response = self._response_builder.get_response(requested_details, casting_level_input)
-        except: # api wrapper not reachable
+        except APINotReachableError as err:
+            Spellcastmanager.log.error(err)
             Spellcastmanager.intent.speak_dialog('api.not.reachable.error.dialog')
-        except: # no spell name stated
+        except NoSpellSpecifiedError as err:
+            Spellcastmanager.log.error(err)
             Spellcastmanager.intent.speak_dialog('no.spell.specified.error.dialog')
-        except: # invalid spell name
+        except InvalidSpellError as err:
+            Spellcastmanager.log.error(err)
             Spellcastmanager.intent.speak_dialog('invalid.spell.error.dialog', {'spellname': spell_name_input})
         else:
             Spellcastmanager.intent.speak_dialog('get.all.details.dialog', response)

@@ -1,4 +1,4 @@
-from src.response_builders.get_spell_description import ResponseBuilderGetSpellDescription
+from src.response_builders.response_builder_get_spell_description import ResponseBuilderGetSpellDescription
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 
 
