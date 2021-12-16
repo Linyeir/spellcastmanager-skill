@@ -16,15 +16,21 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
     
         if self._spell.higher_level != 'empty':
             response['higher_level'] = self._spell.higher_level
+        else:
+            response['higher_level'] = 'stays the same'
 
         if self._spell.range != 'empty':
             response['range'] = self._spell.range
 
         if self._spell.components != 'empty':
             response['components'] = self._spell.components
+        else:
+            response['components'] = 'no components'
 
         if self._spell.material != 'empty':
             response['material'] = self._spell.material
+        else: response['material'] = 'no materials'
+
 
         if self._spell.ritual != 'empty':        # what type is ritual?
             if self._spell.ritual is True:
@@ -52,6 +58,8 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
 
         if self._spell.damage_type != 'empty':
             response['damage_type'] = self._spell.damage_type
+        else:
+            response['damage_type'] = 'no type'
             
         if self._spell.damage_at_slot_level != 'empty':
             response['at_casting_level'] = ('damage at spellslot level ' + 
