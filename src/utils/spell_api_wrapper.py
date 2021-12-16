@@ -4,7 +4,7 @@ from src.utils.exceptions.api_not_reachable_error import APINotReachableError
 from src.utils.exceptions.intent_exception import IntentException
 from src.utils.exceptions.invalid_detail_error import InvalidDetailError
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
-from src.utils.exceptions.no_specified_spell_error import NoSpecifiedSpellError
+from src.utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 
 
 """
@@ -22,7 +22,7 @@ class Spell_api_wrapper():
     def __init__(self, spell_name_in):
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
         if spell_name_in is None:
-            raise NoSpecifiedSpellError()
+            raise NoSpellSpecifiedError()
         self._spell_name = spell_name_in.replace(' ', '-')
         if self.api_reachable():
             self._response = self.api_request()

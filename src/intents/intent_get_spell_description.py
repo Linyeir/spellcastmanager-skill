@@ -1,7 +1,7 @@
 from .intent_base import IntentBase
 from .response_builder_get_spell_description import ResponseBuilderGetSpellDescription
 from ..utils.exceptions.api_not_reachable_error import APINotReachableError
-from ..utils.exceptions.no_specified_spell_error import NoSpecifiedSpellError
+from ..utils.exceptions.no_spell_specified_error import NoSpecifiedSpellError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
 class IntentGetSpellDescription(IntentBase):
