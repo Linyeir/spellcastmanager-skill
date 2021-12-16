@@ -36,7 +36,7 @@ class IntentGetAllDetails(IntentBase):
             # Spellcastmanager.speak_dialog('get.all.details.dialog', {'name': response['name'], 
             #                                                                 'desc': response['desc'], 
             #                                                                 'higher_level': response['higher_level'],
-            #                                                                 'range': response['range'],
+            #     -not complete! see list below! (casting level)              'range': response['range'],
             #                                                                 'components': response['components'],
             #                                                                 'material': response['material'],
             #                                                                 'ritual': response['ritual'],
@@ -73,10 +73,9 @@ class IntentGetAllDetails(IntentBase):
 # level
 # attack_type
 # damage_type
-# damage_at_slot_level
-# heal_at_slot_level
-# damage_at_character_level
-# heal_at_character_level
+# at_casting_level
+# min_casting_level
+# max_casting_level
 # dc_type
 # dc_success
 # area_of_effect_type
