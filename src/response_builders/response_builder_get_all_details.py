@@ -12,7 +12,7 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
 
     def get_response(self) -> dict:
 
-        response = {'Name': self._spell.name}
+        response = {'name': self._spell.name}
     
         if self._spell.higher_level != 'empty':
             response['higher_level'] = self._spell.higher_level
