@@ -3,7 +3,7 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details with existing spell
         Given an english speaking user
          When the user says "<request_all_details_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "all.details.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "get.all.details.dialog"
 
     Examples: request all details with existing spell            
         | request_all_details_with_existing_spell                               |
@@ -22,7 +22,7 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details with invalid spell
         Given an english speaking user
          When the user says "<request_all_details_with_invalid_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"
 
     Examples: request all details with invalid spell            
         | request_all_details_with_invalid_spell            |
@@ -41,7 +41,7 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details without stating spell
         Given an english speaking user
          When the user says "<request_all_details_without_stating_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"
     
     Examples: request all details without stating spell
         | request_all_details_without_stating_spell     |
