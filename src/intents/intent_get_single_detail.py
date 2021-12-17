@@ -32,7 +32,7 @@ class IntentGetSingleDetail(IntentBase):
             detail_input = self._extract_detail(message)
             casting_level_input = self._extract_casting_level(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
-            response = self._response_builder.get_response(detail_input, casting_level_input)
+            response = self._response_builder.get_response(self, detail_input, casting_level_input)
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -49,4 +49,5 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
         else:
-            self._call_detail_dialog()
+            self._call_detail_dialog()      # to implement
+

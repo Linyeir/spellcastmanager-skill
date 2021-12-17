@@ -2,13 +2,9 @@ from src.response_builders.response_builder_get_spell_description import Respons
 from src.response_builders.response_builder_get_all_details import ResponseBuilderGetAllDetails
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.spell_categorizer import SpellCategorizer
+from src.response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
 
 
+response = ResponseBuilderGetSingleDetail('fireball')
 
-response = ResponseBuilderGetAllDetails('fireball')
-details = response.get_response()
-
-spell_categorizer = SpellCategorizer(details)
-spell_category = spell_categorizer.get_categorie_from_details()
-print(spell_category)
-
+print(response.get_response('spellname', '3'))
