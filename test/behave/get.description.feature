@@ -5,7 +5,7 @@ Feature: spellcast manager read ruletext
     Scenario Outline: request ruletext with existing spell
         Given an english speaking user
          When the user says "<request_ruletext_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "long.ruletext.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"
 
     Examples: request ruletext with existing spell     
         | request_ruletext_with_existing_spell                          |
@@ -31,7 +31,7 @@ Feature: spellcast manager read ruletext
     Scenario Outline: request ruletext with invalid spells
         Given an english speaking user
          When the user says "<request_ruletext_with_invalid_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"
 
     Examples: request ruletext with invalid spell            
         | request_ruletext_with_invalid_spell          |
@@ -58,7 +58,7 @@ Feature: spellcast manager read ruletext
     Scenario Outline: request ruletext without stating spell
         Given an english speaking user
          When the user says "<request_ruletext_without_stating_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"
 
     Examples: request ruletext without stating spell       
         | request_ruletext_without_stating_spell        |

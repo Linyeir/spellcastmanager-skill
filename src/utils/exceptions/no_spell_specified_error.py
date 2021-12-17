@@ -1,7 +1,7 @@
 from .intent_exception import IntentException
 
 
-class NoSpecifiedSpellError(IntentException):
+class NoSpellSpecifiedError(IntentException):
     """raised when the user does not state a spell name
 
     Attributes:

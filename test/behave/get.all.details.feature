@@ -3,26 +3,26 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details with existing spell
         Given an english speaking user
          When the user says "<request_all_details_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "all.details.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "<get_all_details_dialogs>"
 
     Examples: request all details with existing spell            
-        | request_all_details_with_existing_spell                               |
-        | Give me the details to the spell fireball                             |
-        | Tell me all the details to the spell bless                            |
-        | Read me the details to the spell burning hands                        |
-        | Give me a detailed version of the spell confusion                     |
-        | Tell me the detailed version for the spell create or destroy water    |
-        | Read me the detailed version of the spell darkness                    |
-        | details for the spell guardian of faith                               |
-        | detailed version of the spell gust of wind                            |
-        | detailed version for the spell heal                                   |
+        | request_all_details_with_existing_spell                               | get_all_details_dialogs               |
+        | Give me the details to the spell fireball                             | get.all.details.category.4.dialog     |
+        | Tell me all the details to the spell bless                            | get.all.details.category.15.dialog    |
+        | Read me the details to the spell burning hands                        | get.all.details.category.4.dialog     |
+        | Give me a detailed version of the spell confusion                     | get.all.details.category.12.dialog    |
+        | Tell me the detailed version for the spell create or destroy water    | get.all.details.category.13.dialog    |
+        | Read me the detailed version of the spell darkness                    | get.all.details.category.13.dialog    |
+        | details for the spell guardian of faith                               | get.all.details.category.4.dialog     |
+        | detailed version of the spell gust of wind                            | get.all.details.category.12.dialog    |
+        | detailed version for the spell heal                                   | get.all.details.category.7.dialog     |
 
 
 
     Scenario Outline: request all details with invalid spell
         Given an english speaking user
          When the user says "<request_all_details_with_invalid_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.invalid.spell.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"
 
     Examples: request all details with invalid spell            
         | request_all_details_with_invalid_spell            |
@@ -41,7 +41,7 @@ Feature: spellcast manager read all details
     Scenario Outline: request all details without stating spell
         Given an english speaking user
          When the user says "<request_all_details_without_stating_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "ruletext.fallback.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"
     
     Examples: request all details without stating spell
         | request_all_details_without_stating_spell     |

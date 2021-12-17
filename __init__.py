@@ -1,8 +1,8 @@
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
-from .src.intents.read_full_ruletext import _read_full_ruletext
-from .src.intents.read_all_details import _read_all_details
+from .src.intents.intent_get_spell_description import IntentGetSpellDescription
+from .src.intents.intent_get_all_details import IntentGetAllDetails
 
 
 class Spellcastmanager(MycroftSkill):
@@ -25,21 +25,23 @@ class Spellcastmanager(MycroftSkill):
         self.speak_dialog('spellcastmanager')
 
     # reads the full ruletext to user
-    @intent_handler(IntentBuilder('readFullRuletext')
+    @intent_handler(IntentBuilder('getSpellDescription')
         .require('theSpell')
         .one_of('ruletext', 'description', 'explanation', 'what', 'tellMeAbout')
         .optionally('spellname'))
-    def handle_read_full_ruletext(self, message):
-        _read_full_ruletext(self, message)
+    def handle_get_spell_description(self, message):
+        intent = IntentGetSpellDescription()
+        intent.execute(self, message)
 
     # reads all details of spell to user
-    @intent_handler(IntentBuilder('readAllDetails')
+    @intent_handler(IntentBuilder('getAllDetails')
         .optionally('spellname')
         .require('detail')
         .require('theSpell')
         )
-    def handle_read_all_details(self, message):
-        _read_all_details(self, message)
+    def handle_get_all_details(self, message):
+        intent = IntentGetAllDetails()
+        intent.execute(self, message)
 
     def stop(self):
         pass
@@ -47,16 +49,3 @@ class Spellcastmanager(MycroftSkill):
 
 def create_skill():
     return Spellcastmanager()
-
-
-"""
-        | Give me the details to the spell fireball                             |
-        | Tell me all the details to the spell bless                            |
-        | Read me the details to the spell burning hands                        |
-        | Give me a detailed version of the spell confusion                     |
-        | Tell me the detailed version for the spell create or destroy water    |
-        | Read me the detailed version of the spell darkness                    |
-        | details for the spell guardian of faith                               |
-        | detailed version of the spell gust of wind                            |
-        | detailed version for the spell heal                                   |
-"""

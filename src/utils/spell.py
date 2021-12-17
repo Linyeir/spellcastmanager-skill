@@ -1,13 +1,13 @@
-from .spell_api_wrapper import Spell_api_wrapper
+from .api_wrapper import APIWrapper
 
 """
 If instantiated with a valid spellname, this class provides an easy way to access the spells details.
 """
 
 
-class Spell_class():
+class Spell():
     def __init__(self, spell_name_in) -> None:
-        self._api = Spell_api_wrapper(spell_name_in)
+        self._api = APIWrapper(spell_name_in)
         self._fill_attributes()
 
     """
@@ -101,7 +101,7 @@ class Spell_class():
     @components.setter
     def components(self, value):
         if value != 'empty':
-            new_value = []
+            new_value = ''
             for entry in value:
                 if entry == 'V':
                     new_entry = entry.replace('V', 'verbal')
@@ -112,10 +112,10 @@ class Spell_class():
                 if entry == 'M':
                     new_entry = entry.replace('M', 'material')
 
-                new_value.append(new_entry)
+                new_value = new_value + new_entry + ' '
             self._components = new_value
         else:
-            self._components = ['empty']
+            self._components = 'empty'
 
     # string
 
