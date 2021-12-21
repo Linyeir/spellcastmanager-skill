@@ -20,7 +20,7 @@ class IntentGetSingleDetail(IntentBase):
     def _extract_casting_level(message):
        casting_level_input = message.data.get('casting_level')
        if casting_level_input == None:
-           casting_level_input == 'default'
+           casting_level_input == 'min'
        return casting_level_input
 
     def _call_detail_dialog():
