@@ -7,4 +7,6 @@ from src.response_builders.response_builder_get_single_detail import ResponseBui
 
 response = ResponseBuilderGetSingleDetail('fireball')
 
-print(response.get_response('spellname', '3'))
+detail = response.get_response('range', '3')
+
+print(detail)
