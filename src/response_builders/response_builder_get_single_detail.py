@@ -11,17 +11,20 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         self._spell = Spell(spell_name)
 
     def _get_damage_healing_at_casting_level(self, attribute_type, attribute_dict, casting_level):
+        res = {}
         first_key = list(attribute_dict.keys())[0]
         last_key = list(attribute_dict.keys())[-1]
+
+        if casting_level < first_key or casting_level > last_key:
+            res = {'validity': 'invalid casting level'}
+
         if casting_level < first_key or casting_level == 'min':
             casting_level = first_key
         elif casting_level > last_key or casting_level == 'max':
             casting_level = last_key
 
-        res = {attribute_type: attribute_dict[casting_level], 'at_casting_level': casting_level}
-
-        if casting_level < first_key or casting_level > last_key:
-            res['validity'] = 'invalid casting level'
+        res[attribute_type] = attribute_dict[casting_level]
+        res['at_casting_level'] = casting_level
         
         return res
 
@@ -46,7 +49,8 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
     # definitely to refactor!
     # for now:
     # expecting almost explizit detail name
-    def get_response(self, detail: str, casting_level: str) -> dict:
+    def get_response(self, detail, casting_level = 'min'):
+        response = 'empty'
         if 'name' in detail:
             response = {'name': self._spell.name}
         if 'desc' in detail:
@@ -91,22 +95,22 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         if 'damage' in detail and 'slot' in detail:
             if self._spell.damage_at_slot_level != 'empty':
                 attribute_type = 'damage_at_slot_level'
-                response = self._get_damage_healing_at_casting_level(self, attribute_type, self._spell.damage_at_slot_level, casting_level)
+                response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.damage_at_slot_level, casting_level)
 
         if 'damage' in detail and 'character' in detail:
             if self._spell.damage_at_character_level != 'empty':
                 attribute_type = 'damage_at_character_level'
-                response = self._get_damage_healing_at_casting_level(self, attribute_type, self._spell.damage_at_character_level, casting_level)
+                response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.damage_at_character_level, casting_level)
 
         if 'heal' in detail and 'slot' in detail:
             if self._spell.heal_at_slot_level != 'empty':
                 attribute_type = 'heal_at_slot_level'
-                response = self._get_damage_healing_at_casting_level(self, attribute_type, self._spell.heal_at_slot_level, casting_level)
+                response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.heal_at_slot_level, casting_level)
 
         if 'heal' in detail and 'character' in detail:
             if self._spell.heal_at_character_level != 'empty':
                 attribute_type = 'heal_at_character_level'
-                response = self._get_damage_healing_at_casting_level(self, attribute_type, self._spell.heal_at_character_level, casting_level)
+                response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.heal_at_character_level, casting_level)
 
         if 'min' in detail and 'level' in detail:
             casting_level = 'min_casting_level'
