@@ -4,11 +4,14 @@ from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.spell_categorizer import SpellCategorizer
 from src.response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
 
-# noch abzufangen: slot/character level mittendrin aber ungültig
+# fireball - damage_slot - 3-9
+# eldritch blast - damage_character - 1,5,11,17
+# cure-wounds - heal_slot - 1-9
+# alarm - no higher level - ritual true
 
-response = ResponseBuilderGetSingleDetail('fireball')
+response = ResponseBuilderGetSingleDetail('cure wounds')
 
-detail = response.get_response('school')
+detail = response.get_response('heal slot', 10)
 
 print(detail)
 

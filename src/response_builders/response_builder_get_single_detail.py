@@ -13,15 +13,13 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
     def _get_damage_healing_at_casting_level(self, attribute_type, attribute_dict, casting_level):
         res = {}
         first_key = list(attribute_dict.keys())[0]
-        last_key = list(attribute_dict.keys())[-1]
+        casting_level = str(casting_level)
 
-        if casting_level < first_key or casting_level > last_key:
+        if casting_level not in list(attribute_dict.keys()) and casting_level != 'min':
             res = {'validity': 'invalid casting level'}
 
-        if casting_level < first_key or casting_level == 'min':
+        if casting_level == 'min' or casting_level not in list(attribute_dict.keys()):
             casting_level = first_key
-        elif casting_level > last_key or casting_level == 'max':
-            casting_level = last_key
 
         res[attribute_type] = attribute_dict[casting_level]
         res['at_casting_level'] = casting_level
@@ -56,30 +54,33 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         if 'desc' in detail:
             response = {'desc': self._spell.desc}
         if 'high' in detail:
-            response = {'higher_level': self._spell.higher_level}
-            if response == 'empty':
+            if self._spell.higher_level == 'empty':
                 response = {'higher_level': 'stays the same'}
+            else:
+                response = {'higher_level': self._spell.higher_level}
         if 'range' in detail:
             response = {'range': self._spell.range}
         if 'component' in detail:
-            response = {'components': self._spell.components}
-            if response == 'empty':
+            if self._spell.components == 'empty':
                 response = {'components': 'no components'}
+            else:
+                response = {'components': self._spell.components}
         if 'material' in detail:
-            response = {'material': self._spell.material}
-            if response == 'empty':
+            if self._spell.material == 'empty':
                 response = {'material': 'no material'}
+            else:
+                response = {'material': self._spell.material}
         if 'ritual' in detail:
             if self._spell.ritual == True:    
                 response = {'ritual': 'a ritual'}
-            if self._spell.ritual == False:
+            elif self._spell.ritual == False:
                 response = {'ritual': 'not a ritual'}
         if 'duration' in detail:
             response = {'duration': self._spell.duration}
         if 'concent' in detail:
             if self._spell.concentration == True:
                 response = {'concentration': 'concentration'}
-            if self._spell.concentration == False:
+            elif self._spell.concentration == False:
                 response = {'concentration': 'no concentration'}
         if 'time' in detail:
             response = {'casting_time': self._spell.casting_time}
@@ -88,10 +89,11 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         if 'attack' in detail:
             response = {'attack_type': self._spell.attack_type}
         if 'damage' in detail and 'type' in detail:
-            response = {'damage_type': self._spell.damage_type}
-            if response == 'empty':
+            if self._spell.damage_type == 'empty':
                 response = {'damage_type': 'no type'}
-
+            else:
+                response = {'damage_type': self._spell.damage_type}
+            
         if 'damage' in detail and 'slot' in detail:
             if self._spell.damage_at_slot_level != 'empty':
                 attribute_type = 'damage_at_slot_level'
