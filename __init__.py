@@ -1,8 +1,10 @@
+from typing import Optional
 from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
 from .src.intents.intent_get_spell_description import IntentGetSpellDescription
 from .src.intents.intent_get_all_details import IntentGetAllDetails
+from .src.intents.intent_get_single_detail import IntentGetSingleDetail
 
 
 class Spellcastmanager(MycroftSkill):
@@ -42,6 +44,21 @@ class Spellcastmanager(MycroftSkill):
     def handle_get_all_details(self, message):
         intent = IntentGetAllDetails()
         intent.execute(self, message)
+
+    # reads one detail of spell to user
+    # For now: Which 'range' does the spell 'fireball' have
+    #           Is the spell 'alarm' a 'ritual'
+    #           What damage does the spell 'eldritch blast' at character level '1'
+    @intent_handler(IntentBuilder('getSingleDetail')
+        .optionally('spellname')
+        .optionally('single_detail')
+        .optionally('casting_level')
+        .require('doesTheSpell')
+        )
+    def handle_get_single_detail(self, message):
+        intent = IntentGetSingleDetail()
+        intent.execute(self, message)
+    
 
     def stop(self):
         pass
