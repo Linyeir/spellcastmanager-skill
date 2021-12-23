@@ -136,6 +136,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         if response == 'empty':
             raise InvalidDetailError(detail)
 
+        response['name'] = self._spell.name
         return response
 
             #dont forget generic: damage, dice, healing effect, casting level   -> maybe
@@ -153,7 +154,10 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
 # level
 # attack_type
 # damage_type
-# at_casting_level
+# damage_slot
+# damage_character
+# heal_slot
+# heal_character
 # min_casting_level
 # max_casting_level
 # dc_type

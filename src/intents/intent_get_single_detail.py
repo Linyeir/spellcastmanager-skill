@@ -25,7 +25,8 @@ class IntentGetSingleDetail(IntentBase):
        return casting_level_input
 
     def _call_detail_dialog(self, response):
-        pass
+
+        
 
     def execute(self, Spellcastmanager, message):
         try:

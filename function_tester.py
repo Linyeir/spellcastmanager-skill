@@ -11,7 +11,7 @@ from src.response_builders.response_builder_get_single_detail import ResponseBui
 
 response = ResponseBuilderGetSingleDetail('cure wounds')
 
-detail = response.get_response('heal slot', 10)
+detail = response.get_response('name', 10)
 
 print(detail)
 
