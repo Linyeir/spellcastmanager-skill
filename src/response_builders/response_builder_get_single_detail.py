@@ -16,7 +16,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         casting_level = str(casting_level)
 
         if casting_level not in list(attribute_dict.keys()) and casting_level != 'min':
-            res = {'validity': 'invalid casting level'}
+            res = {'invalid_level': 'invalid casting level'}
 
         if casting_level == 'min' or casting_level not in list(attribute_dict.keys()):
             casting_level = first_key

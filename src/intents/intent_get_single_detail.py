@@ -7,7 +7,6 @@ from ..utils.exceptions.no_detail_specified_error import NoDetailSpecifiedError
 from ..utils.exceptions.invalid_detail_error import InvalidDetailError
 
 
-
 class IntentGetSingleDetail(IntentBase):
     def __init__(self):
         pass
@@ -24,8 +23,21 @@ class IntentGetSingleDetail(IntentBase):
            casting_level_input == 'min'
        return casting_level_input
 
-    def _call_detail_dialog(self, response):
+    def _call_detail_dialog(self, Spellcastmanager, response):
 
+        # min max vorher abfangen
+        # andere außnahmen?
+
+        key = list(response.key())[1]
+
+        dialog = 'get.single.detail.' + key
+
+        Spellcastmanager.speak_dialog(dialog)
+
+        if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
+            key = list(response.key())[2]
+            dialog = 'get.single.detail.' + key
+            Spellcastmanager.speak_dialog(dialog)
         
 
     def execute(self, Spellcastmanager, message):
@@ -51,5 +63,5 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
         else:
-            self._call_detail_dialog(self, response)      # to implement
+            self._call_detail_dialog(self, Spellcastmanager, response)
 
