@@ -32,12 +32,12 @@ class IntentGetSingleDetail(IntentBase):
 
         dialog = 'get.single.detail.' + key
 
-        Spellcastmanager.speak_dialog(dialog)
+        Spellcastmanager.speak_dialog(dialog, response)
 
         if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
             key = list(response.key())[2]
             dialog = 'get.single.detail.' + key
-            Spellcastmanager.speak_dialog(dialog)
+            Spellcastmanager.speak_dialog(dialog, response)
         
 
     def execute(self, Spellcastmanager, message):

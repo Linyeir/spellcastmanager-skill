@@ -1,0 +1,3 @@
+.*(what | which) (?P<single_detail>.*)
+.* is a (?P<single_detail>.*)
+.* the (^spell) (?P<single_detail>.*)

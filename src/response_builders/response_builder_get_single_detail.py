@@ -45,7 +45,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         return res
 
     # definitely to refactor!
-    # for now:
+    # for now: 
     # expecting almost explizit detail name
     def get_response(self, detail, casting_level = 'min'):
         response = 'empty'

@@ -46,19 +46,43 @@ class Spellcastmanager(MycroftSkill):
         intent.execute(self, message)
 
     # reads one detail of spell to user
-    # For now: Which 'range' does the spell 'fireball' have
+    # For now:  Which 'range' does the spell 'fireball' have
     #           Is the spell 'alarm' a 'ritual'
-    #           What damage does the spell 'eldritch blast' at character level '1'
+    #           What 'damage' does the spell 'eldritch blast' at character level '1'
     @intent_handler(IntentBuilder('getSingleDetail')
         .optionally('spellname')
-        .optionally('single_detail')
-        .optionally('casting_level')
+        .optionally('single_detail')    #rx
+        .optionally('casting_level')    #rx
         .require('doesTheSpell')
         )
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
         intent.execute(self, message)
-    
+
+# name
+# desc
+# higher_level
+# range
+# components
+# material
+# ritual
+# duration
+# concentration
+# casting_time
+# level
+# attack_type
+# damage_type
+# damage_slot
+# damage_character
+# heal_slot
+# heal_character
+# min_casting_level
+# max_casting_level
+# dc_type
+# dc_success
+# area_of_effect_type
+# area_of_effect_size
+# school
 
     def stop(self):
         pass
