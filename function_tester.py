@@ -9,9 +9,9 @@ from src.response_builders.response_builder_get_single_detail import ResponseBui
 # cure-wounds - heal_slot - 1-9
 # alarm - no higher level - ritual true
 
-response = ResponseBuilderGetSingleDetail('cure wounds')
+response = ResponseBuilderGetSingleDetail('heal')
 
-detail = response.get_response('name', 10)
+detail = response.get_response('heal slot', 6)
 
 print(detail)
 

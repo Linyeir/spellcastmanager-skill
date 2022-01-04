@@ -11,13 +11,13 @@ class IntentGetSingleDetail(IntentBase):
     def __init__(self):
         pass
 
-    def _extract_detail(message):
-        detail_input = message.data.get('detail')
+    def _extract_detail(self, message):
+        detail_input = message.data.get('single_detail')
         if detail_input == None:
             raise NoDetailSpecifiedError
         return detail_input
 
-    def _extract_casting_level(message):
+    def _extract_casting_level(self, message):
        casting_level_input = message.data.get('casting_level')
        if casting_level_input == None:
            casting_level_input == 'min'
