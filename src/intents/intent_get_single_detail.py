@@ -11,8 +11,8 @@ class IntentGetSingleDetail(IntentBase):
     def __init__(self):
         pass
 
-    def _detail_validation(Spellcastmanager, response):  #or self
-        pass
+    def _detail_validation(Spellcastmanager, response, rp):  #or self
+        rp.detail_validation()
 
     def _extract_detail(self, message):
         detail_input = message.data.get('single_detail')
@@ -47,7 +47,7 @@ class IntentGetSingleDetail(IntentBase):
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
                             # extracting detail like in message?
-            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input}, validator=self._detail_validation, on_fail='invalid.detail.error', num_retries=2)      
+            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input}, validator=self._detail_validation(self._response_builder), on_fail='invalid.detail.error', num_retries=2)      
 
 
         except APINotReachableError as err:
