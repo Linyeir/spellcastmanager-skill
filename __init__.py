@@ -55,7 +55,7 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('getSingleDetail')
         .optionally('spellname')
         .require('theSpell')
-        .require('wantInformation')
+        .require('wantInformation')     #to change
         )
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
