@@ -104,6 +104,14 @@ class IntentGetSingleDetail(IntentBase):
         return response
 
 
+    # validator check mit liste -> valides detail? nicht auf spell zugeschnitten!
+    # voc file? handler?
+    # getting response
+    # dann prüfen, ob für spell existiert
+        # if not , erneut get_response
+
+
+
     def _extract_detail(self, message):
         detail_input = message.data.get('single_detail')
         if detail_input == None:
