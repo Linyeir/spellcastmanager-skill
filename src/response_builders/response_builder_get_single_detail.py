@@ -150,8 +150,8 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
             response = {'school': self._spell.school}
         
         else:
-            response == 'empty'
-            raise InvalidDetailError(detail)
+            return response
+            # raise InvalidDetailError(detail)
 
         response['name'] = self._spell.name
         return response

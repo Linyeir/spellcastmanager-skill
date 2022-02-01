@@ -44,15 +44,13 @@ class IntentGetSingleDetail(IntentBase):
             except NoDetailSpecifiedError as err:
                 Spellcastmanager.log.error(err)
                 Spellcastmanager.speak_dialog('no.detail.specified.error')
-                Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
-                retry_counter = retry_counter + 1
             except InvalidDetailError as err:
                 Spellcastmanager.log.error(err)
                 Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
-                Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
-                retry_counter = retry_counter + 1
+#                Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
+#                retry_counter = retry_counter + 1
             else:
-                response_valid == True
+#                response_valid == True
 
     def _fetch_casting_level(self, Spellcastmanager, detail):
         if self._casting_level_is_needed(detail):
