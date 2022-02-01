@@ -50,7 +50,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
     def get_response(self, detail, casting_level = 'min'):
         response = 'empty'
         if detail == 'name':
-            response = {'dummy_name': self._spell.name}
+            response = {'name': self._spell.name}
 
         elif detail =='desc':
             response = {'desc': self._spell.desc}

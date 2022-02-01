@@ -19,7 +19,6 @@ class IntentGetSingleDetail(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
-
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -32,34 +31,41 @@ class IntentGetSingleDetail(IntentBase):
         else:
             self._call_detail_dialog(self, Spellcastmanager, self._api_response)
 
+        retry_counter = 0
+        response_valid = False
 
-        try:
-                            # extracting detail like in message?
-            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
-            detail = self._normalize_detail(detail_input)
-            
-            self._api_response = self._response_builder.get_response(detail)     #casting level?
-        except NoDetailSpecifiedError as err:
-            Spellcastmanager.log.error(err)
-            Spellcastmanager.speak_dialog('no.detail.specified.error')
-        except InvalidDetailError as err:
-            Spellcastmanager.log.error(err)
-            Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
+        while response_valid == False and retry_counter < 3:
+            try:
+                detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+                detail = self._normalize_detail(detail_input)
+                casting_level = self._fetch_casting_level(Spellcastmanager, detail)
+                self._api_response = self._response_builder.get_response(detail, casting_level)     #casting level?
 
+            except NoDetailSpecifiedError as err:
+                Spellcastmanager.log.error(err)
+                Spellcastmanager.speak_dialog('no.detail.specified.error')
+                Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
+                retry_counter = retry_counter + 1
+            except InvalidDetailError as err:
+                Spellcastmanager.log.error(err)
+                Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
+                Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
+                retry_counter = retry_counter + 1
+            else:
+                response_valid == True
 
-    def _extract_detail(self, message):
-        detail_input = message.data.get('single_detail')
-        if detail_input == None:
-            raise NoDetailSpecifiedError
-        return detail_input
+    def _fetch_casting_level(self, Spellcastmanager, detail):
+        if self._casting_level_is_needed(detail):
+            return Spellcastmanager.get_response('get.single.detail.casting_level')        #validation? probabaly not cause min/max
+        else:
+            return 'min'
 
-
-    def _extract_casting_level(self, message):
-       casting_level_input = message.data.get('casting_level')
-       if casting_level_input == None:
-           casting_level_input == 'min'
-       return casting_level_input
-
+    def _casting_level_is_needed(self, detail):
+        attributes_with_casting_level = ['damage_at_slot_level', 'damage_at_character_level', 'heal_at_slot_level', 'heal_at_character_level']
+        for entry in attributes_with_casting_level:
+            if detail == entry:
+                return True
+        return False
 
     def _call_detail_dialog(self, Spellcastmanager, response):
         # min max vorher abfangen
@@ -77,6 +83,8 @@ class IntentGetSingleDetail(IntentBase):
 
         
     def _normalize_detail(self, Spellcastmanager, detail_input):
+        if detail_input == None:
+            raise NoDetailSpecifiedError
         if Spellcastmanager.voc_match(detail_input, 'valid_attributes'):
             attribute = self._detail_normalizer.match_spoken_detail_to_attribute(detail_input)
         else:
