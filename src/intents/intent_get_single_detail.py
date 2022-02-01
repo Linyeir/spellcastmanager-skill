@@ -1,5 +1,8 @@
+from pickle import TRUE
+from turtle import setundobuffer
 from .intent_base import IntentBase
 from ..response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
+from ..utils.detail_normalizer import DetailNormalizer
 from ..utils.exceptions.api_not_reachable_error import APINotReachableError
 from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
@@ -9,52 +12,13 @@ from ..utils.exceptions.invalid_detail_error import InvalidDetailError
 
 class IntentGetSingleDetail(IntentBase):
     def __init__(self):
-        pass
-
-    def _detail_validation(self, response, Spellcastmanager, rp):  #or self
-        pass
-    # validator check mit liste -> valides detail? nicht auf spell zugeschnitten!
-    # voc file? handler?
-    # getting response
-    # dann prüfen, ob für spell existiert
-        # if not , erneut get_response
+        self._detail_normalizer = DetailNormalizer()
 
 
-    def _extract_detail(self, message):
-        detail_input = message.data.get('single_detail')
-        if detail_input == None:
-            raise NoDetailSpecifiedError
-        return detail_input
-
-    def _extract_casting_level(self, message):
-       casting_level_input = message.data.get('casting_level')
-       if casting_level_input == None:
-           casting_level_input == 'min'
-       return casting_level_input
-
-    def _call_detail_dialog(self, Spellcastmanager, response):
-
-        # min max vorher abfangen
-        # andere außnahmen?
-        key = list(response.key())[1]
-
-        dialog = 'get.single.detail.' + key
-
-        Spellcastmanager.speak_dialog(dialog, response)
-
-        if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
-            key = list(response.key())[2]
-            dialog = 'get.single.detail.' + key
-            Spellcastmanager.speak_dialog(dialog, response)
-        
     def execute(self, Spellcastmanager, message):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
-                            # extracting detail like in message?
-            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input}, validator=self._detail_validation(Spellcastmanager,self._response_builder), on_fail='invalid.detail.error', num_retries=2)
-            response = self._response_builder.get_response(detail_input)     #casting level?
-
 
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
@@ -66,8 +30,59 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
         else:
-            self._call_detail_dialog(self, Spellcastmanager, response)
+            self._call_detail_dialog(self, Spellcastmanager, self._api_response)
 
+
+        try:
+                            # extracting detail like in message?
+            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+            detail = self._normalize_detail(detail_input)
+            
+            self._api_response = self._response_builder.get_response(detail)     #casting level?
+        except NoDetailSpecifiedError as err:
+            Spellcastmanager.log.error(err)
+            Spellcastmanager.speak_dialog('no.detail.specified.error')
+        except InvalidDetailError as err:
+            Spellcastmanager.log.error(err)
+            Spellcastmanager.speak_dialog('invalid.detail.error', {'detail': detail_input})
+
+
+    def _extract_detail(self, message):
+        detail_input = message.data.get('single_detail')
+        if detail_input == None:
+            raise NoDetailSpecifiedError
+        return detail_input
+
+
+    def _extract_casting_level(self, message):
+       casting_level_input = message.data.get('casting_level')
+       if casting_level_input == None:
+           casting_level_input == 'min'
+       return casting_level_input
+
+
+    def _call_detail_dialog(self, Spellcastmanager, response):
+        # min max vorher abfangen
+        # andere außnahmen?
+        key = list(response.key())[0]
+
+        dialog_file_name = 'get.single.detail.' + key
+
+        Spellcastmanager.speak_dialog(dialog_file_name, response)
+
+        if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
+            key = list(response.key())[1]
+            dialog_file_name = 'get.single.detail.' + key
+            Spellcastmanager.speak_dialog(dialog_file_name, response)
+
+        
+    def _normalize_detail(self, Spellcastmanager, detail_input):
+        if Spellcastmanager.voc_match(detail_input, 'valid_attributes'):
+            attribute = self._detail_normalizer.match_spoken_detail_to_attribute(detail_input)
+        else:
+            raise InvalidDetailError
+
+        return attribute
 
 
 # validation: does detail input exist for this spell? (not empty where it matters)

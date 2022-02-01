@@ -46,98 +46,117 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
 
     # definitely to refactor!
     # for now: 
-    # expecting almost explizit detail name
+    # expecting almost explicit detail name
     def get_response(self, detail, casting_level = 'min'):
         response = 'empty'
-        if 'name' in detail:
-            response = {'name': self._spell.name}
-        if 'desc' in detail:
+        if detail == 'name':
+            response = {'dummy_name': self._spell.name}
+
+        elif detail =='desc':
             response = {'desc': self._spell.desc}
-        if 'high' in detail:
+
+        elif detail == 'higher_level':
             if self._spell.higher_level == 'empty':
                 response = {'higher_level': 'stays the same'}
             else:
                 response = {'higher_level': self._spell.higher_level}
-        if 'range' in detail:
+
+        elif detail == 'range':
             response = {'range': self._spell.range}
-        if 'component' in detail:
+
+        elif detail == 'component':
             if self._spell.components == 'empty':
                 response = {'components': 'no components'}
             else:
                 response = {'components': self._spell.components}
-        if 'material' in detail:
+
+        elif detail == 'material':
             if self._spell.material == 'empty':
                 response = {'material': 'no material'}
             else:
                 response = {'material': self._spell.material}
-        if 'ritual' in detail:
+
+        elif detail == 'ritual':
             if self._spell.ritual == True:    
                 response = {'ritual': 'a ritual'}
             elif self._spell.ritual == False:
                 response = {'ritual': 'not a ritual'}
-        if 'duration' in detail:
+
+        elif detail == 'duration':
             response = {'duration': self._spell.duration}
-        if 'concent' in detail:
+
+        elif detail == 'concentration':
             if self._spell.concentration == True:
                 response = {'concentration': 'concentration'}
             elif self._spell.concentration == False:
                 response = {'concentration': 'no concentration'}
-        if 'time' in detail:
+
+        elif detail == 'casting_time':
             response = {'casting_time': self._spell.casting_time}
-        if 'level' == detail:
+
+        elif detail == 'level':
             response = {'level': self._spell.level}
-        if 'attack' in detail:
+
+        elif detail == 'attack_type':
             response = {'attack_type': self._spell.attack_type}
-        if 'damage' in detail and 'type' in detail:
+
+        elif detail == 'damage_type':
             if self._spell.damage_type == 'empty':
                 response = {'damage_type': 'no type'}
             else:
                 response = {'damage_type': self._spell.damage_type}
             
-        if 'damage' in detail and 'slot' in detail:
+        elif detail == 'damage_at_slot_level':
             if self._spell.damage_at_slot_level != 'empty':
                 attribute_type = 'damage_at_slot_level'
                 response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.damage_at_slot_level, casting_level)
 
-        if 'damage' in detail and 'character' in detail:
+        elif detail == 'damage_at_character_level':
             if self._spell.damage_at_character_level != 'empty':
                 attribute_type = 'damage_at_character_level'
                 response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.damage_at_character_level, casting_level)
 
-        if 'heal' in detail and 'slot' in detail:
+        elif detail == 'heal_at_slot_level':
             if self._spell.heal_at_slot_level != 'empty':
                 attribute_type = 'heal_at_slot_level'
                 response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.heal_at_slot_level, casting_level)
 
-        if 'heal' in detail and 'character' in detail:
+        elif detail == 'heal_at_character_level':
             if self._spell.heal_at_character_level != 'empty':
                 attribute_type = 'heal_at_character_level'
                 response = self._get_damage_healing_at_casting_level(attribute_type, self._spell.heal_at_character_level, casting_level)
 
-        if 'min' in detail and 'level' in detail:
+        elif detail == 'min_casting_level':
             casting_level = 'min_casting_level'
             response = self._get_casting_min_max_dict(casting_level)
 
-        if 'max' in detail and 'level' in detail:
+        elif detail == 'max_casting_level':
             casting_level = 'max_casting_level'
             response = self._get_casting_min_max_dict(casting_level)
 
-        if 'type' in detail and ('dc' in detail or 'difficulty class' in detail or 'saving throw' in detail):
+        elif detail == 'dc_type':
             response = {'dc_type': self._spell.dc_type}
-        if 'success' in detail and ('dc' in detail or 'difficulty class' in detail or 'saving throw' in detail):
+
+        elif detail == 'dc_success':
             response = {'dc_success': self._spell.dc_success}
-        if 'area' in detail and 'type' in detail:
+
+        elif detail == 'area_of_effect_type':
             response = {'area_of_effect_type': self._spell.area_of_effect_type}
-        if 'area' in detail and 'size' in detail:
+
+        elif detail == 'area_of_effect_size':
             response = {'area_of_effect_size': self._spell.area_of_effect_size}
-        if 'school' in detail:
+
+        elif detail == 'school':
             response = {'school': self._spell.school}
         
-        if response == 'empty':
+        else:
+            response == 'empty'
             raise InvalidDetailError(detail)
 
         response['name'] = self._spell.name
         return response
+    
+
 
             #dont forget generic: damage, dice, healing effect, casting level   -> maybe
 
