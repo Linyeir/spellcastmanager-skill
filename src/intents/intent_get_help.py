@@ -6,6 +6,9 @@ class IntentGetHelp(IntentBase):
         pass
 
     def execute(self, Spellcastmanager, message):
+
+        Spellcastmanager.gui.show_image("https://github.com/Linyeir/spellcastmanager-skill/blob/feature_gui/src/icon.png")
+
         terminate_help = False;
         Spellcastmanager.speak_dialog('help.get')
 
