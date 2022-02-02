@@ -1,14 +1,19 @@
-from src.response_builders.response_builder_get_spell_description import ResponseBuilderGetSpellDescription
+from mycroft.util.parse import extract_number
+import lingua_franca
+from src.response_builders.response_builder_invoke_casting_assistant import ResponseBuilderInvokeCastingAssistant
 from src.response_builders.response_builder_get_all_details import ResponseBuilderGetAllDetails
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.spell_categorizer import SpellCategorizer
 
 
+def testo(input):
+    if input == 1:
+        return input
+    else:
+        return False
 
-response = ResponseBuilderGetAllDetails('fireball')
-details = response.get_response()
-
-spell_categorizer = SpellCategorizer(details)
-spell_category = spell_categorizer.get_categorie_from_details()
-print(spell_category)
+if (testo(0) != False):
+    print(testo(1))
+else:
+    print(testo(0))
 

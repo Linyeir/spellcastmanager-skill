@@ -1,0 +1,2 @@
+you heal your targets in a {aoe_size} {aoe_type} for {value} hit points
+your targets in {aoe_type} of {aoe_size} regain {value} hit points
