@@ -16,11 +16,10 @@ class IntentGetSingleDetail(IntentBase):
 
 
     def execute(self, Spellcastmanager, message):
-        exception_was_raised = True
-
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
+            self._fetch_detail(Spellcastmanager, spell_name_input)
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -30,15 +29,27 @@ class IntentGetSingleDetail(IntentBase):
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
-        else:
-            exception_was_raised = False
 
-        if exception_was_raised:
-            return
-
+        
+    def _fetch_detail(self, Spellcastmanager, spell_name_input):
         retry_counter = 0
         response_valid = False
         while response_valid == False and retry_counter < 3:
+            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+            detail = self._normalize_detail(detail_input)
+            if detail == 'empty':
+                retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
+                return
+            casting_level = self._fetch_casting_level(Spellcastmanager, detail)
+            self._api_response = self._response_builder.get_response(detail, casting_level)
+            if detail == 'empty':
+                retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
+                return
+            response_valid = True
+            
+            
+            
+            '''
             try:
                 detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
                 detail = self._normalize_detail(detail_input)
@@ -57,7 +68,12 @@ class IntentGetSingleDetail(IntentBase):
                 else:
                     response_valid = True
                     self._call_detail_dialog(self, Spellcastmanager, self._api_response)
-
+            '''
+            
+    def _speak_error_message(self, Spellcastmanager, retry_counter): 
+        Spellcastmanager.speak_dialog('invalid.detail.error')
+        Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
+        return retry_counter + 1
 
     def _fetch_casting_level(self, Spellcastmanager, detail):
         if self._casting_level_is_needed(detail):
@@ -93,6 +109,6 @@ class IntentGetSingleDetail(IntentBase):
         if Spellcastmanager.voc_match(detail_input, 'valid_attributes'):
             attribute = self._detail_normalizer.match_spoken_detail_to_attribute(detail_input)
         else:
-            raise InvalidDetailError
+            return 'empty'
 
         return attribute

@@ -41,7 +41,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         elif self._spell.heal_at_character_level != 'empty':
             res = {casting_level: list(self._spell.heal_at_character_level.keys())[index], 'type': 'character level'}
         else:
-            raise InvalidDetailError(casting_level)
+            return 'empty'
         return res
 
     # definitely to refactor!
@@ -151,7 +151,9 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         
         else:
             return response
-            # raise InvalidDetailError(detail)
+
+        if response == 'emtpy':
+            return response
 
         response['name'] = self._spell.name
         return response
