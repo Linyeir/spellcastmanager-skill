@@ -11,7 +11,7 @@ from src.response_builders.response_builder_get_single_detail import ResponseBui
 
 response = ResponseBuilderGetSingleDetail('fireball')
 
-detail = response.get_response('damage_at_slot_level', 0)
+detail = response.get_response('damage_at_character_level', 3)
 
 print(detail)
 

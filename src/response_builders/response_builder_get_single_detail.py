@@ -10,21 +10,22 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
             raise NoSpellSpecifiedError()
         self._spell = Spell(spell_name)
 
+    # determines if the casting level is in range, if not the function returns a dict with 'invalid level' and the response for the minimum casting level
     def _get_damage_healing_at_casting_level(self, attribute_type, attribute_dict, casting_level):
-        res = {}
+        response = {}
         first_key = list(attribute_dict.keys())[0]
         casting_level = str(casting_level)
 
         if casting_level not in list(attribute_dict.keys()) and casting_level != 'min':
-            res = {'invalid_level': 'invalid casting level'}
+            response = {'invalid_level': 'invalid casting level'}
 
         if casting_level == 'min' or casting_level not in list(attribute_dict.keys()):
             casting_level = first_key
 
-        res[attribute_type] = attribute_dict[casting_level]
-        res['at_casting_level'] = casting_level
+        response[attribute_type] = attribute_dict[casting_level]
+        response['at_casting_level'] = casting_level
         
-        return res
+        return response
 
     def _get_casting_min_max_dict(self, casting_level):
         if casting_level == 'min_casting_level':
@@ -152,12 +153,11 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         else:
             return response
 
-        if response == 'emtpy':
+        if response == 'empty':
             return response
 
         response['name'] = self._spell.name
         return response
-    
 
 
             #dont forget generic: damage, dice, healing effect, casting level   -> maybe

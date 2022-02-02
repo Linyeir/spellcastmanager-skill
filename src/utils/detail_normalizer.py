@@ -11,7 +11,7 @@ class DetailNormalizer():
         
 
         matched_spoken_detail = match_one(detail_input, self._spoken_attribute_names)
-        detail_index = self._spoken_attribute_names.index(matched_spoken_detail)
+        detail_index = self._spoken_attribute_names.index(matched_spoken_detail[0])
         attribute = self._attribute_names[detail_index]
 
         return attribute
