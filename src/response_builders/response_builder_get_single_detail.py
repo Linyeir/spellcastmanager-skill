@@ -5,13 +5,23 @@ from ..utils.exceptions.invalid_detail_error import InvalidDetailError
 
 
 class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
+    """
+    validates user input (spell name and detail) and formats response fitting for dialog file
+    """
+
     def __init__(self, spell_name: str):
+        """
+        validates spell name and builds class spell
+        """
         if spell_name is None:
             raise NoSpellSpecifiedError()
         self._spell = Spell(spell_name)
 
-    # determines if the casting level is in range, if not the function returns a dict with 'invalid level' and the response for the minimum casting level
+
     def _get_damage_healing_at_casting_level(self, attribute_type, attribute_dict, casting_level):
+        """
+        validates casting level and returns attribute value, if invalid returns message key with lowest attribute value
+        """
         response = {}
         first_key = list(attribute_dict.keys())[0]
         casting_level = str(casting_level)
@@ -29,6 +39,9 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
 
     # determines if minimal or maximal casting level is asked, then determines the attribute of the spell (damage/ heal, slot/ character)
     def _get_casting_min_max_dict(self, casting_level):
+        """
+        determines casting attribute of class and returns minimal or maximal casting level
+        """
         if casting_level == 'min_casting_level':
             index = 0
         elif casting_level == 'max_casting_level':
@@ -47,6 +60,9 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         return response
 
     def get_response(self, detail, casting_level = 'min'):
+        """
+        returns attribute value as dict, if detail is invalid returns keyword 'empty'
+        """
         response = 'empty'
         if detail == 'name':
             response = {'name': self._spell.name}
