@@ -7,7 +7,46 @@ class IntentGetHelp(IntentBase):
 
     def execute(self, Spellcastmanager, message):
 
-        Spellcastmanager.gui.show_image("https://github.com/Linyeir/spellcastmanager-skill/blob/feature_gui/src/icon.png")
+        rawhtml="""<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Help options</title>
+
+<body>
+    <div class="container mt-3 ">
+        <h2>spellcast manager help options</h2>
+        <div class="card bg-light text-dark">
+            <div class="card-header">Option 1</div>
+            <div class="card-body">You can generally ask about a specific spell.'</div>
+        </div>
+        <br>
+        <div class="card bg-light text-dark">
+            <div class="card-header">Option 2</div>
+            <div class="card-body">You can ask for specific details regarding a spell.</div>
+        </div>
+        <br>
+        <div class="card bg-light text-dark">
+            <div class="card-header">Option 3</div>
+            <div class="card-body">You can ask for all details i have about a spell</div>
+        </div>
+        <br>
+        <div class="card bg-light text-dark">
+            <div class="card-header">Option 4</div>
+            <div class="card-body">The spellcast manager can guide you through the casting of a specific spell</div>
+        </div>
+    </div>
+</body>
+
+</html>
+"""
+
+        """Spellcastmanager.gui.show_image("https://raw.githubusercontent.com/Linyeir/spellcastmanager-skill/feature_gui/src/icon.png")"""
+        Spellcastmanager.gui.show_html(rawhtml)
 
         terminate_help = False;
         Spellcastmanager.speak_dialog('help.get')
