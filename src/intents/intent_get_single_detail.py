@@ -24,7 +24,7 @@ class IntentGetSingleDetail(IntentBase):
                     should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
                 if should_repeat == 'no':
                     return
-                if should_repeat != 'no' or should_repeat != 'yes':
+                if should_repeat != 'no' and should_repeat != 'yes':
                     reask_counter = reask_counter + 1
                     continue
                 self._fetch_detail(Spellcastmanager, spell_name_input)
