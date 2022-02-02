@@ -110,3 +110,7 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
 
 
         return response 
+    
+    @property
+    def spell(self):
+        return self._spell

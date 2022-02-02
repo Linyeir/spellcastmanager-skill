@@ -27,6 +27,7 @@ class IntentGetSingleDetail(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
+            Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
             should_repeat = 'yes'
             reask_counter = 0
             already_asked = False
@@ -35,12 +36,14 @@ class IntentGetSingleDetail(IntentBase):
                 if already_asked:
                     should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
                 if should_repeat == 'no':
+                    Spellcastmanager.speak_dialog('alright')
                     return
                 if should_repeat != 'no' and should_repeat != 'yes':
                     reask_counter = reask_counter + 1
                     continue
                 self._fetch_detail(Spellcastmanager, spell_name_input)
                 already_asked = True
+
         
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
@@ -51,6 +54,7 @@ class IntentGetSingleDetail(IntentBase):
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
+            Spellcastmanager.remove_context('spellname')
 
         
     def _fetch_detail(self, Spellcastmanager, spell_name_input):
