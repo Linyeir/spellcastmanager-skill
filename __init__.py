@@ -5,12 +5,14 @@ from mycroft import MycroftSkill, intent_handler
 from .src.intents.intent_get_spell_description import IntentGetSpellDescription
 from .src.intents.intent_get_all_details import IntentGetAllDetails
 from .src.intents.intent_get_single_detail import IntentGetSingleDetail
+from .src.intents.intent_get_help import IntentGetHelp
 
 
 class Spellcastmanager(MycroftSkill):
 
     # the constructor
     def __init__(self):
+
         super().__init__()
         self.learning = True
 
@@ -45,6 +47,7 @@ class Spellcastmanager(MycroftSkill):
         intent = IntentGetAllDetails()
         intent.execute(self, message)
 
+
    # reads single detail of spell to user
     @intent_handler(IntentBuilder('getSingleDetail')
         .optionally('spellname')
@@ -54,6 +57,14 @@ class Spellcastmanager(MycroftSkill):
         )
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
+
+        
+    # reads help to the user (padatious)
+    @intent_handler('get.help.intent')
+
+    def handle_get_help(self, message):
+        intent = IntentGetHelp()
+
         intent.execute(self, message)
 
     def stop(self):
