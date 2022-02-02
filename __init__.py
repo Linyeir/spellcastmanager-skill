@@ -57,6 +57,7 @@ class Spellcastmanager(MycroftSkill):
         )
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
+        intent.execute(self, message)
 
         
     # reads help to the user (padatious)
