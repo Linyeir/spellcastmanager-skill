@@ -36,6 +36,7 @@ class IntentGetSingleDetail(IntentBase):
                 if already_asked:
                     should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
                 if should_repeat == 'no':
+                    Spellcastmanager.speak_dialog('alright')
                     return
                 if should_repeat != 'no' and should_repeat != 'yes':
                     reask_counter = reask_counter + 1
