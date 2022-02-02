@@ -64,12 +64,8 @@ class IntentGetSingleDetail(IntentBase):
         return False
 
     def _call_detail_dialog(self, Spellcastmanager, response):
-        # min max vorher abfangen
-        # andere außnahmen?
         key = list(response.keys())[0]
-
         dialog_file_name = 'get.single.detail.' + key
-
         Spellcastmanager.speak_dialog(dialog_file_name, response)
 
         if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message

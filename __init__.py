@@ -50,12 +50,12 @@ class Spellcastmanager(MycroftSkill):
     #               - What do you want to know about fireball
     #           The range
     #               - The range is 70 feet
-    #               - Do you want to know something else about fireball?
-
+    #               - Do you want to know something else about fireball?        fehlt ================
     @intent_handler(IntentBuilder('getSingleDetail')
         .optionally('spellname')
         .require('theSpell')
-        .require('wantInformation')     #to change
+        .require('want')
+        .require('information')
         )
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
