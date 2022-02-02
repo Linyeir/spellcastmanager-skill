@@ -167,6 +167,10 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
         response['name'] = self._spell.name
         return response
 
+    @property
+    def spell(self):
+        return self._spell
+
 # name
 # desc
 # higher_level

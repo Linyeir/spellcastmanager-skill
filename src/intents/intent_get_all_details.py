@@ -13,6 +13,7 @@ class IntentGetAllDetails(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetAllDetails(spell_name_input)
+            Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
             response = self._response_builder.get_response()
             spell_categorizer = SpellCategorizer(response)
             spell_category = spell_categorizer.get_categorie_from_details()

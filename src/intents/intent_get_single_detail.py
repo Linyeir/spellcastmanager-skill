@@ -27,6 +27,7 @@ class IntentGetSingleDetail(IntentBase):
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
+            Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
             should_repeat = 'yes'
             reask_counter = 0
             already_asked = False
@@ -41,6 +42,7 @@ class IntentGetSingleDetail(IntentBase):
                     continue
                 self._fetch_detail(Spellcastmanager, spell_name_input)
                 already_asked = True
+
         
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)

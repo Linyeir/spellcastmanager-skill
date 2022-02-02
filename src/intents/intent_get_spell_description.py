@@ -25,7 +25,3 @@ class IntentGetSpellDescription(IntentBase):
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
         else:
             Spellcastmanager.speak_dialog('get.spell.description',response)
-
-
-    def get_spell_name():
-        return
