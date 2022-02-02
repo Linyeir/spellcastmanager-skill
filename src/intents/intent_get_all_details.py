@@ -26,6 +26,7 @@ class IntentGetAllDetails(IntentBase):
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
+            Spellcastmanager.remove_context('spellname')
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
             Spellcastmanager.speak_dialog(dialog, response)

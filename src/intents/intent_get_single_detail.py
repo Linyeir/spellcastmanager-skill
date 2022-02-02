@@ -53,6 +53,7 @@ class IntentGetSingleDetail(IntentBase):
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
+            Spellcastmanager.remove_context('spellname')
 
         
     def _fetch_detail(self, Spellcastmanager, spell_name_input):
