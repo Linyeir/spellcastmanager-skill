@@ -21,7 +21,7 @@ class IntentGetSpellDescription(IntentBase):
             Spellcastmanager.speak_dialog('no.spell.specified.error')
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})                                                                       # maybe pass dict? right place?
+            Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
         else:
             Spellcastmanager.speak_dialog('get.spell.description',response)
 

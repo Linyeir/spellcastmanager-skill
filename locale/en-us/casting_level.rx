@@ -1,0 +1,2 @@
+.*level (?P<casting_level>.*)
+.*slot (?P<casting_level>.*)

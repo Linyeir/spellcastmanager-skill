@@ -1,0 +1,131 @@
+from .intent_base import IntentBase
+from ..response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
+from ..utils.detail_normalizer import DetailNormalizer
+from ..utils.exceptions.api_not_reachable_error import APINotReachableError
+from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
+from ..utils.exceptions.invalid_spell_error import InvalidSpellError
+
+
+class IntentGetSingleDetail(IntentBase):
+    """
+    prompts for user input and validates it
+    chooses dialog based on validation
+    """
+    def __init__(self):
+        """
+        builds DetailNormalizer
+        """
+        self._detail_normalizer = DetailNormalizer()
+
+
+    def execute(self, Spellcastmanager, message):
+        """
+        prompts user for spell name, detail and when necessary the casting level
+        validates the input
+        chooses dialog based on validation
+        """
+        try:
+            spell_name_input = super()._extract_spell_name(message)
+            self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
+            should_repeat = 'yes'
+            reask_counter = 0
+            already_asked = False
+
+            while should_repeat == 'yes' and reask_counter < 3:
+                if already_asked:
+                    should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
+                if should_repeat == 'no':
+                    return
+                if should_repeat != 'no' and should_repeat != 'yes':
+                    reask_counter = reask_counter + 1
+                    continue
+                self._fetch_detail(Spellcastmanager, spell_name_input)
+                already_asked = True
+        
+        except APINotReachableError as err:
+            Spellcastmanager.log.error(err)
+            Spellcastmanager.speak_dialog('api.not.reachable.error')
+        except NoSpellSpecifiedError as err:
+            Spellcastmanager.log.error(err)
+            Spellcastmanager.speak_dialog('no.spell.specified.error')        
+        except InvalidSpellError as err:
+            Spellcastmanager.log.error(err)
+            Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
+
+        
+    def _fetch_detail(self, Spellcastmanager, spell_name_input):
+        """
+        prompts user for detail and repeats if invalid
+        calls choose dialog function
+        """
+        retry_counter = 0
+        response_valid = False
+        while response_valid == False and retry_counter < 3:
+            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+            detail = self._normalize_detail(Spellcastmanager, detail_input)
+            if detail == 'empty':
+                retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
+                return
+            casting_level = self._fetch_casting_level(Spellcastmanager, detail)
+            self._api_response = self._response_builder.get_response(detail, casting_level)
+            if self._api_response == 'empty':
+                retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
+                return
+            response_valid = True
+        self._call_detail_dialog(Spellcastmanager, self._api_response)
+
+            
+    def _speak_error_message(self, Spellcastmanager, retry_counter): 
+        """
+        reads error and prompt repetition message
+        increases retry counter for repetition
+        """
+        Spellcastmanager.speak_dialog('invalid.detail.error')
+        Spellcastmanager.speak_dialog('get.single.detail.request.repetition')
+        return retry_counter + 1
+
+    def _fetch_casting_level(self, Spellcastmanager, detail):
+        """
+        prompts user for casting level if necessary
+        """
+        if self._casting_level_is_needed(detail):
+            return Spellcastmanager.get_response('get.single.detail.casting_level')
+        else:
+            return 'min'
+
+    def _casting_level_is_needed(self, detail):
+        """
+        checks if casting level is necessary, returns confirmation
+        """
+        attributes_with_casting_level = ['damage_at_slot_level', 'damage_at_character_level', 'heal_at_slot_level', 'heal_at_character_level']
+        for entry in attributes_with_casting_level:
+            if detail == entry:
+                return True
+        return False
+
+    def _call_detail_dialog(self, Spellcastmanager, response):
+        """
+        chooses detail dialog based on asked details and validation
+        """
+        key = list(response.keys())[0]
+        dialog_file_name = 'get.single.detail.' + key
+        Spellcastmanager.speak_dialog(dialog_file_name, response)
+
+        if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
+            key = list(response.keys())[1]
+            dialog_file_name = 'get.single.detail.' + key
+            Spellcastmanager.speak_dialog(dialog_file_name, response)
+        
+    def _normalize_detail(self, Spellcastmanager, detail_input):
+        """
+        input: detail in spoken form
+        returns detail as attribute form (normalized)
+        """
+        if detail_input == None:
+            return 'empty'
+        if Spellcastmanager.voc_match(detail_input, 'valid_attributes'):
+            attribute = self._detail_normalizer.match_spoken_detail_to_attribute(detail_input)
+        else:
+            return 'empty'
+
+        return attribute
