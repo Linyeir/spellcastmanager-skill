@@ -17,25 +17,31 @@ class IntentGetHelp(IntentBase):
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Help options</title>
 
-<body>
-    <div class="container mt-3 ">
-        <h2>spellcast manager help options</h2>
-        <div class="card bg-light text-dark">
+<body class="bg-light text-dark">
+    <div class="container mt-3">
+        <div class="row mb-4">
+            <h2 class="col-sm-11">spellcast manager help options</h2>
+            <image
+                src="https://camo.githubusercontent.com/0c736947847ed2b1bdc33782e55b6eceaf3e3a3b934a187983ebeef185b6d8a6/68747470733a2f2f7261772e6769746861636b2e636f6d2f466f7274417765736f6d652f466f6e742d417765736f6d652f6d61737465722f737667732f736f6c69642f646963652d6432302e737667"
+                width="20" class="col-sm-1" />
+
+        </div>
+        <div class="card">
             <div class="card-header">Option 1</div>
             <div class="card-body">You can generally ask about a specific spell.'</div>
         </div>
         <br>
-        <div class="card bg-light text-dark">
+        <div class="card">
             <div class="card-header">Option 2</div>
             <div class="card-body">You can ask for specific details regarding a spell.</div>
         </div>
         <br>
-        <div class="card bg-light text-dark">
+        <div class="card">
             <div class="card-header">Option 3</div>
             <div class="card-body">You can ask for all details i have about a spell</div>
         </div>
         <br>
-        <div class="card bg-light text-dark">
+        <div class="card">
             <div class="card-header">Option 4</div>
             <div class="card-body">The spellcast manager can guide you through the casting of a specific spell</div>
         </div>
