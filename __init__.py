@@ -45,12 +45,7 @@ class Spellcastmanager(MycroftSkill):
         intent = IntentGetAllDetails()
         intent.execute(self, message)
 
-    # reads one detail of spell to user
-    # For now:  I want some information on the spell fireball
-    #               - What do you want to know about fireball
-    #           The range
-    #               - The range is 70 feet
-    #               - Do you want to know something else about fireball?        fehlt ================
+   # reads single detail of spell to user
     @intent_handler(IntentBuilder('getSingleDetail')
         .optionally('spellname')
         .require('theSpell')
@@ -60,31 +55,6 @@ class Spellcastmanager(MycroftSkill):
     def handle_get_single_detail(self, message):
         intent = IntentGetSingleDetail()
         intent.execute(self, message)
-
-# name
-# desc
-# higher_level
-# range
-# components
-# material
-# ritual
-# duration
-# concentration
-# casting_time
-# level
-# attack_type
-# damage_type
-# damage_slot
-# damage_character
-# heal_slot
-# heal_character
-# min_casting_level
-# max_casting_level
-# dc_type
-# dc_success
-# area_of_effect_type
-# area_of_effect_size
-# school
 
     def stop(self):
         pass
