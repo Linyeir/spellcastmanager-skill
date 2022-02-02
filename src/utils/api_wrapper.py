@@ -21,7 +21,7 @@ class APIWrapper():
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
         if spell_name_in is None:
             raise NoSpellSpecifiedError()
-        self._spell_name = spell_name_in.replace(' ', '-')
+        self._spell_name = spell_name_in.replace(' ', '-').lower()
         if self.api_reachable():
             self._response = self.api_request()
 
