@@ -6,19 +6,21 @@ class IntentGetHelp(IntentBase):
         pass
 
     def execute(self, Spellcastmanager, message):
-        terminate = False;
+        Spellcastmanager.speak_dialog('help.get')
 
-        user_response = Spellcastmanager.ask_selection(Spellcastmanager.help_intent_selection, 'help.get')
-        while not terminate:
-            if user_response == 'yes':
-                user_response = Spellcastmanager.ask_selection(Spellcastmanager.help_intent_selection, 'help.which.one')
-            else: 
-                if user_response == 'no':
-                    terminate = TRUE;
-                elif user_response == 'option one':
-                    Spellcastmanager.speak_dialog('help.option.one')
-                elif user_response == 'option two':
-                    Spellcastmanager.speak_dialog('help.option.two')
-                elif user_response == 'option three':
-                    Spellcastmanager.speak_dialog('help.option.three')
-        Spellcastmanager.speak_dialog('help.terminate')
+        options = ['You can generally ask about a specific spell',
+                    'You can ask for specific details regarding a spell.',
+                    'You can ask for all details i have about a spell',
+                    'The spellcast manager can guide you through the casting of a specific spell']
+
+        selection = Spellcastmanager.ask_selection(options, 'help.post.option')
+
+        if selection == 'You can generally ask about a specific spell':
+            Spellcastmanager.speak_dialog('help.option.all')        
+        elif selection == 'You can ask for specific details regarding a spell.':
+            Spellcastmanager.speak_dialog('help.option.assistant')
+        elif selection == 'You can ask for all details i have about a spell':
+            Spellcastmanager.speak_dialog('help.option.description')            
+        elif selection == 'The spellcast manager can guide you through the casting of a specific spell':
+            Spellcastmanager.speak_dialog('help.option.detail')
+
