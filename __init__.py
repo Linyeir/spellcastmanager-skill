@@ -36,6 +36,7 @@ class Spellcastmanager(MycroftSkill):
     def handle_get_spell_description(self, message):
         intent = IntentGetSpellDescription()
         intent.execute(self, message)
+        
 
     # reads all details of spell to user
     @intent_handler(IntentBuilder('getAllDetails')

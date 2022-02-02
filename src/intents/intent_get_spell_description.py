@@ -13,6 +13,7 @@ class IntentGetSpellDescription(IntentBase):
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)
             response = self._response_builder.get_response()
+            Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -26,4 +27,5 @@ class IntentGetSpellDescription(IntentBase):
             Spellcastmanager.speak_dialog('get.spell.description',response)
 
 
-
+    def get_spell_name():
+        return
