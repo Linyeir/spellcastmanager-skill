@@ -11,6 +11,12 @@ Feature: spellcastmanager-context
     When the user says "Option One"
     Then "spellcastmanager-skill" should reply with dialog from "help.option.all"
 
+  Scenario: stopping help
+    Given an english speaking user
+    Given a 15 second timeout
+    When the user says "no"
+    Then "spellcastmanager-skill" should reply with dialog from "help.terminate"
+
   # - different help utterances
   Scenario Outline: request help
     Given an english speaking user

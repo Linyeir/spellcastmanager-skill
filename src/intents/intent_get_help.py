@@ -6,21 +6,30 @@ class IntentGetHelp(IntentBase):
         pass
 
     def execute(self, Spellcastmanager, message):
+        terminate_help = False;
         Spellcastmanager.speak_dialog('help.get')
 
-        options = ['You can generally ask about a specific spell',
-                    'You can ask for specific details regarding a spell.',
-                    'You can ask for all details i have about a spell',
-                    'The spellcast manager can guide you through the casting of a specific spell']
+        while not terminate_help:
 
-        selection = Spellcastmanager.ask_selection(options, 'help.post.option')
+            options = ['You can generally ask about a specific spell',
+                        'You can ask for specific details regarding a spell.',
+                        'You can ask for all details i have about a spell',
+                        'The spellcast manager can guide you through the casting of a specific spell']
 
-        if selection == 'You can generally ask about a specific spell':
-            Spellcastmanager.speak_dialog('help.option.all')        
-        elif selection == 'You can ask for specific details regarding a spell.':
-            Spellcastmanager.speak_dialog('help.option.assistant')
-        elif selection == 'You can ask for all details i have about a spell':
-            Spellcastmanager.speak_dialog('help.option.description')            
-        elif selection == 'The spellcast manager can guide you through the casting of a specific spell':
-            Spellcastmanager.speak_dialog('help.option.detail')
+            selection = Spellcastmanager.ask_selection(options, 'help.post.option')
 
+            if selection == options[0]:
+                Spellcastmanager.speak_dialog('help.option.all')        
+            elif selection == options[1]:
+                Spellcastmanager.speak_dialog('help.option.assistant')
+            elif selection == options[2]:
+                Spellcastmanager.speak_dialog('help.option.description')            
+            elif selection == options[3]:
+                Spellcastmanager.speak_dialog('help.option.detail')
+
+            further_help = Spellcastmanager.ask_yesno('help.continue') 
+
+            if further_help == 'no':
+                  terminate_help = True
+
+        Spellcastmanager.speak_dialog('help.terminate')
