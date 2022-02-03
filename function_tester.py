@@ -3,6 +3,8 @@ from src.response_builders.response_builder_get_all_details import ResponseBuild
 from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.spell_categorizer import SpellCategorizer
 from src.response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
+from src.utils.detail_normalizer import DetailNormalizer
+
 
 # fireball - damage_slot - 3-9
 # eldritch blast - damage_character - 1,5,11,17

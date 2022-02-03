@@ -4,6 +4,7 @@ from ..utils.spell_categorizer import SpellCategorizer
 from ..utils.exceptions.api_not_reachable_error import APINotReachableError
 from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
+from ..utils.detail_normalizer import DetailNormalizer
 
 
 class IntentGetAllDetails(IntentBase):
@@ -87,7 +88,9 @@ class IntentGetAllDetails(IntentBase):
 
             rawhtml = rawhtml + """ <tbody>
                         <td>"""
-            rawhtml = rawhtml + entry            
+
+            dn = DetailNormalizer()
+            rawhtml = rawhtml + dn.get_spoken_attribute(entry)            
 
             rawhtml = rawhtml + """
             </td>
