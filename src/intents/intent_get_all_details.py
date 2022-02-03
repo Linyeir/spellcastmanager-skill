@@ -32,8 +32,26 @@ class IntentGetAllDetails(IntentBase):
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
             Spellcastmanager.speak_dialog(dialog, response)
-            # add if for using gui
+            self._continue(Spellcastmanager)
 #            IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
+
+    def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know')
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
+    
+    def _validate_yes_no(self, response):
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False
+
 
     def all_details_gui(self, Spellcastmanager, response):
 

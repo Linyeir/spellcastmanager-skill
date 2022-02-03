@@ -43,8 +43,7 @@ class IntentGetSingleDetail(IntentBase):
                     continue
                 self._fetch_detail(Spellcastmanager, spell_name_input)
                 already_asked = True
-
-        
+            self._continue(Spellcastmanager)
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -64,6 +63,8 @@ class IntentGetSingleDetail(IntentBase):
         """
         retry_counter = 0
         response_valid = False
+
+        # retry for invalid responses
         while response_valid == False and retry_counter < 3:
             detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
             detail = self._normalize_detail(Spellcastmanager, detail_input)
@@ -77,6 +78,7 @@ class IntentGetSingleDetail(IntentBase):
                 return
             response_valid = True
         self._call_detail_dialog(Spellcastmanager, self._api_response)
+        self._continue(Spellcastmanager)
 
             
     def _speak_error_message(self, Spellcastmanager, retry_counter): 
@@ -133,3 +135,20 @@ class IntentGetSingleDetail(IntentBase):
             return 'empty'
 
         return attribute
+    
+    def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know')
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
+
+    def _validate_yes_no(self, response):
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False

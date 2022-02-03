@@ -35,6 +35,9 @@ class IntentGetSpellDescription(IntentBase):
             return False
     
     def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
         to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
         if to_continue == 'yes':
             Spellcastmanager.speak_dialog('what.do.you.want.to.know')
