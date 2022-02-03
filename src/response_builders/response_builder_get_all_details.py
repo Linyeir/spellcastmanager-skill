@@ -4,14 +4,21 @@ from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 
 
 class ResponseBuilderGetAllDetails(ResponseBuilderBase):
-
+    """
+    validates user input (spell name) and formats response fitting for dialog file
+    """
     def __init__(self, spell_name: str):
+        """
+        validates spell name and builds class spell
+        """
         if spell_name is None:
             raise NoSpellSpecifiedError()
         self._spell = Spell(spell_name)
 
     def get_response(self) -> dict:
-
+        """
+        adds not empty attributes with value to dict and returns it
+        """
         response = {'name': self._spell.name}
     
         if self._spell.higher_level != 'empty':
@@ -110,3 +117,7 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
 
 
         return response 
+    
+    @property
+    def spell(self):
+        return self._spell
