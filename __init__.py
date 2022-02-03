@@ -3,7 +3,7 @@ from mycroft import MycroftSkill, intent_file_handler
 from mycroft import MycroftSkill, intent_handler
 from .src.intents.intent_get_spell_description import IntentGetSpellDescription
 from .src.intents.intent_get_all_details import IntentGetAllDetails
-from .src.intents.intent_invoke_casting_assistant import IntentInvokeCastinAssistant
+from .src.intents.intent_invoke_casting_assistant import IntentInvokeCastingAssistant
 
 
 class Spellcastmanager(MycroftSkill):
@@ -38,8 +38,7 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('getAllDetails')
         .optionally('spellname')
         .require('detail')
-        .require('theSpell')
-        )
+        .require('theSpell'))
     def handle_get_all_details(self, message):
         intent = IntentGetAllDetails()
         intent.execute(self, message)
@@ -48,12 +47,9 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('invokeCastinAssistant')
         .require('i')
         .require('cast')
-        .optionally('theSpell')
-        .optionally('spellname_cast')
-        .optionally('spellname_cast_level')
-        )
+        .optionally('spellname_cast'))
     def handle_invoke_casting_assistant(self, message):
-        intent = IntentInvokeCastinAssistant()
+        intent = IntentInvokeCastingAssistant()
         intent.execute(self, message)
 
     def stop(self):

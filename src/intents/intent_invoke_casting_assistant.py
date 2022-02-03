@@ -13,6 +13,7 @@ class IntentInvokeCastingAssistant(IntentBase):
 
     def execute(self, Spellcastmanager, message):
         try:
+            Spellcastmanager.log.error(message.data.get('spellname'))
             self._spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderInvokeCastingAssistant(self._spell_name_input) 
             self._api_response = self._response_builder.get_response       
