@@ -21,7 +21,7 @@ class APIWrapper():
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
         if spell_name_in is None:
             raise NoSpellSpecifiedError()
-        self._spell_name = spell_name_in.replace(' ', '-')
+        self._spell_name = spell_name_in.replace(' ', '-').lower()
         if self.api_reachable():
             self._response = self.api_request()
 
@@ -63,7 +63,7 @@ class APIWrapper():
     - if required, an index-/ range can be passed
     """
 
-    def get_detail(self, key, index_start=-1, index_stop=-1):
+    def get_detail(self, key):
         response_json = self._response.json()
         try:
             parsed_response = functools.reduce(dict.get, key, response_json)

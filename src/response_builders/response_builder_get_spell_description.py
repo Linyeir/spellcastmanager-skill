@@ -14,3 +14,8 @@ class ResponseBuilderGetSpellDescription(ResponseBuilderBase):
     def get_response(self) -> dict:
         response = {'desc': self._spell.desc}
         return response
+
+
+    @property
+    def spell(self):
+        return self._spell
