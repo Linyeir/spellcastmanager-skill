@@ -28,22 +28,22 @@ class IntentGetSingleDetail(IntentBase):
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
             Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
-            should_repeat = 'yes'
+            should_repeat_iteration = 'yes'
             reask_counter = 0
             already_asked = False
 
-            while should_repeat == 'yes' and reask_counter < 3:
+            while should_repeat_iteration == 'yes' and reask_counter < 3:
                 if already_asked:
-                    should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
-                if should_repeat == 'no':
+                    should_repeat_iteration = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
+                if should_repeat_iteration == 'no':
                     Spellcastmanager.speak_dialog('alright')
+                    self._continue(Spellcastmanager)
                     return
-                if should_repeat != 'no' and should_repeat != 'yes':
+                if should_repeat_iteration != 'no' and should_repeat_iteration != 'yes':
                     reask_counter = reask_counter + 1
                     continue
                 self._fetch_detail(Spellcastmanager, spell_name_input)
                 already_asked = True
-            self._continue(Spellcastmanager)
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -54,6 +54,24 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
             Spellcastmanager.remove_context('spellname')
+
+    
+    def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know')
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
+
+    def _validate_yes_no(self, response):
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False
 
         
     def _fetch_detail(self, Spellcastmanager, spell_name_input):
@@ -78,7 +96,6 @@ class IntentGetSingleDetail(IntentBase):
                 return
             response_valid = True
         self._call_detail_dialog(Spellcastmanager, self._api_response)
-        self._continue(Spellcastmanager)
 
             
     def _speak_error_message(self, Spellcastmanager, retry_counter): 
@@ -135,20 +152,3 @@ class IntentGetSingleDetail(IntentBase):
             return 'empty'
 
         return attribute
-    
-    def _continue(self, Spellcastmanager):
-        """
-        prompts user for more questions
-        """
-        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
-        if to_continue == 'yes':
-            Spellcastmanager.speak_dialog('what.do.you.want.to.know')
-        else:
-            Spellcastmanager.speak_dialog('alright')
-            Spellcastmanager.remove_context('spellname')
-
-    def _validate_yes_no(self, response):
-        if response == 'yes' or response == 'no':
-            return True
-        else:
-            return False
