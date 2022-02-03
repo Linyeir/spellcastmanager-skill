@@ -69,6 +69,9 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.remove_context('spellname')
 
     def _validate_yes_no(self, response):
+        """
+        validates, if user response is something else then yes or no
+        """
         if response == 'yes' or response == 'no':
             return True
         else:
