@@ -34,8 +34,8 @@ class IntentGetAllDetails(IntentBase):
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
-            """?????    allDetailsGui(str(dialog) + str(response))"""
             Spellcastmanager.speak_dialog(dialog, response)
+            IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
 
             # Spellcastmanager.speak_dialog('get.all.details.dialog', {'name': response['name'],
             #                                                                 'desc': response['desc'],
@@ -61,29 +61,13 @@ class IntentGetAllDetails(IntentBase):
             #                                                                 'school': response['school']
             #                                                                 })
 
-# name
-# desc
-# higher_level
-# range
-# components
-# material
-# ritual
-# duration
-# concentration
-# casting_time
-# level
-# attack_type
-# damage_type
-# at_casting_level
-# min_casting_level
-# max_casting_level
-# dc_type
-# dc_success
-# area_of_effect_type
-# area_of_effect_size
-# school
+    def all_details_gui(self, Spellcastmanager, response):
 
-    def allDetailsGui(input):
+        """
+        A function to parse the response on to a gui.
+        The displayed webpage is written with Bootstrap.
+        """
+
         rawhtml = """<!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -98,10 +82,10 @@ class IntentGetAllDetails(IntentBase):
     <div class="container mt-3">
         <div class="card p-4">
             <div class="row">
-                <h2 class="col-sm-11">all details for 
+                <h2 class="col-sm-11">all details for
         """
 
-        rawhtml = rawhtml +"""$spellname"""
+        rawhtml = rawhtml + response["name"]
 
         rawhtml = rawhtml + """</h2>
                 <image
@@ -125,7 +109,23 @@ class IntentGetAllDetails(IntentBase):
                 </tbody>
 
         """
+        response.pop("name")
 
+        for entry in response:
+
+            rawhtml = rawhtml + """ <tbody>
+                        <td>"""
+            rawhtml = rawhtml + entry            
+
+            rawhtml = rawhtml + """
+            </td>
+                        <td>"""
+
+            rawhtml = rawhtml + response[entry]
+            rawhtml = rawhtml + """</td >
+                    </tbody>
+
+            """
 
         rawhtml = rawhtml + """
             </table>
@@ -136,3 +136,26 @@ class IntentGetAllDetails(IntentBase):
 </html>"""
 
         Spellcastmanager.gui.show_html(rawhtml)
+
+
+# name
+# desc
+# higher_level
+# range
+# components
+# material
+# ritual
+# duration
+# concentration
+# casting_time
+# level
+# attack_type
+# damage_type
+# at_casting_level
+# min_casting_level
+# max_casting_level
+# dc_type
+# dc_success
+# area_of_effect_type
+# area_of_effect_size
+# school
