@@ -5,6 +5,7 @@ from ..utils.exceptions.api_not_reachable_error import APINotReachableError
 from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
+
 class IntentGetAllDetails(IntentBase):
     def __init__(self):
         pass        
@@ -30,25 +31,80 @@ class IntentGetAllDetails(IntentBase):
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
             Spellcastmanager.speak_dialog(dialog, response)
+            IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
 
-# name
-# desc
-# higher_level
-# range
-# components
-# material
-# ritual
-# duration
-# concentration
-# casting_time
-# level
-# attack_type
-# damage_type
-# at_casting_level
-# min_casting_level
-# max_casting_level
-# dc_type
-# dc_success
-# area_of_effect_type
-# area_of_effect_size
-# school
+    def all_details_gui(self, Spellcastmanager, response):
+
+        """
+        A function to parse the response on to a gui.
+        The displayed webpage is written with Bootstrap.
+        """
+
+        rawhtml = """<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Help options</title>
+
+<body class="bg-light">
+    <div class="container mt-3">
+        <div class="card p-4">
+            <div class="row">
+                <h2 class="col-sm-11">all details for
+        """
+
+        rawhtml = rawhtml + response["name"]
+
+        rawhtml = rawhtml + """</h2>
+                <image
+                    src="https://camo.githubusercontent.com/0c736947847ed2b1bdc33782e55b6eceaf3e3a3b934a187983ebeef185b6d8a6/68747470733a2f2f7261772e6769746861636b2e636f6d2f466f7274417765736f6d652f466f6e742d417765736f6d652f6d61737465722f737667732f736f6c69642f646963652d6432302e737667"
+                    width="20" class="col-sm-1" />
+
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">attribute</th>
+                        <th scope="col">value</th>
+                    </tr>
+                </thead>"""
+
+        """?????
+        for every attribute:
+            rawhtml = rawhtml + ""<tbody>
+                    <td>$attribute</td>
+                    <td>$value</td>
+                </tbody>
+
+        """
+        response.pop("name")
+
+        for entry in response:
+
+            rawhtml = rawhtml + """ <tbody>
+                        <td>"""
+            rawhtml = rawhtml + entry            
+
+            rawhtml = rawhtml + """
+            </td>
+                        <td>"""
+
+            rawhtml = rawhtml + response[entry]
+            rawhtml = rawhtml + """</td >
+                    </tbody>
+
+            """
+
+        rawhtml = rawhtml + """
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>"""
+
+        Spellcastmanager.gui.show_html(rawhtml)
