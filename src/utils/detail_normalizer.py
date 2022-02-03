@@ -22,3 +22,11 @@ class DetailNormalizer():
         attribute = self._attribute_names[detail_index]
 
         return attribute
+
+    def get_spoken_attribute(self, attribute):
+        """
+        return the spoken attribute for a given technical description
+        """
+        attribute_map = dict(zip(self._attribute_names, self._spoken_attribute_names))
+        return attribute_map.get(attribute)
+        
