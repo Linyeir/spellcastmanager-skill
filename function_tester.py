@@ -6,14 +6,8 @@ from src.utils.exceptions.invalid_spell_error import InvalidSpellError
 from src.utils.spell_categorizer import SpellCategorizer
 
 
-def testo(input):
-    if input == 1:
-        return input
-    else:
-        return False
-
-if (testo(0) != False):
-    print(testo(1))
-else:
-    print(testo(0))
+rb = ResponseBuilderInvokeCastingAssistant('healing word')
+print(rb.get_casting_level_type())
+print(rb.get_casting_level_limits())
+print(rb.get_value_at_casting_level(5))
 

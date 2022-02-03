@@ -1,1 +1,1 @@
-.*(((i cast|conjure|invoke|summon)(the spell)?)|(the spell))(?P<spellname>.*)
+.*((cast|conjure|invoke|summon)( the spell)?) (?P<spellname>.*)

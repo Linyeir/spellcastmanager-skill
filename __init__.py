@@ -47,7 +47,7 @@ class Spellcastmanager(MycroftSkill):
     @intent_handler(IntentBuilder('invokeCastinAssistant')
         .require('i')
         .require('cast')
-        .optionally('spellname_cast'))
+        .optionally('spellname'))
     def handle_invoke_casting_assistant(self, message):
         intent = IntentInvokeCastingAssistant()
         intent.execute(self, message)
