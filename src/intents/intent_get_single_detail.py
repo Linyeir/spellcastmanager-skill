@@ -28,23 +28,23 @@ class IntentGetSingleDetail(IntentBase):
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
             Spellcastmanager.set_context('spellname', self._response_builder.spell.name)
-            should_repeat = 'yes'
+            should_repeat_iteration = 'yes'
             reask_counter = 0
             already_asked = False
+            detail_valid = True
 
-            while should_repeat == 'yes' and reask_counter < 3:
-                if already_asked:
-                    should_repeat = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
-                if should_repeat == 'no':
+            while should_repeat_iteration == 'yes' and reask_counter < 3:
+                if already_asked and detail_valid:
+                    should_repeat_iteration = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
+                if should_repeat_iteration == 'no':
                     Spellcastmanager.speak_dialog('alright')
+                    self._continue(Spellcastmanager)
                     return
-                if should_repeat != 'no' and should_repeat != 'yes':
+                if should_repeat_iteration != 'no' and should_repeat_iteration != 'yes':
                     reask_counter = reask_counter + 1
                     continue
-                self._fetch_detail(Spellcastmanager, spell_name_input)
+                detail_valid = self._fetch_detail(Spellcastmanager, spell_name_input, detail_valid)
                 already_asked = True
-
-        
         except APINotReachableError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('api.not.reachable.error')
@@ -56,27 +56,54 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
             Spellcastmanager.remove_context('spellname')
 
+    
+    def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know', expect_response=True)
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
+
+    def _validate_yes_no(self, response):
+        """
+        validates, if user response is something else then yes or no
+        """
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False
+
         
-    def _fetch_detail(self, Spellcastmanager, spell_name_input):
+    def _fetch_detail(self, Spellcastmanager, spell_name_input, detail_valid):
         """
         prompts user for detail and repeats if invalid
         calls choose dialog function
         """
         retry_counter = 0
         response_valid = False
+
+        # retry for invalid responses
         while response_valid == False and retry_counter < 3:
-            detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+            if detail_valid:
+                detail_input = Spellcastmanager.get_response('get.single.detail.request.detail', {'name': spell_name_input})
+            else:
+                detail_input = Spellcastmanager.get_response()
             detail = self._normalize_detail(Spellcastmanager, detail_input)
             if detail == 'empty':
                 retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
-                return
+                return False
             casting_level = self._fetch_casting_level(Spellcastmanager, detail)
             self._api_response = self._response_builder.get_response(detail, casting_level)
             if self._api_response == 'empty':
                 retry_counter = self._speak_error_message(Spellcastmanager, retry_counter)
-                return
+                return False
             response_valid = True
         self._call_detail_dialog(Spellcastmanager, self._api_response)
+        return True
 
             
     def _speak_error_message(self, Spellcastmanager, retry_counter): 

@@ -9,6 +9,9 @@ class IntentGetSpellDescription(IntentBase):
         pass
 
     def execute(self, Spellcastmanager, message):
+        """
+        orchestrates the dialog by calling mycroft functions
+        """
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)
@@ -26,3 +29,24 @@ class IntentGetSpellDescription(IntentBase):
             Spellcastmanager.remove_context('spellname')
         else:
             Spellcastmanager.speak_dialog('get.spell.description',response)
+            self._continue(Spellcastmanager)
+    
+    def _validate_yes_no(self, response):
+        """
+        validates, if user response is something else then yes or no
+        """
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False
+    
+    def _continue(self, Spellcastmanager):
+        """
+        prompts user for more questions
+        """
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know', expect_response=True)
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
