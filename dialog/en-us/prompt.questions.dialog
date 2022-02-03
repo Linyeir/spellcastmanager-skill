@@ -1,16 +1,2 @@
 is there something else you want to know about {name}
 can i help you with something else
-
-
-
-
-tell me the description of the spell fireball
-    - description
-    - is there something else you want to know about fireball
-yes
-    - alright, what do you want to know
-    (expect response)
-{utterance}
-
-no
-    - alright

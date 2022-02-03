@@ -32,7 +32,8 @@ class IntentGetAllDetails(IntentBase):
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
             Spellcastmanager.speak_dialog(dialog, response)
-            IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
+            # add if for using gui
+#            IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
 
     def all_details_gui(self, Spellcastmanager, response):
 

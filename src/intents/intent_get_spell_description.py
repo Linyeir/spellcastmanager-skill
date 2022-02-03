@@ -26,3 +26,18 @@ class IntentGetSpellDescription(IntentBase):
             Spellcastmanager.remove_context('spellname')
         else:
             Spellcastmanager.speak_dialog('get.spell.description',response)
+            self._continue(Spellcastmanager)
+    
+    def _validate_yes_no(self, response):
+        if response == 'yes' or response == 'no':
+            return True
+        else:
+            return False
+    
+    def _continue(self, Spellcastmanager):
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        if to_continue == 'yes':
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know')
+        else:
+            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.remove_context('spellname')
