@@ -1,20 +1,20 @@
+import ast
 from .api_wrapper import APIWrapper
-
-"""
-If instantiated with a valid spellname, this class provides an easy way to access the spells details.
-"""
 
 
 class Spell():
+    """
+    If instantiated with a valid spellname, this class provides an easy way to access the spells details.
+    """
     def __init__(self, spell_name_in) -> None:
         self._api = APIWrapper(spell_name_in)
         self._fill_attributes()
 
-    """
-    prepares a query result for reading
-    """
-
+    
     def _clean_string(self, json_input):
+        """
+        prepares a query result for reading
+        """
         output_string = str(json_input).replace(
             '[', '').replace(']', '').replace('"', '').replace("'", '')
         return output_string
@@ -32,23 +32,56 @@ class Spell():
         self.casting_time = self._api.get_detail(('casting_time',))
         self.level = self._api.get_detail(('level',))
         self.attack_type = self._api.get_detail(('attack_type',))
-        self.damage_type = self._api.get_detail(
-            ('damage', 'damage_type', 'name'))
-        self.damage_at_slot_level = self._api.get_detail(
-            ('damage', 'damage_at_slot_level'))  # additional parsing necessary - list
-        self.heal_at_slot_level = self._api.get_detail(
-            ('heal_at_slot_level',))  # additional parsing necessary - list
-        self.damage_at_character_level = self._api.get_detail(
-            ('damage', 'damage_at_character_level'))
-        self.heal_at_character_level = self._api.get_detail(
-            ('heal_at_character_level',))
-        self.dc_type = self._api.get_detail(('dc', 'dc_type', 'name'))
+        self.damage_type = self._api.get_detail(('damage', 'damage_type', 'name'))
+        self.damage_at_slot_level = self._api.get_detail(('damage', 'damage_at_slot_level'))  # additional parsing necessary - list
+        self.damage_at_slot_level = self._rephrase_effect_modifiers(self.damage_at_slot_level)
+        self.heal_at_slot_level = self._api.get_detail(('heal_at_slot_level',))  # additional parsing necessary - list
+        self.heal_at_slot_level = self._rephrase_effect_modifiers(self.heal_at_slot_level)
+        self.damage_at_character_level = self._api.get_detail(('damage', 'damage_at_character_level'))
+        self.damage_at_character_level = self._rephrase_effect_modifiers(self.damage_at_character_level)
+        self.heal_at_character_level = self._api.get_detail(('heal_at_character_level',))
+        self.heal_at_character_level = self._rephrase_effect_modifiers(self.heal_at_character_level)
+        self.dc_type = self._rephrase_saving_throw_type(self._api.get_detail(('dc', 'dc_type', 'name')))
         self.dc_success = self._api.get_detail(('dc', 'dc_success'))
-        self.area_of_effect_type = self._api.get_detail(
-            ('area_of_effect', 'type'))
-        self.area_of_effect_size = self._api.get_detail(
-            ('area_of_effect', 'size'))
+        self.area_of_effect_type = self._api.get_detail(('area_of_effect', 'type'))
+        self.area_of_effect_size = self._api.get_detail(('area_of_effect', 'size'))
         self.school = self._api.get_detail(('school', 'name'))
+
+
+    def _rephrase_saving_throw_type(self, saving_throw_input):
+        """
+        rephrases the saving throw types to increase readability
+        """
+
+        if saving_throw_input == 'DEX':
+            saving_throw_output = saving_throw_input.replace('DEX', 'Dexterity')
+        elif saving_throw_input == 'STR':
+            saving_throw_output = saving_throw_input.replace('STR', 'Strength')
+        elif saving_throw_input == 'CON':
+            saving_throw_output = saving_throw_input.replace('CON', 'Constitution')
+        elif saving_throw_input == 'WIS':
+            saving_throw_output = saving_throw_input.replace('WIS', 'Wisdom')
+        elif saving_throw_input == 'INT':
+            saving_throw_output = saving_throw_input.replace('INT', 'Intelligence')
+        elif saving_throw_input == 'CHA':
+            saving_throw_output = saving_throw_input.replace('CHA', 'Charisma')
+        else: 
+            saving_throw_output = saving_throw_input
+        return saving_throw_output
+
+
+    def _rephrase_effect_modifiers(self, input_string):
+        """
+        rephrases MOD to your Modifiers to increase readability
+        """
+
+        value_dict = input_string
+        if type(value_dict) is dict: 
+            for entry in value_dict.keys():
+                if 'MOD' in value_dict[entry]:
+                    value_dict[entry] = value_dict[entry].replace('MOD', 'your Modifiers')
+        return value_dict
+        
 
 
 # region properties

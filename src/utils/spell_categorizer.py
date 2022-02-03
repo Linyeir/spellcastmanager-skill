@@ -1,10 +1,10 @@
 from ..utils.exceptions.invalid_spell_category_error import InvalidSpellCategoryError
 
 
-"""
-A class that holds a list of detail configurations which can be compared with the passed dict
-"""
 class SpellCategorizer():
+    """
+    A class that holds a list of detail configurations which can be compared with the passed dict
+    """
 
     def __init__(self, details):
         self._detail_list = list(details.keys())
@@ -25,11 +25,11 @@ class SpellCategorizer():
             14: ['name', 'school', 'level', 'components', 'material', 'ritual', 'concentration', 'casting_time', 'duration', 'range', 'damage_type', 'higher_level', 'dc_type', 'dc_success'],     
             15: ['name', 'school', 'level', 'components', 'material', 'ritual', 'concentration', 'casting_time', 'duration', 'range', 'damage_type', 'higher_level']}  
 
-
-    """
-    converts the passed detail dict and the list of detail dicts into sets, compares them, and when they match, it returns the number of the matched list of details
-    """
+    
     def get_categorie_from_details(self)-> int:
+        """
+        converts the passed detail dict and the list of detail dicts into sets, compares them, and when they match, it returns the number of the matched list of details
+        """
         category = None
         for category_number in self._categories.keys():
             if set(self._categories[category_number]) == set(self._detail_list):
