@@ -1,2 +1,4 @@
 {max_casting_level}
 the maximal {type} for {name} is {max_casting_level}
+the maximal {type} is {max_casting_level}
+{name}s maximal {type} is {max_casting_level}

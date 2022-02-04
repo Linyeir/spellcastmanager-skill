@@ -1,2 +1,3 @@
 {material}
-{name} needs the {material}
+{name} needs {material}
+{name} needs following materials. {material}

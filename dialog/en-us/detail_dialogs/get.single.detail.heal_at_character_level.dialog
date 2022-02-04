@@ -1,3 +1,6 @@
 {heal_at_character_level}
 {heal_at_character_level} at character level {at_casting_level}
-{name} heals {heal_at_character_level} at character level {at_casting_level}
+at character level {at_casting_level} {name} heals {heal_at_character_level} hitpoints
+{name} heals {heal_at_character_level} hitpoints at character level {at_casting_level}
+at character level {at_casting_level} {name} restores {heal_at_character_level} hitpoints
+{name} restores {heal_at_character_level} hitpoints at character level {at_casting_level}
