@@ -38,8 +38,7 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
             response['material'] = self._spell.material
         else: response['material'] = 'no materials'
 
-
-        if self._spell.ritual != 'empty':        # what type is ritual?
+        if self._spell.ritual != 'empty':
             if self._spell.ritual is True:
                 response['ritual'] = 'a ritual'
             if self._spell.ritual is False:
