@@ -72,32 +72,32 @@ class ResponseBuilderGetAllDetails(ResponseBuilderBase):
                 list(self._spell.damage_at_slot_level.keys())[0] + 
                 ' is ' + 
                 list(self._spell.damage_at_slot_level.values())[0])
-            response['min_casting_level'] = 'minimum slot level ' + list(self._spell.damage_at_slot_level.keys())[0]
-            response['max_casting_level'] = 'maximum slot level ' + list(self._spell.damage_at_slot_level.keys())[-1]
+            response['min_casting_level'] = 'minimum slot level is ' + list(self._spell.damage_at_slot_level.keys())[0]
+            response['max_casting_level'] = 'maximum slot level is ' + list(self._spell.damage_at_slot_level.keys())[-1]
 
         if self._spell.heal_at_slot_level != 'empty':
             response['at_casting_level'] = ('health increase at spellslot level ' + 
                 list(self._spell.heal_at_slot_level.keys())[0] + 
                 ' is ' + 
                 list(self._spell.heal_at_slot_level.values())[0])
-            response['min_casting_level'] = 'minimum slot level ' + list(self._spell.heal_at_slot_level.keys())[0]
-            response['max_casting_level'] = 'maximum slot level ' +list(self._spell.heal_at_slot_level.keys())[-1]
+            response['min_casting_level'] = 'minimum slot level is ' + list(self._spell.heal_at_slot_level.keys())[0]
+            response['max_casting_level'] = 'maximum slot level is ' +list(self._spell.heal_at_slot_level.keys())[-1]
 
         if self._spell.damage_at_character_level != 'empty':
             response['at_casting_level'] = ('damage at character level ' + 
                 list(self._spell.damage_at_character_level.keys())[0] + 
                 ' is ' + 
                 list(self._spell.damage_at_character_level.values())[0])
-            response['min_casting_level'] = 'minimum character level ' + list(self._spell.damage_at_character_level.keys())[0]
-            response['max_casting_level'] = 'minimum character level ' + list(self._spell.damage_at_character_level.keys())[-1]
+            response['min_casting_level'] = 'minimum character level is ' + list(self._spell.damage_at_character_level.keys())[0]
+            response['max_casting_level'] = 'minimum character level is ' + list(self._spell.damage_at_character_level.keys())[-1]
 
         if self._spell.heal_at_character_level != 'empty':
             response['at_casting_level'] = ('health increase at character level ' + 
                 list(self._spell.heal_at_character_level.keys())[0] + 
                 ' is ' + 
                 list(self._spell.heal_at_character_level.values())[0])
-            response['min_casting_level'] = 'minimum character level ' + list(self._spell.heal_at_character_level.keys())[0]
-            response['max_casting_level'] = 'maximum character level ' +list(self._spell.heal_at_character_level.keys())[-1]
+            response['min_casting_level'] = 'minimum character level is ' + list(self._spell.heal_at_character_level.keys())[0]
+            response['max_casting_level'] = 'maximum character level is ' +list(self._spell.heal_at_character_level.keys())[-1]
 
         if self._spell.dc_type != 'empty':
             response['dc_type'] = self._spell.dc_type
