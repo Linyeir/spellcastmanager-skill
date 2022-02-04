@@ -137,10 +137,10 @@ class Spell():
             new_value = ''
             for entry in value:
                 if entry == 'V':
-                    new_entry = entry.replace('V', 'verbal')
+                    new_entry = entry.replace('V', 'verbal,')
 
                 if entry == 'S':
-                    new_entry = entry.replace('S', 'somatic')
+                    new_entry = entry.replace('S', 'somatic,')
 
                 if entry == 'M':
                     new_entry = entry.replace('M', 'material')
