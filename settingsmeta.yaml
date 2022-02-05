@@ -1,6 +1,22 @@
 
 skillMetadata:
   sections:
+    - name: Title
+      fields:
+        - type: label
+          label: The title mycroft addresses you with
+        - name: title
+          type: text
+          label: State your title
+          value: ""
+    - name: Language
+      fields:
+        - type: label
+          label: The chosen language
+        - name: language
+          type: text
+          label: Choose a langugage
+          value: ""
     - name: Options << Name of section
       fields:
         - name: internal_python_variable_name
@@ -19,12 +35,4 @@ skillMetadata:
         - name: password
           type: password
           label: Password
-          value: ""
-    - name: Title
-      fields:
-        - type: label
-          label: The title mycroft addresses you with
-        - name: title
-          type: text
-          label: State your title
           value: ""

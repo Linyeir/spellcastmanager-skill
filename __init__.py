@@ -27,10 +27,10 @@ class Spellcastmanager(MycroftSkill):
 
     
     def set_settings(self):
-        if self.settings.get('language') == 'empty' or self.settings.get('title') == 'empty':
+        if self.settings.get('language') == "" or self.settings.get('title') == "":
             self.speak_dialog('settings.empty')
             ics = IntentChangeSettings()
-            ics.execute_with_guide()
+            ics.execute_with_guide(self)
             return self.settings.get('title')
 
     #-----------------------------------------------------
