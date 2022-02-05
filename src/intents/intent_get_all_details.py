@@ -15,7 +15,9 @@ class IntentGetAllDetails(IntentBase):
         """
         orchestrates the dialog by calling mycroft functions
         """
-        self._title = Spellcastmanager.set_settings()
+        if not Spellcastmanager.set_settings():
+            return
+
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetAllDetails(spell_name_input)

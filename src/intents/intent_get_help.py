@@ -10,7 +10,8 @@ class IntentGetHelp(IntentBase):
         A function to allow the user to ask mycroft for help regarding the Spellcastmanager.
         Also outputs to the GUI.
         """
-        self._title = Spellcastmanager.set_settings()
+        if not Spellcastmanager.set_settings():
+            return
 
         rawhtml="""<!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

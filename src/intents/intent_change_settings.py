@@ -6,9 +6,9 @@ class IntentChangeSettings(IntentBase):
         self._fail_message_setting = 'This setting does not exist. Choose either language or title'
         self._fail_message_value = 'You need to give me something to work with'
 
-    def execute(self, Spellcastmanager):
+    def execute(self, Spellcastmanager, message):
         """
-        user calls intent themself
+        user calls intent themselves
         """
         self._spellcastmanger = Spellcastmanager
         self._setting_to_change = self._spellcastmanger.get_response(
@@ -25,12 +25,13 @@ class IntentChangeSettings(IntentBase):
             setting_value_input = 'en'
         self._spellcastmanger.settings[self._setting_to_change] = setting_value_input
         self._spellcastmanger.speak_dialog('alright')
+        Spellcastmanager.speak_dialog('acknowledge.settings', {'title': Spellcastmanager.settings['title'], 'language': 'english'})
 
     def execute_if_not_set(self, Spellcastmanager):
         """
-        spellcastmanager asks user to fill gaps
+        spellcastmanager forces user to provide 'necessary'
         """
-        self.speak_dialog('settings.empty')
+        Spellcastmanager.speak_dialog('settings.empty')
         if Spellcastmanager.settings.get('language') == "":
             self._setting_to_change = 'language'
             setting_value_input = Spellcastmanager.get_response(
@@ -48,8 +49,9 @@ class IntentChangeSettings(IntentBase):
             if setting_value_input == None:
                 Spellcastmanager.speak_dialog('assume.setting.value', {
                                               'setting_value': 'oaf'})
-                setting_value_input = 'oaf'
+                setting_value_input = 'Oaf'
             Spellcastmanager.settings['title'] = setting_value_input
+        Spellcastmanager.speak_dialog('acknowledge.settings', {'title': Spellcastmanager.settings['title'], 'language': 'english'})
 
     def _validate_chosen_setting(self, response):
         if self._spellcastmanger.settings.get(response, False) == False:

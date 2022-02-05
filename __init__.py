@@ -28,19 +28,18 @@ class Spellcastmanager(MycroftSkill):
         if self.settings.get('language') == "" or self.settings.get('title') == "":
             ics = IntentChangeSettings()
             ics.execute_if_not_set(self)
-            return self.settings.get('title')
+            return False
+        else:
+            return True
 
     # -----------------------------------------------------
     # handlers
 
-    @intent_file_handler('spellcastmanager.intent')
-    def handle_spellcastmanager(self, message):
-        self.speak_dialog('spellcastmanager')
-
+    # allows the user to change settings
     @intent_handler('change.settings.intent')
-    def handle_change_settings(self):
+    def handle_change_settings(self, message):
         intent = IntentChangeSettings()
-        intent.execute(self)
+        intent.execute(self, message)
 
     # reads the full ruletext to user
     @intent_handler(IntentBuilder('getSpellDescription')
