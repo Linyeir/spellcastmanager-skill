@@ -19,7 +19,7 @@ class IntentInvokeCastingAssistant(IntentBase):
         """
         executes the casting assistant intent by first initializing the api handler and then starting the dialog
         """
-        self._title = super()._set_settings(Spellcastmanager)
+        self._title = Spellcastmanager.set_settings(Spellcastmanager)
         try:
             self._spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderInvokeCastingAssistant(self._spell_name_input) 

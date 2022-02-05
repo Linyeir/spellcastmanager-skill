@@ -1,4 +1,3 @@
-from sympy import Q
 from .intent_base import IntentBase
 
 class IntentChangeSettings(IntentBase):
