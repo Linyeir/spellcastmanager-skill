@@ -1,0 +1,6 @@
+{heal_at_slot_level}
+{heal_at_slot_level} at spell slot {at_casting_level}
+at spell slot {at_casting_level} {name} heals {heal_at_slot_level} hitpoints
+{name} heals {heal_at_slot_level} hitpoints at spell slot {at_casting_level}
+at spell slot {at_casting_level} {name} restores {heal_at_slot_level} hitpoints
+{name} restores {heal_at_slot_level} hitpoints at spell slot {at_casting_level}

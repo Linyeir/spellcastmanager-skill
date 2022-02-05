@@ -120,7 +120,7 @@ class IntentGetSingleDetail(IntentBase):
         prompts user for casting level if necessary
         """
         if self._casting_level_is_needed(detail):
-            return Spellcastmanager.get_response('get.single.detail.casting_level')
+            return Spellcastmanager.get_response('get.single.detail.prompt.casting_level')
         else:
             return 'min'
 
