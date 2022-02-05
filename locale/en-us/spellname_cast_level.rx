@@ -1,1 +1,0 @@
-.*(((i cast|conjure|invoke|summon)(the spell)?)|(the spell))(?P<spellname>.+)(( at| with| using).+(level (?P<level>.*)))

@@ -24,6 +24,9 @@ class IntentGetSingleDetail(IntentBase):
         validates the input
         chooses dialog based on validation
         """
+        if not Spellcastmanager.set_settings():
+            return
+            
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)

@@ -12,6 +12,9 @@ class IntentGetSpellDescription(IntentBase):
         """
         orchestrates the dialog by calling mycroft functions
         """
+        if not Spellcastmanager.set_settings():
+            return
+            
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)

@@ -16,6 +16,7 @@ class IntentBase(ABC):
         else: 
             return spell_name_input
 
+
     @abstractmethod
     def execute(self, Spellcastmanager, message):
         pass
