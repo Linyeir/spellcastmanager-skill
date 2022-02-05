@@ -1,36 +1,49 @@
-from mycroft.util.parse import extract_number
-import lingua_franca
-from src.response_builders.response_builder_invoke_casting_assistant import ResponseBuilderInvokeCastingAssistant
-from src.response_builders.response_builder_get_all_details import ResponseBuilderGetAllDetails
-from src.utils.exceptions.invalid_spell_error import InvalidSpellError
-from src.utils.spell_categorizer import SpellCategorizer
-from src.response_builders.response_builder_get_single_detail import ResponseBuilderGetSingleDetail
-from src.utils.detail_normalizer import DetailNormalizer
+import padatious
+
+intent_container = padatious.IntentContainer('/opt/mycroft/skills/spellcastmanager-skill/temp_pad')
+
+traing_utterances = ['what does spellcastmanager do',
+    'what does the spellcast manager do',
+    'what does spellcastmanager',
+    'what can i do with spellcastmanager',
+    'i need assistance with spellcastmanager',
+    'i need help with the spellcastmanager',
+    'how do i use the spellcastmanager',
+    'spellcastmanager help',
+    'spellcatmanager help please']
 
 
-rb = ResponseBuilderInvokeCastingAssistant('healing word')
-print(rb.get_casting_level_type())
-print(rb.get_casting_level_limits())
-print(rb.get_value_at_casting_level(5))
+test_utterances = ['what does spellcastmanager do',
+    'spellcastmanager help',
+    'What do I do with spellcastmanager',
+    'help',
+    'Spellcastmanager',
+    'help Spell',
+    'I would very much like some assistance please',
+    'I need assistance',
+    'How does this Thing work',
+    'What ca i do wit this spellcast manager thing']
 
-# name
-# desc
-# higher_level
-# range
-# components
-# material
-# ritual
-# duration
-# concentration
-# casting_time
-# level
-# attack_type
-# damage_type
-# at_casting_level
-# min_casting_level
-# max_casting_level
-# dc_type
-# dc_success
-# area_of_effect_type
-# area_of_effect_size
-# school
+intent_container.add_intent('help', traing_utterances, False)
+intent_container.train()
+
+for entry in test_utterances:
+    entry_dict = intent_container.calc_intent(entry)
+    print(entry_dict)
+
+
+"""
+results:
+{'name': 'help', 'sent': ['what', 'does', 'spellcastmanager', 'do'], 'matches': {}, 'conf': 1.0}
+{'name': 'help', 'sent': ['spellcastmanager', 'help'], 'matches': {}, 'conf': 1.0}
+{'name': 'help', 'sent': 'what do i do with spellcastmanager', 'matches': {}, 'conf': 0.6713903771722669}
+{'name': 'help', 'sent': 'help', 'matches': {}, 'conf': 0.15896761847554391}
+{'name': 'help', 'sent': 'spellcastmanager', 'matches': {}, 'conf': 0.6723280620590926}
+{'name': 'help', 'sent': 'help spell', 'matches': {}, 'conf': 0.0}
+{'name': 'help', 'sent': 'i would very much like some assistance please', 'matches': {}, 'conf': 0.46033088961031177}
+{'name': 'help', 'sent': 'i need assistance', 'matches': {}, 'conf': 0.4247065028681306}
+{'name': 'help', 'sent': 'how does this thing work', 'matches': {}, 'conf': 0.3328145787693864}
+{'name': 'help', 'sent': 'what ca i do wit this spellcast manager thing', 'matches': {}, 'conf': 0.5288085702631974}
+"""
+
+

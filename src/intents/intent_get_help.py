@@ -1,4 +1,4 @@
-from pickle import TRUE
+from padatious.intent_container import IntentContainer
 from .intent_base import IntentBase
 
 class IntentGetHelp(IntentBase):
@@ -6,7 +6,6 @@ class IntentGetHelp(IntentBase):
         pass
 
     def execute(self, Spellcastmanager, message):
-
         """
         A function to allow the user to ask mycroft for help regarding the Spellcastmanager.
         Also outputs to the GUI.
@@ -64,12 +63,13 @@ class IntentGetHelp(IntentBase):
 
         while not terminate_help:
 
-            options = ['You can generally ask about a specific spell',
-                        'You can ask for specific details regarding a spell.',
-                        'You can ask for all details i have about a spell',
-                        'The spellcast manager can guide you through the casting of a specific spell']
+            Spellcastmanager.speak_dialog('help.post.option')
+            options = ['compact details,',
+                        'casting assistant,',
+                        'description,',
+                        'specific detail']
 
-            selection = Spellcastmanager.ask_selection(options, 'help.post.option')
+            selection = Spellcastmanager.ask_selection(options)
 
             if selection == options[0]:
                 Spellcastmanager.speak_dialog('help.option.all')        
@@ -79,6 +79,8 @@ class IntentGetHelp(IntentBase):
                 Spellcastmanager.speak_dialog('help.option.description')            
             elif selection == options[3]:
                 Spellcastmanager.speak_dialog('help.option.detail')
+            else:
+                Spellcastmanager.speak_dialog('help.option.invalid')
 
             further_help = Spellcastmanager.ask_yesno('help.continue') 
 
