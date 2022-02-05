@@ -1,103 +1,47 @@
 # Voice Assistant Utterances
 
-## skillStartIntent
+## getHelp
 
-- Start Spellcast Manager
-- Open Spellcast Manager
+- What does spellcastmanager do
+- What does the spellcast manager do
+- What does spellcastmanager
+- What can i do with spellcastmanager
+- I need help with spellcastmanager
+- I need help with the spellcastmanager
+- How do i use the spellcastmanager
+- Spellcastmanager help
+- Spellcatmanager help please
 
-## skillTerminationIntent
 
-- Close Spellcast Manager
-- Terminate Spellcast Manager
-- Close
-- End
-- Terminate
-- Just die already
-- Stop
-- Thats it
-- We are done here
-- I am finished
+## getSpellDescription
 
-## helpIntent
+- Give me the whole description of the spell <spell>
+- Description of the spell <spell>
+- Tell me the rules for the spell <spell>
+- Explain the spell <spell>
+- Tell me about the spell <spell>
+- What is the spell <spell>
+- What does the spell <spell>
 
-- Help
-- What can I do
-- Help me
-- How do I ...
-- What actions can I take
-- What can I ask
-- What can I ask you
-- Give me a list of actions you can do
-- List of actions
-- What can I do now
-- Can you do ...
+## getAllDetails
 
-## repeatHelpSubIntent
+- Tell me the details for the spell <spell>
+- Give me the detailed version for the spell <spell>
+- What are the details for the spell <spell>
+- Details for the spell <spell>
+- Detailed version of the spell <spell>
 
-## fullRuleTextIntent
+## getSingleDetail
 
-- Give me the whole description of <spell>
-- Long description of <spell>
-- What does <spell> do in detail
+- I want some information for the spell <spell>
+- We would like some infos about the spell <spell>
+- I would like some information about the spell <spell>
+- I want some info about the spell <spell>
 
-## shortRuleTextIntent
+## invokeCastingAssistant
 
-- Give me a description of <spell>
-- Give me a short description of <spell>
-- What does <spell> do
-- What can <spell> do
-- What does <spell>
-- Explain <spell>
-- Tell me about <spell>
-- Explain what <spell> does
-- Describe <spell>
-
-## ruleDetailSubIntent
-
-## ruleDetailIntent
-
-## basicCastingRulesIntent
-
-## castingExamplesSubIntent
-
-## listFilteredSpellsIntent
-
-- Give me a list of all spells
-- Give me all spells
-- Tell me all spells
-- Tell me which spells I can use
-- What spells can I use
-- What spells can I do
-- What spells can I cast
-- Which spells do exist
-- Which spells do you know
-- Give me a list of all <filtergroup> spells
-- Give me a list of all spells of <filtergroup>
-- Give me all spells of <filtergroup>
-
-## spellAssistantIntent
-
-- I cast <spell>
-- I want to cast <spell>
-- I use <spell>
-- I want to use <spell>
-- Guide me trough <spell>
-- Help me trough <spell>
-- Help me with <spell>
-- How do I cast <spell>
-
-## [repeat intent]
-
-- Can you repeat what you said
-- Again
-- Repeat
-- Please repeat yourself
-- What did you say
-- I didn't understand
-- I didn't catch what you said
-
-## rollForMeIntent
-
-- Roll for me
-- Roll
-- Can you roll for me
+- I cast the spell <spell>
+- I conjure the spell <spell>
+- We cast the spell <spell>
+- I invoke the spell <spell>
+- I summon the spell <spell>
