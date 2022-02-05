@@ -1,2 +1,3 @@
-which level between level {min_casting_level} and level {max_casting_level} is your character?
-your character level between level {min_casting_level} and level {max_casting_level} please
+which level between level {min_casting_level} and level {max_casting_level} is your character, my {title}?
+My {title} your character level between level {min_casting_level} and level {max_casting_level} please
+and which leve does your character possess, my {title}? It has to be between{min_casting_level} and {max_casting_level}

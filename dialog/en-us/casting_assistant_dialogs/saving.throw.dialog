@@ -1,1 +1,3 @@
 Your target rolls a {type} saving throw with {success} damage on success
+Your target rolls a {type} saving throw. If it succeeds, it takes {success} the effect
+If succeeding a {type} saving throw, your target is affected by {success} the effect. 

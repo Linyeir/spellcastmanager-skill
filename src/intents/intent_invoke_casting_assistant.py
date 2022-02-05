@@ -50,8 +50,10 @@ class IntentInvokeCastingAssistant(IntentBase):
         if (casting_level == -1) and (self._response_builder.get_casting_level_type() != 'empty'):    
             dialog_file_name = 'choose.' + self._response_builder.get_casting_level_type()
             casting_level_limits = self._response_builder.get_casting_level_limits()
+            dialog_data = casting_level_limits
+            dialog_data['title'] = Spellcastmanager.settings['title']
             fail_message = 'you selected an invalid slot please choose one between ' + casting_level_limits['min_casting_level'] + ' and ' + casting_level_limits['max_casting_level']
-            casting_level_input = Spellcastmanager.get_response(dialog_file_name, data=casting_level_limits, validator=self._validate_casting_level_input, on_fail=fail_message, num_retries=2)
+            casting_level_input = Spellcastmanager.get_response(dialog_file_name, data=dialog_data, validator=self._validate_casting_level_input, on_fail=fail_message, num_retries=2)
 
             if casting_level_input is None:
                 casting_level_input = casting_level_limits['min_casting_level']

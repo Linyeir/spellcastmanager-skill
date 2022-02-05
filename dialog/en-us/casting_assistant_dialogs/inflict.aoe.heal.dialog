@@ -1,2 +1,3 @@
 you heal your targets in a {aoe_size} feet {aoe_type} for {value} hit points
 your targets in {aoe_type} of {aoe_size} feet regain {value} hit points
+The targer area is {aoe_type} in shape and {aoe_size} feet large
