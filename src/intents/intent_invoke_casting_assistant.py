@@ -11,14 +11,15 @@ class IntentInvokeCastingAssistant(IntentBase):
     guides the user through the process of casting a specific spell while supplying the necessary values from the api
     """
 
-    def __init__(self):
-        lingua_franca.load_language('en')
+    def __init__(self, lang):
+        lingua_franca.load_language(lang)
 
 
     def execute(self, Spellcastmanager, message):
         """
         executes the casting assistant intent by first initializing the api handler and then starting the dialog
         """
+        self._title = super()._set_settings(Spellcastmanager)
         try:
             self._spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderInvokeCastingAssistant(self._spell_name_input) 

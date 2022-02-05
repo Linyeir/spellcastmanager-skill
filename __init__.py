@@ -7,6 +7,7 @@ from .src.intents.intent_get_all_details import IntentGetAllDetails
 from .src.intents.intent_invoke_casting_assistant import IntentInvokeCastingAssistant
 from .src.intents.intent_get_single_detail import IntentGetSingleDetail
 from .src.intents.intent_get_help import IntentGetHelp
+from .src.intents.intent_change_settings import IntentChangeSettings
 
 
 
@@ -21,7 +22,8 @@ class Spellcastmanager(MycroftSkill):
     # after-construction-initialisation
     def initialize(self):
         # read user setting
-        my_setting = self.settings.get('my_setting')
+        self._language = self.settings.get('language')
+        self._title = self.settings.get('title')
 
     #-----------------------------------------------------
     # handlers
@@ -29,6 +31,12 @@ class Spellcastmanager(MycroftSkill):
     @intent_file_handler('spellcastmanager.intent')
     def handle_spellcastmanager(self, message):
         self.speak_dialog('spellcastmanager')
+
+
+    @intent_handler('change.settings.intent')
+    def handle_change_settings(self):
+        intent = IntentChangeSettings()
+        intent.execute(self)
 
     # reads the full ruletext to user
     @intent_handler(IntentBuilder('getSpellDescription')
@@ -57,7 +65,7 @@ class Spellcastmanager(MycroftSkill):
         .require('theSpell')
         .optionally('spellname'))
     def handle_invoke_casting_assistant(self, message):
-        intent = IntentInvokeCastingAssistant()
+        intent = IntentInvokeCastingAssistant(self._language)
         intent.execute(self, message)
 
 
