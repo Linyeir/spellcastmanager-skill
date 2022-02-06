@@ -5,24 +5,18 @@ Feature: spellcast manager read ruletext
     Scenario Outline: request ruletext with existing spell
         Given an english speaking user
          When the user says "<request_ruletext_with_existing_spell>"
-         Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"
+         Then "spellcastmanager-skill" should reply with dialog from "<get_description_dialogs>"
 
     Examples: request ruletext with existing spell
-        | request_ruletext_with_existing_spell                          |
-        | Give me the ruletext for the spell fireball                   |
-        | Tell me the rules for the spell healing word                  |
-        | Give me a description for the spell chain lightning           |
-        | description of the spell finger of death                      |
-        | describe the spell burning hands                              |
-        | Read me the ruletext for the spell incendiary cloud           |
-        | ruletext for the spell eldritch blast                         |
-        | rules for the spell druidcraft                                |
-        | What does the spell divine favor do                           |
-        | What is the spell fireball                                    |
-        | What is the spell burning hands                               |
-        | Describe the spell eldritch blast                             |
-        | Explain the spell acid splash                                 |
-        | Tell me about the spell dominate person                       |
+        | request_ruletext_with_existing_spell                          | get_description_dialogs       |
+        | Give me the ruletext for the spell fireball                   | get.spell.description.dialog  |  
+        | no                                                            | alright.dialog                |
+        | Tell me the rules for the spell healing word                  | get.spell.description.dialog  |
+        | no                                                            | alright.dialog                |
+        | Give me a description for the spell chain lightning           | get.spell.description.dialog  |
+        | no                                                            | alright.dialog                |
+        | description of the spell finger of death                      | get.spell.description.dialog  |
+        | no                                                            | alright.dialog                |
 
 
     # - different not existing spells
@@ -33,7 +27,7 @@ Feature: spellcast manager read ruletext
          Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"
 
     Examples: request ruletext with invalid spell
-        | request_ruletext_with_invalid_spell          |
+        | request_ruletext_with_invalid_spell           |
         | Give me the ruletext for the spell avocado    |
         | Tell me the rules for the spell help          |
         | Give me a description for the spell hass      |

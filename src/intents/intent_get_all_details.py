@@ -40,7 +40,6 @@ class IntentGetAllDetails(IntentBase):
             Spellcastmanager.remove_context('spellname')
         else:
             dialog = 'get.all.details.category.' + str(spell_category)
-            Spellcastmanager.log.error(response)
             IntentGetAllDetails.all_details_gui(self, Spellcastmanager, response)
             Spellcastmanager.speak_dialog(dialog, response)
             self._continue(Spellcastmanager)

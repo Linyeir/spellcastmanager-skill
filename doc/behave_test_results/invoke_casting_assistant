@@ -1,0 +1,92 @@
+2022-02-06 20:37:55.910 | INFO     | 31513 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:37:57.155 | INFO     | 31513 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+2022-02-06 20:37:57.284 | INFO     | 31513 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+-------- TEST SETUP --------
+extra_skills: []
+platform: mycroft_mark_1
+test_skills:
+- spellcastmanager-skill
+
+----------------------------
+Bereits aktuell.
+Starting all mycroft-core services
+Initializing...
+Running behave with the arguments "-i invoke.casting.assistant"
+2022-02-06 20:37:58.193 | INFO     | 31738 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2022-02-06 20:37:59.758 | INFO     | 31738 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:37:59.761 | INFO     | 31738 | mycroft_bus_client.client.client | Connected
+2022-02-06 20:38:00,893 | Voight Kampff | INFO | Waiting for messagebus connection...
+2022-02-06 20:38:00,893 | Voight Kampff | INFO | Waiting for skills to be loaded...
+2022-02-06 20:38:00,898 | Voight Kampff | INFO | Starting tests for spellcast manager invoke casting assistant
+Feature: spellcast manager invoke casting assistant # features/invoke.casting.assistant.feature:1
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.1 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:10
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i cast the spell fireball"                                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "choose.spellslot.dialog"                              # features/steps/utterance_responses.py:146 1.053s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.2 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:11
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "3"                                                                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "inflict.aoe.damage.dialog"                            # features/steps/utterance_responses.py:146 0.013s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.3 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:12
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i summon the spell shocking grasp"                                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "choose.characterlevel.dialog"                         # features/steps/utterance_responses.py:146 0.880s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.4 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:13
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "1"                                                                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "inflict.damage.dialog"                                # features/steps/utterance_responses.py:146 0.007s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.5 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:14
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "We conjure the spell bless"                                                                    # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "has.no.castinglevel.dialog"                           # features/steps/utterance_responses.py:146 1.099s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.6 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:15
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Me invoke the spell Eldritch Blast"                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "choose.characterlevel.dialog"                         # features/steps/utterance_responses.py:146 1.049s
+
+  Scenario Outline: invoke casting assistant with existing spell -- @1.7 invoke casting assistance for specific spell  # features/invoke.casting.assistant.feature:16
+    Given an english speaking user                                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "1"                                                                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "inflict.damage.dialog"                                # features/steps/utterance_responses.py:146 0.010s
+
+  Scenario Outline: invoke casting assistant with invalid spell -- @1.1 invoke casting assistant with invalid spell  # features/invoke.casting.assistant.feature:25
+    Given an english speaking user                                                                                   # features/steps/utterance_responses.py:117 0.000s
+    When the user says "I cast the spell Climate Change"                                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                         # features/steps/utterance_responses.py:146 0.957s
+
+  Scenario Outline: invoke casting assistant with invalid spell -- @1.2 invoke casting assistant with invalid spell  # features/invoke.casting.assistant.feature:26
+    Given an english speaking user                                                                                   # features/steps/utterance_responses.py:117 0.000s
+    When the user says "I conjure the spell Hatred"                                                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                         # features/steps/utterance_responses.py:146 1.179s
+
+  Scenario Outline: invoke casting assistant with invalid spell -- @1.3 invoke casting assistant with invalid spell  # features/invoke.casting.assistant.feature:27
+    Given an english speaking user                                                                                   # features/steps/utterance_responses.py:117 0.000s
+    When the user says "We summon the spell Avocado"                                                                 # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                         # features/steps/utterance_responses.py:146 1.118s
+
+  Scenario Outline: invoke casting assistant without spellname -- @1.1 invoke casting assistant without spellname  # features/invoke.casting.assistant.feature:37
+    Given an english speaking user                                                                                 # features/steps/utterance_responses.py:117 0.000s
+    When the user says "I cast the spell Climate Change"                                                           # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                       # features/steps/utterance_responses.py:146 0.985s
+
+  Scenario Outline: invoke casting assistant without spellname -- @1.2 invoke casting assistant without spellname  # features/invoke.casting.assistant.feature:38
+    Given an english speaking user                                                                                 # features/steps/utterance_responses.py:117 0.000s
+    When the user says "I conjure the spell Hatred"                                                                # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                       # features/steps/utterance_responses.py:146 1.007s
+
+  Scenario Outline: invoke casting assistant without spellname -- @1.3 invoke casting assistant without spellname  # features/invoke.casting.assistant.feature:39
+    Given an english speaking user                                                                                 # features/steps/utterance_responses.py:117 0.000s
+    When the user says "We summon the spell Avocado"                                                               # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                       # features/steps/utterance_responses.py:146 0.936s
+2022-02-06 20:39:21,349 | Voight Kampff | INFO | Result: passed (10.30s)
+
+1 feature passed, 0 failed, 0 skipped
+13 scenarios passed, 0 failed, 0 skipped
+39 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m10.298s

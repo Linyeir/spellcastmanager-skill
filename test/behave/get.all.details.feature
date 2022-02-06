@@ -8,14 +8,14 @@ Feature: spellcast manager read all details
         Examples: request all details with existing spell
             | request_all_details_with_existing_spell                            | get_all_details_dialogs            |
             | Give me the details to the spell fireball                          | get.all.details.category.4.dialog  |
+            | no                                                                 | alright.dialog                     |
             | Tell me all the details to the spell bless                         | get.all.details.category.15.dialog |
-            | Read me the details to the spell burning hands                     | get.all.details.category.4.dialog  |
+            | no                                                                 | alright.dialog                     |
             | Give me a detailed version of the spell confusion                  | get.all.details.category.12.dialog |
+            | no                                                                 | alright.dialog                     |
             | Tell me the detailed version for the spell create or destroy water | get.all.details.category.13.dialog |
-            | Read me the detailed version of the spell darkness                 | get.all.details.category.13.dialog |
-            | details for the spell guardian of faith                            | get.all.details.category.4.dialog  |
-            | detailed version of the spell gust of wind                         | get.all.details.category.12.dialog |
-            | detailed version for the spell heal                                | get.all.details.category.7.dialog  |
+            | no                                                                 | alright.dialog                     |
+
 
     Scenario Outline: request all details with invalid spell
         Given an english speaking user
@@ -50,5 +50,3 @@ Feature: spellcast manager read all details
             | details for the spell                      |
             | detailed version of the spell              |
             | detailed version for the spell             |
-
-# unterscheidung zu detailfragen mit kontext?!?!

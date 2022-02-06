@@ -104,7 +104,7 @@ class IntentGetHelp(IntentBase):
                 further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data)
                 if further_help == 'yes':
                     pass
-                elif further_help != 'no':
+                elif further_help == 'no':
                     terminate_help = True
                 else:
                     Spellcastmanager.speak_dialog('help.option.invalid')
