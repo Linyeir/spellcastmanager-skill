@@ -12,8 +12,7 @@ class IntentInvokeCastingAssistant(IntentBase):
     """
 
     def __init__(self, lang):
-        lingua_franca.load_language(lang)
-
+        pass
 
     def execute(self, Spellcastmanager, message):
         """
@@ -21,6 +20,8 @@ class IntentInvokeCastingAssistant(IntentBase):
         """
         if not Spellcastmanager.set_settings():
             return
+
+        lingua_franca.load_language(Spellcastmanager.settings['language'])
             
         try:
             self._spell_name_input = super()._extract_spell_name(message)
