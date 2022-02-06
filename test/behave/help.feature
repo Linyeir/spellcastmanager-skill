@@ -29,7 +29,7 @@ Feature: spellcastmanager-context
       | what does the spellcast manager do    |
       | what does spellcastmanager            |
       | what can i do with spellcastmanager   |
-      | i need help with spellcastmanager     |
+      | i need assistance with spellcastmanager     |
       | i need help with the spellcastmanager |
       | how do i use the spellcastmanager     |
       | spellcastmanager help                 |

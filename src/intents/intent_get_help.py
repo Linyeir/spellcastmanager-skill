@@ -66,31 +66,49 @@ class IntentGetHelp(IntentBase):
         dialog_data = {'title': Spellcastmanager.settings['title']}
         terminate_help = False;
         Spellcastmanager.speak_dialog('help.get', dialog_data)
+        timeout = 3
+        yesno_input_failed = False
+        option_input_invalid = False
 
         while not terminate_help:
 
-            Spellcastmanager.speak_dialog('help.post.option')
-            options = ['compact details,',
-                        'casting assistant,',
-                        'description,',
-                        'specific detail']
+            if not yesno_input_failed:
+                Spellcastmanager.speak_dialog('help.post.option')
+                options = ['compact details',
+                            'casting assistant',
+                            'description',
+                            'specific detail',
+                            'end help']
 
-            selection = Spellcastmanager.ask_selection(options)
+                selection = Spellcastmanager.ask_selection(options)
 
-            if selection == options[0]:
-                Spellcastmanager.speak_dialog('help.option.all')        
-            elif selection == options[1]:
-                Spellcastmanager.speak_dialog('help.option.assistant')
-            elif selection == options[2]:
-                Spellcastmanager.speak_dialog('help.option.description')            
-            elif selection == options[3]:
-                Spellcastmanager.speak_dialog('help.option.detail')
-            else:
-                Spellcastmanager.speak_dialog('help.option.invalid')
+                if selection == options[0]:
+                    Spellcastmanager.speak_dialog('help.option.all')        
+                elif selection == options[1]:
+                    Spellcastmanager.speak_dialog('help.option.assistant')
+                elif selection == options[2]:
+                    Spellcastmanager.speak_dialog('help.option.description')            
+                elif selection == options[3]:
+                    Spellcastmanager.speak_dialog('help.option.detail')
+                elif selection == options[4]:
+                    terminate_help = True                
+                else:
+                    Spellcastmanager.speak_dialog('help.option.invalid')
+                    option_input_invalid = True
+                    timeout = timeout - 1
 
-            further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data) 
+            if timeout <= 0:
+                terminate_help = True
 
-            if further_help == 'no':
-                  terminate_help = True
+            if (not terminate_help) and (not option_input_invalid):
+                further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data) 
+                if further_help == 'yes':
+                    pass
+                elif further_help != 'no':
+                    terminate_help = True
+                else:
+                    Spellcastmanager.speak_dialog('help.option.invalid')
+                    yesno_input_failed =True
+                    timeout = timeout - 1
 
         Spellcastmanager.speak_dialog('help.terminate', dialog_data)
