@@ -10,22 +10,22 @@ class IntentChangeSettings(IntentBase):
         """
         user calls intent themselves
         """
-        self._spellcastmanger = Spellcastmanager
-        self._setting_to_change = self._spellcastmanger.get_response(
+        self._spellcastmanager = Spellcastmanager
+        self._setting_to_change = self._spellcastmanager.get_response(
             'which.setting', validator=self._validate_chosen_setting, on_fail=self._fail_message_setting, num_retries=3)
         if self._setting_to_change == None:
-            self._spellcastmanger.speak_dialog('too.many.fails')
+            self._spellcastmanager.speak_dialog('too.many.fails')
             return
-        setting_value_input = self._spellcastmanger.get_response(
+        setting_value_input = self._spellcastmanager.get_response(
             'which.setting.value', validator=self._validate_setting_value, on_fail=self._fail_message_value, num_retries=3)
         if setting_value_input == None:
-            self._spellcastmanger.speak_dialog('too.many.fails')
+            self._spellcastmanager.speak_dialog('too.many.fails')
             return
         if setting_value_input == 'english':
             setting_value_input = 'en'
-        self._spellcastmanger.settings[self._setting_to_change] = setting_value_input
-        self._spellcastmanger.speak_dialog('alright')
-        Spellcastmanager.speak_dialog('acknowledge.settings', {'title': Spellcastmanager.settings['title'], 'language': 'english'})
+        self._spellcastmanager.settings[self._setting_to_change] = setting_value_input
+        self._spellcastmanager.speak_dialog('alright', {'title': self._spellcastmanager.settings['title']})
+        self._spellcastmanager.speak_dialog('acknowledge.settings', {'title': self._spellcastmanager.settings['title'], 'language': 'english'})
 
     def execute_if_not_set(self, Spellcastmanager):
         """
@@ -54,7 +54,7 @@ class IntentChangeSettings(IntentBase):
         Spellcastmanager.speak_dialog('acknowledge.settings', {'title': Spellcastmanager.settings['title'], 'language': 'english'})
 
     def _validate_chosen_setting(self, response):
-        if self._spellcastmanger.settings.get(response, False) == False:
+        if self._spellcastmanager.settings.get(response, False) == False:
             return False
         return True
 
