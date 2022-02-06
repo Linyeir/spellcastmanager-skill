@@ -13,10 +13,13 @@ class IntentBase(ABC):
         spell_name_input = message.data.get('spellname')
         if spell_name_input == None:
             raise NoSpellSpecifiedError
-        else: 
+        else:
             return spell_name_input
 
 
     @abstractmethod
     def execute(self, Spellcastmanager, message):
+        """
+        dictates the interface of the child classes
+        """
         pass

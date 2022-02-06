@@ -5,6 +5,9 @@ from ..utils.exceptions.no_spell_specified_error import NoSpellSpecifiedError
 from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
 class IntentGetSpellDescription(IntentBase):
+    """
+    enables the user to ask for the spells description
+    """
     def __init__(self):
         pass
 
@@ -14,7 +17,7 @@ class IntentGetSpellDescription(IntentBase):
         """
         if not Spellcastmanager.set_settings():
             return
-            
+
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSpellDescription(spell_name_input)
@@ -33,7 +36,7 @@ class IntentGetSpellDescription(IntentBase):
         else:
             Spellcastmanager.speak_dialog('get.spell.description',response)
             self._continue(Spellcastmanager)
-    
+
     def _validate_yes_no(self, response):
         """
         validates, if user response is something else then yes or no
@@ -42,10 +45,10 @@ class IntentGetSpellDescription(IntentBase):
             return True
         else:
             return False
-    
+
     def _continue(self, Spellcastmanager):
         """
-        prompts user for more questions
+        prompts user if they want to ask for something else
         """
         to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name, 'title': Spellcastmanager.settings['title']}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
         if to_continue == 'yes':

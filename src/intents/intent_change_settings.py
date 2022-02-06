@@ -2,13 +2,17 @@ from .intent_base import IntentBase
 
 
 class IntentChangeSettings(IntentBase):
+    """
+    enables the user to change some personal settings for the skill, like personal title and language
+    """
+
     def __init__(self):
         self._fail_message_setting = 'This setting does not exist. Choose either language or title'
         self._fail_message_value = 'You need to give me something to work with'
 
     def execute(self, Spellcastmanager, message):
         """
-        user calls intent themselves
+        runs the dialog to change the users settings. -- normal use case: user calls intent on its own
         """
         self._spellcastmanager = Spellcastmanager
         self._setting_to_change = self._spellcastmanager.get_response(
@@ -29,8 +33,9 @@ class IntentChangeSettings(IntentBase):
 
     def execute_if_not_set(self, Spellcastmanager):
         """
-        spellcastmanager forces user to provide 'necessary'
+        runs the dialog to change the users settings. -- forced use case: when some settings are not set
         """
+
         Spellcastmanager.speak_dialog('settings.empty')
         if Spellcastmanager.settings.get('language') == "":
             self._setting_to_change = 'language'
@@ -54,19 +59,20 @@ class IntentChangeSettings(IntentBase):
         Spellcastmanager.speak_dialog('acknowledge.settings', {'title': Spellcastmanager.settings['title'], 'language': 'english'})
 
     def _validate_chosen_setting(self, response):
+        """
+        validator function for mycrofts get_response function that handles setting selection
+        """
         if self._spellcastmanager.settings.get(response, False) == False:
             return False
         return True
 
     def _validate_setting_value(self, response):
+        """
+        validator function for mycrofts get_response function that handles setting selection
+        """
         if response == None:
             return False
         if self._setting_to_change == 'language' and response != 'english':
             self._fail_message_value = 'This language is not availaible. You can choose one of the following. English'
             return False
         return True
-
-
-# durch settings geleitet werden
-
-# selber intent aufrufen

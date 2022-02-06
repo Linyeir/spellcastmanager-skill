@@ -7,11 +7,11 @@ class DetailNormalizer():
     """
     def __init__(self):
         """
-        defines list of spoken and written attribute names
+        initializes lists of spoken and written attribute names
         """
         self._spoken_attribute_names = ['name', 'description', 'higher level', 'range', 'components', 'material', 'ritual', 'duration', 'concentration', 'casting time', 'level', 'attack type', 'damage type', 'effect at casting level', 'damage at slot level', 'damage at character level', 'heal at slot level', 'heal at character level', 'minimum casting level', 'maximum casting level', 'minimum casting level', 'maximum casting level', 'saving throw type', 'saving throw success', 'area of effect type', 'area of effect size', 'school']
         self._attribute_names = ['name', 'desc', 'higher_level', 'range', 'components', 'material', 'ritual', 'duration', 'concentration', 'casting_time', 'level', 'attack_type', 'damage_type', 'at_casting_level', 'damage_at_slot_level', 'damage_at_character_level', 'heal_at_slot_level', 'heal_at_character_level', 'min_casting_level', 'max_casting_level', 'min_casting_level', 'max_casting_level', 'dc_type', 'dc_success', 'area_of_effect_type', 'area_of_effect_size', 'school']
-        
+
 
     def match_spoken_detail_to_attribute(self, detail_input):
         """
@@ -31,9 +31,8 @@ class DetailNormalizer():
         attribute_map = dict(zip(self._attribute_names, self._spoken_attribute_names))
 
         readable_attribute = attribute_map.get(attribute)
-        
+
         if readable_attribute is not None:
             return readable_attribute
         else:
             return 'NA'
-        

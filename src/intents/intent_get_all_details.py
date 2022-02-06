@@ -8,12 +8,15 @@ from ..utils.detail_normalizer import DetailNormalizer
 
 
 class IntentGetAllDetails(IntentBase):
+    """
+    enables the user to get all the details in a compact format
+    """
     def __init__(self):
-        pass        
+        pass
 
     def execute(self, Spellcastmanager, message):
         """
-        orchestrates the dialog by calling mycroft functions
+        orchestrates the dialog to get the spell details by calling the appropriate mycroft functions
         """
         if not Spellcastmanager.set_settings():
             return
@@ -52,7 +55,7 @@ class IntentGetAllDetails(IntentBase):
         else:
             Spellcastmanager.speak_dialog('alright', {'title': Spellcastmanager.settings['title']})
             Spellcastmanager.remove_context('spellname')
-    
+
     def _validate_yes_no(self, response):
         """
         validates, if user response is something else then yes or no
@@ -66,7 +69,7 @@ class IntentGetAllDetails(IntentBase):
     def all_details_gui(self, Spellcastmanager, response):
 
         """
-        A function to parse the response on to a gui.
+        A function to pass the response on to a gui.
         The displayed webpage is written with Bootstrap.
         """
 
@@ -119,7 +122,7 @@ class IntentGetAllDetails(IntentBase):
             rawhtml = rawhtml + """ <tbody>
                         <td>"""
 
-            rawhtml = rawhtml + dn.get_spoken_attribute(entry)            
+            rawhtml = rawhtml + dn.get_spoken_attribute(entry)
 
             rawhtml = rawhtml + """
             </td>

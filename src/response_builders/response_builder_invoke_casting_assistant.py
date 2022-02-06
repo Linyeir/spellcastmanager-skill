@@ -16,11 +16,11 @@ class ResponseBuilderInvokeCastingAssistant(ResponseBuilderBase):
 
     def get_response(self) -> dict:
         """
-        provides a dictionary with the relevant information for the cating assistant
+        provides a dictionary with the relevant information for the casting assistant
         """
 
         response = {'name': self._spell.name}
-        
+
         if self._spell.desc != 'empty':
             response['desc']=  self._spell.desc
         else:
@@ -42,7 +42,7 @@ class ResponseBuilderInvokeCastingAssistant(ResponseBuilderBase):
         if self._spell.area_of_effect_size != 'empty':
             response['area_of_effect_size'] = self._spell.area_of_effect_size
 
-        return response 
+        return response
 
 
     def get_casting_level_type(self) -> str:
@@ -51,7 +51,7 @@ class ResponseBuilderInvokeCastingAssistant(ResponseBuilderBase):
         """
 
         if self._spell.damage_at_slot_level != 'empty':
-            return 'spellslot'    
+            return 'spellslot'
 
         elif self._spell.heal_at_slot_level != 'empty':
             return 'spellslot'
@@ -66,11 +66,11 @@ class ResponseBuilderInvokeCastingAssistant(ResponseBuilderBase):
 
     def get_heal_or_unheal(self):
         """
-        returns if the spell heals or deals damage             
+        returns if the spell heals or deals damage
         """
 
         if self._spell.damage_at_slot_level != 'empty':
-            return 'damage'    
+            return 'damage'
 
         elif self._spell.heal_at_slot_level != 'empty':
             return 'heal'
@@ -116,14 +116,14 @@ class ResponseBuilderInvokeCastingAssistant(ResponseBuilderBase):
         """
         returns the damage or heal value for a given casting level
         """
-        
+
         try:
             if (self._spell.damage_at_slot_level != 'empty'):
                 value_at_casting_level = self._spell.damage_at_slot_level[str(casting_level)]
 
             elif self._spell.heal_at_slot_level != 'empty':
                 value_at_casting_level = self._spell.heal_at_slot_level[str(casting_level)]
-                
+
             elif self._spell.damage_at_character_level != 'empty':
                 value_at_casting_level = self._spell.damage_at_character_level[str(casting_level)]
 

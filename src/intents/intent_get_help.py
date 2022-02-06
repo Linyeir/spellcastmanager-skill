@@ -3,7 +3,7 @@ from .intent_base import IntentBase
 
 class IntentGetHelp(IntentBase):
     """
-    provides the user with information about the skills usage
+    tells the user how to use the skill to achieve his goals
     """
     def __init__(self):
         pass
@@ -11,7 +11,7 @@ class IntentGetHelp(IntentBase):
     def execute(self, Spellcastmanager, message):
         """
         A function to allow the user to ask mycroft for help regarding the Spellcastmanager.
-        Also outputs to the GUI.
+        Key Information is shown on the gui
         """
         if not Spellcastmanager.set_settings():
             return
@@ -83,15 +83,15 @@ class IntentGetHelp(IntentBase):
                 selection = Spellcastmanager.ask_selection(options)
 
                 if selection == options[0]:
-                    Spellcastmanager.speak_dialog('help.option.all')        
+                    Spellcastmanager.speak_dialog('help.option.all')
                 elif selection == options[1]:
                     Spellcastmanager.speak_dialog('help.option.assistant')
                 elif selection == options[2]:
-                    Spellcastmanager.speak_dialog('help.option.description')            
+                    Spellcastmanager.speak_dialog('help.option.description')
                 elif selection == options[3]:
                     Spellcastmanager.speak_dialog('help.option.detail')
                 elif selection == options[4]:
-                    terminate_help = True                
+                    terminate_help = True
                 else:
                     Spellcastmanager.speak_dialog('help.option.invalid')
                     option_input_invalid = True
@@ -101,7 +101,7 @@ class IntentGetHelp(IntentBase):
                 terminate_help = True
 
             if (not terminate_help) and (not option_input_invalid):
-                further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data) 
+                further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data)
                 if further_help == 'yes':
                     pass
                 elif further_help != 'no':

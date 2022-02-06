@@ -6,7 +6,7 @@ from ..utils.exceptions.invalid_detail_error import InvalidDetailError
 
 class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
     """
-    validates user input (spell name and detail) and formats response fitting for dialog file
+    validates user input (spell name and detail) and formats responses to fit the dialog files
     """
 
     def __init__(self, spell_name: str):
@@ -34,7 +34,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
 
         response[attribute_type] = attribute_dict[casting_level]
         response['at_casting_level'] = casting_level
-        
+
         return response
 
     # determines if minimal or maximal casting level is asked, then determines the attribute of the spell (damage/ heal, slot/ character)
@@ -92,7 +92,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
                 response = {'material': self._spell.material}
 
         elif detail == 'ritual':
-            if self._spell.ritual == True:    
+            if self._spell.ritual == True:
                 response = {'ritual': 'a ritual'}
             elif self._spell.ritual == False:
                 response = {'ritual': 'not a ritual'}
@@ -120,7 +120,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
                 response = {'damage_type': 'no type'}
             else:
                 response = {'damage_type': self._spell.damage_type}
-            
+
         elif detail == 'damage_at_slot_level':
             if self._spell.damage_at_slot_level != 'empty':
                 response = self._get_damage_healing_at_casting_level(detail, self._spell.damage_at_slot_level, casting_level)
@@ -157,7 +157,7 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
 
         elif detail == 'school':
             response = {'school': self._spell.school}
-        
+
         else:
             return response
 
@@ -170,28 +170,3 @@ class ResponseBuilderGetSingleDetail(ResponseBuilderBase):
     @property
     def spell(self):
         return self._spell
-
-# name
-# desc
-# higher_level
-# range
-# components
-# material
-# ritual
-# duration
-# concentration
-# casting_time
-# level
-# attack_type
-# damage_type
-# damage_slot
-# damage_character
-# heal_slot
-# heal_character
-# min_casting_level
-# max_casting_level
-# dc_type
-# dc_success
-# area_of_effect_type
-# area_of_effect_size
-# school

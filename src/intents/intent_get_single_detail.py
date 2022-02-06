@@ -8,12 +8,11 @@ from ..utils.exceptions.invalid_spell_error import InvalidSpellError
 
 class IntentGetSingleDetail(IntentBase):
     """
-    prompts for user input and validates it
-    chooses dialog based on validation
+    enables the user to ask for a specific detail of a spell
     """
     def __init__(self):
         """
-        builds DetailNormalizer
+        builds the DetailNormalizer on creation
         """
         self._detail_normalizer = DetailNormalizer()
 
@@ -26,7 +25,7 @@ class IntentGetSingleDetail(IntentBase):
         """
         if not Spellcastmanager.set_settings():
             return
-            
+
         try:
             spell_name_input = super()._extract_spell_name(message)
             self._response_builder = ResponseBuilderGetSingleDetail(spell_name_input)
@@ -53,13 +52,13 @@ class IntentGetSingleDetail(IntentBase):
             Spellcastmanager.speak_dialog('api.not.reachable.error')
         except NoSpellSpecifiedError as err:
             Spellcastmanager.log.error(err)
-            Spellcastmanager.speak_dialog('no.spell.specified.error')        
+            Spellcastmanager.speak_dialog('no.spell.specified.error')
         except InvalidSpellError as err:
             Spellcastmanager.log.error(err)
             Spellcastmanager.speak_dialog('invalid.spell.error', {'name': spell_name_input})
             Spellcastmanager.remove_context('spellname')
 
-    
+
     def _continue(self, Spellcastmanager):
         """
         prompts user for more questions
@@ -80,7 +79,7 @@ class IntentGetSingleDetail(IntentBase):
         else:
             return False
 
-        
+
     def _fetch_detail(self, Spellcastmanager, spell_name_input, detail_valid):
         """
         prompts user for detail and repeats if invalid
@@ -108,8 +107,8 @@ class IntentGetSingleDetail(IntentBase):
         self._call_detail_dialog(Spellcastmanager, self._api_response)
         return True
 
-            
-    def _speak_error_message(self, Spellcastmanager, retry_counter): 
+
+    def _speak_error_message(self, Spellcastmanager, retry_counter):
         """
         reads error and prompt repetition message
         increases retry counter for repetition
@@ -151,7 +150,7 @@ class IntentGetSingleDetail(IntentBase):
             dialog_data = response
             dialog_data['title'] = Spellcastmanager.settings['title']
             Spellcastmanager.speak_dialog(dialog_file_name, dialog_data)
-        
+
     def _normalize_detail(self, Spellcastmanager, detail_input):
         """
         input: detail in spoken form

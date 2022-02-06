@@ -16,6 +16,10 @@ class APIWrapper():
     """
 
     def __init__(self, spell_name_in):
+        """
+        parses the spells name, converts it to a form, that is suitable ro query the api, and than executes the query
+        If no spell name is passed, an error is raised
+        """
         self._api_path = 'https://www.dnd5eapi.co/api/spells/'
         if spell_name_in is None:
             raise NoSpellSpecifiedError()
@@ -28,7 +32,7 @@ class APIWrapper():
         """
         returns true if api is reachable
         """
-        
+
         try:
             response = requests.get(self._api_path, timeout=3)
             response.raise_for_status()
@@ -64,7 +68,7 @@ class APIWrapper():
         - expects a tuple for "key"
         - if required, an index-/ range can be passed
         """
-        
+
         response_json = self._response.json()
         try:
             parsed_response = functools.reduce(dict.get, key, response_json)
