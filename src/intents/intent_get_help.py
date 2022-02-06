@@ -1,7 +1,10 @@
-from padatious.intent_container import IntentContainer
 from .intent_base import IntentBase
 
+
 class IntentGetHelp(IntentBase):
+    """
+    provides the user with information about the skills usage
+    """
     def __init__(self):
         pass
 
@@ -60,8 +63,9 @@ class IntentGetHelp(IntentBase):
         """Spellcastmanager.gui.show_image("https://raw.githubusercontent.com/Linyeir/spellcastmanager-skill/feature_gui/src/icon.png")"""
         Spellcastmanager.gui.show_html(rawhtml)
 
+        dialog_data = {'title': Spellcastmanager.settings['title']}
         terminate_help = False;
-        Spellcastmanager.speak_dialog('help.get')
+        Spellcastmanager.speak_dialog('help.get', dialog_data)
 
         while not terminate_help:
 
@@ -84,9 +88,9 @@ class IntentGetHelp(IntentBase):
             else:
                 Spellcastmanager.speak_dialog('help.option.invalid')
 
-            further_help = Spellcastmanager.ask_yesno('help.continue') 
+            further_help = Spellcastmanager.ask_yesno('help.continue', dialog_data) 
 
             if further_help == 'no':
                   terminate_help = True
 
-        Spellcastmanager.speak_dialog('help.terminate')
+        Spellcastmanager.speak_dialog('help.terminate', dialog_data)

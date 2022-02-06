@@ -40,7 +40,7 @@ class IntentGetSingleDetail(IntentBase):
                 if already_asked and detail_valid:
                     should_repeat_iteration = Spellcastmanager.get_response('get.single.detail.something.else', {'name': spell_name_input})
                 if should_repeat_iteration == 'no':
-                    Spellcastmanager.speak_dialog('alright')
+                    Spellcastmanager.speak_dialog('alright', {'title': Spellcastmanager.settings['title']})
                     self._continue(Spellcastmanager)
                     return
                 if should_repeat_iteration != 'no' and should_repeat_iteration != 'yes':
@@ -64,11 +64,11 @@ class IntentGetSingleDetail(IntentBase):
         """
         prompts user for more questions
         """
-        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name, 'title': Spellcastmanager.settings['title']}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
         if to_continue == 'yes':
-            Spellcastmanager.speak_dialog('what.do.you.want.to.know', expect_response=True)
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know', {'name': self._response_builder.spell.name, 'title': Spellcastmanager.settings['title']}, expect_response=True)
         else:
-            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.speak_dialog('alright', {'title': Spellcastmanager.settings['title']})
             Spellcastmanager.remove_context('spellname')
 
     def _validate_yes_no(self, response):
@@ -148,7 +148,9 @@ class IntentGetSingleDetail(IntentBase):
         if key == 'invalid_level':      # calling actual damage/ heal dialog here, above just invalid message
             key = list(response.keys())[1]
             dialog_file_name = 'get.single.detail.' + key
-            Spellcastmanager.speak_dialog(dialog_file_name, response)
+            dialog_data = response
+            dialog_data['title'] = Spellcastmanager.settings['title']
+            Spellcastmanager.speak_dialog(dialog_file_name, dialog_data)
         
     def _normalize_detail(self, Spellcastmanager, detail_input):
         """

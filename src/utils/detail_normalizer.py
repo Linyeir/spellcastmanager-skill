@@ -36,6 +36,4 @@ class DetailNormalizer():
             return readable_attribute
         else:
             return 'NA'
-
-        return 
         

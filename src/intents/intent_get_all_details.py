@@ -46,11 +46,11 @@ class IntentGetAllDetails(IntentBase):
         """
         prompts user for more questions
         """
-        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
+        to_continue = Spellcastmanager.get_response('prompt.questions', {'name': self._response_builder.spell.name, 'title': Spellcastmanager.settings['title']}, validator=self._validate_yes_no, on_fail='get.single.detail.request.repetition', num_retries=1)
         if to_continue == 'yes':
-            Spellcastmanager.speak_dialog('what.do.you.want.to.know', expect_response=True)
+            Spellcastmanager.speak_dialog('what.do.you.want.to.know', {'name': self._response_builder.spell.name, 'title': Spellcastmanager.settings['title']}, expect_response=True)
         else:
-            Spellcastmanager.speak_dialog('alright')
+            Spellcastmanager.speak_dialog('alright', {'title': Spellcastmanager.settings['title']})
             Spellcastmanager.remove_context('spellname')
     
     def _validate_yes_no(self, response):
