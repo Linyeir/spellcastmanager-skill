@@ -1,0 +1,2 @@
+.*the spell (?P<spellname>.*)(?<! do)
+.*the spell (?P<spellname>.*) have .*

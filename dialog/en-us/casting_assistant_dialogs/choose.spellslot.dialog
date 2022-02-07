@@ -1,0 +1,5 @@
+please choose a spellslot between level {min_casting_level} and level {max_casting_level}, {title}
+My {title} select a spellslot between level {min_casting_level} and level {max_casting_level} please
+please select a spellslot between level {min_casting_level} and {max_casting_level}, my {title}
+{title} choose a spellslot between level {min_casting_level} and level {max_casting_level} please
+which spellslot between level {min_casting_level} and level {max_casting_level} do you want to use

@@ -1,0 +1,155 @@
+2022-02-06 20:29:45.855 | INFO     | 30134 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:29:47.114 | INFO     | 30134 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+2022-02-06 20:29:47.246 | INFO     | 30134 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+-------- TEST SETUP --------
+extra_skills: []
+platform: mycroft_mark_1
+test_skills:
+- spellcastmanager-skill
+
+----------------------------
+Bereits aktuell.
+Starting all mycroft-core services
+Initializing...
+Running behave with the arguments "-i get.single.detail"
+2022-02-06 20:29:48.077 | INFO     | 30360 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2022-02-06 20:29:49.894 | INFO     | 30360 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:29:49.898 | INFO     | 30360 | mycroft_bus_client.client.client | Connected
+2022-02-06 20:29:51,268 | Voight Kampff | INFO | Waiting for messagebus connection...
+2022-02-06 20:29:51,268 | Voight Kampff | INFO | Waiting for skills to be loaded...
+2022-02-06 20:29:51,273 | Voight Kampff | INFO | Starting tests for spellcast manager read single detail
+Feature: spellcast manager read single detail # features/get.single.detail.feature:1
+
+  Scenario Outline: request singledetail with existing spell -- @1.1 request single detail with existing spell  # features/get.single.detail.feature:10
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want some information about the spell fireball"                                       # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.request.detail.dialog"       # features/steps/utterance_responses.py:146 1.029s
+
+  Scenario Outline: request singledetail with existing spell -- @1.2 request single detail with existing spell  # features/get.single.detail.feature:11
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "range"                                                                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.range.dialog"                # features/steps/utterance_responses.py:146 10.000s
+      Assertion Failed: Mycroft responded with:
+      Mycroft: unknown.dialog(UnknownSkill)
+      "You might have to say that a different way."
+      Mycroft: (Spellcastmanager)
+      "just ask"
+
+AUTO-RETRY SCENARIO (attempt 1)
+
+  Scenario Outline: request singledetail with existing spell -- @1.2 request single detail with existing spell  # features/get.single.detail.feature:11
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "range"                                                                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.range.dialog"                # features/steps/utterance_responses.py:146 0.010s
+AUTO-RETRY SCENARIO PASSED (after 2 attempts)
+
+  Scenario Outline: request singledetail with existing spell -- @1.3 request single detail with existing spell  # features/get.single.detail.feature:12
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                # features/steps/utterance_responses.py:146 0.010s
+
+  Scenario Outline: request singledetail with existing spell -- @1.4 request single detail with existing spell  # features/get.single.detail.feature:13
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                # features/steps/utterance_responses.py:146 0.045s
+
+  Scenario Outline: request singledetail with existing spell -- @1.5 request single detail with existing spell  # features/get.single.detail.feature:14
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want infos for the spell bless"                                                       # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.request.detail.dialog"       # features/steps/utterance_responses.py:146 1.493s
+
+  Scenario Outline: request singledetail with existing spell -- @1.6 request single detail with existing spell  # features/get.single.detail.feature:15
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "name"                                                                                   # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.name.dialog"                 # features/steps/utterance_responses.py:146 0.047s
+
+  Scenario Outline: request singledetail with existing spell -- @1.7 request single detail with existing spell  # features/get.single.detail.feature:16
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                # features/steps/utterance_responses.py:146 0.008s
+
+  Scenario Outline: request singledetail with existing spell -- @1.8 request single detail with existing spell  # features/get.single.detail.feature:17
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                # features/steps/utterance_responses.py:146 0.008s
+
+  Scenario Outline: request singledetail with existing spell -- @1.9 request single detail with existing spell  # features/get.single.detail.feature:18
+    Given an english speaking user                                                                              # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i would like some information about the spell eldritch blast"                           # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.request.detail.dialog"       # features/steps/utterance_responses.py:146 1.323s
+
+  Scenario Outline: request singledetail with existing spell -- @1.10 request single detail with existing spell  # features/get.single.detail.feature:19
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "school"                                                                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.school.dialog"                # features/steps/utterance_responses.py:146 0.047s
+
+  Scenario Outline: request singledetail with existing spell -- @1.11 request single detail with existing spell  # features/get.single.detail.feature:20
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                 # features/steps/utterance_responses.py:146 0.009s
+
+  Scenario Outline: request singledetail with existing spell -- @1.12 request single detail with existing spell  # features/get.single.detail.feature:21
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                 # features/steps/utterance_responses.py:146 0.010s
+
+  Scenario Outline: request singledetail with existing spell -- @1.13 request single detail with existing spell  # features/get.single.detail.feature:22
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i would like some info about the spell fire bolt"                                        # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.request.detail.dialog"        # features/steps/utterance_responses.py:146 1.080s
+
+  Scenario Outline: request singledetail with existing spell -- @1.14 request single detail with existing spell  # features/get.single.detail.feature:23
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "range"                                                                                   # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.single.detail.range.dialog"                 # features/steps/utterance_responses.py:146 0.009s
+
+  Scenario Outline: request singledetail with existing spell -- @1.15 request single detail with existing spell  # features/get.single.detail.feature:24
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                 # features/steps/utterance_responses.py:146 0.043s
+
+  Scenario Outline: request singledetail with existing spell -- @1.16 request single detail with existing spell  # features/get.single.detail.feature:25
+    Given an english speaking user                                                                               # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                                 # features/steps/utterance_responses.py:146 8.458s
+
+  Scenario Outline: request single detail with invalid spell -- @1.1 request single detail with invalid spell  # features/get.single.detail.feature:35
+    Given an english speaking user                                                                             # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want some information about the spell arcane"                                        # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                   # features/steps/utterance_responses.py:146 1.091s
+
+  Scenario Outline: request single detail with invalid spell -- @1.2 request single detail with invalid spell  # features/get.single.detail.feature:36
+    Given an english speaking user                                                                             # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want infos for the spell banish"                                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                   # features/steps/utterance_responses.py:146 0.945s
+
+  Scenario Outline: request single detail with invalid spell -- @1.3 request single detail with invalid spell  # features/get.single.detail.feature:37
+    Given an english speaking user                                                                             # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i would like some information about the spell fire"                                    # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                   # features/steps/utterance_responses.py:146 0.960s
+
+  Scenario Outline: request single detail with invalid spell -- @1.4 request single detail with invalid spell  # features/get.single.detail.feature:38
+    Given an english speaking user                                                                             # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i would like some info about the spell avocado"                                        # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"                   # features/steps/utterance_responses.py:146 1.032s
+
+  Scenario Outline: request single detail without spellname -- @1.1 request single detail without spellname  # features/get.single.detail.feature:47
+    Given an english speaking user                                                                           # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want some information about the spell"                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"            # features/steps/utterance_responses.py:146 0.061s
+
+  Scenario Outline: request single detail without spellname -- @1.2 request single detail without spellname  # features/get.single.detail.feature:48
+    Given an english speaking user                                                                           # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i want infos for the spell"                                                          # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"            # features/steps/utterance_responses.py:146 0.019s
+
+  Scenario Outline: request single detail without spellname -- @1.3 request single detail without spellname  # features/get.single.detail.feature:49
+    Given an english speaking user                                                                           # features/steps/utterance_responses.py:117 0.000s
+    When the user says "i would like some information about the spell"                                       # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"            # features/steps/utterance_responses.py:146 0.064s
+2022-02-06 20:31:47,486 | Voight Kampff | INFO | Result: passed (17.81s)
+
+1 feature passed, 0 failed, 0 skipped
+23 scenarios passed, 0 failed, 0 skipped
+69 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m17.809s

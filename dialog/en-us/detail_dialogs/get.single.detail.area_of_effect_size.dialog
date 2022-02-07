@@ -1,0 +1,4 @@
+{area_of_effect_size} feet
+The affected area has the size of {area_of_effect_size} feet
+{name} affects an area of {area_of_effect_size} feet
+Everything within {area_of_effect_size} is affected

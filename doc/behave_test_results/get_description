@@ -1,0 +1,196 @@
+2022-02-06 20:02:35.688 | INFO     | 22625 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:02:36.812 | INFO     | 22625 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+2022-02-06 20:02:36.942 | INFO     | 22625 | msm.mycroft_skills_manager | Best match (1.0): spellcastmanager-skill by 
+-------- TEST SETUP --------
+extra_skills: []
+platform: mycroft_mark_1
+test_skills:
+- spellcastmanager-skill
+
+----------------------------
+Bereits aktuell.
+Starting all mycroft-core services
+Initializing...
+Starting background service bus
+CAUTION: The Mycroft bus is an open websocket with no built-in security
+         measures.  You are responsible for protecting the local port
+         8181 with a firewall as appropriate.
+Starting background service skills
+Starting background service audio
+Starting background service voice
+Starting background service enclosure
+Running behave with the arguments "-i get.description"
+2022-02-06 20:02:37.850 | INFO     | 22817 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2022-02-06 20:02:39.529 | INFO     | 22817 | mycroft_bus_client.client.client | Connected
+2022-02-06 20:02:40.580 | INFO     | 22817 | msm.mycroft_skills_manager | building SkillEntry objects for all skills
+2022-02-06 20:02:41,663 | Voight Kampff | INFO | Waiting for messagebus connection...
+2022-02-06 20:02:41,663 | Voight Kampff | INFO | Waiting for skills to be loaded...
+2022-02-06 20:02:48,875 | Voight Kampff | INFO | Starting tests for spellcast manager read ruletext
+Feature: spellcast manager read ruletext # features/get.description.feature:1
+
+  Scenario Outline: request ruletext with existing spell -- @1.1 request ruletext with existing spell  # features/get.description.feature:12
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Give me the ruletext for the spell fireball"                                   # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"         # features/steps/utterance_responses.py:146 1.112s
+
+  Scenario Outline: request ruletext with existing spell -- @1.2 request ruletext with existing spell  # features/get.description.feature:13
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 0.009s
+
+  Scenario Outline: request ruletext with existing spell -- @1.3 request ruletext with existing spell  # features/get.description.feature:14
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Tell me the rules for the spell healing word"                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"         # features/steps/utterance_responses.py:146 1.131s
+
+  Scenario Outline: request ruletext with existing spell -- @1.4 request ruletext with existing spell  # features/get.description.feature:15
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 0.047s
+
+  Scenario Outline: request ruletext with existing spell -- @1.5 request ruletext with existing spell  # features/get.description.feature:16
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Give me a description for the spell chain lightning"                           # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"         # features/steps/utterance_responses.py:146 1.134s
+
+  Scenario Outline: request ruletext with existing spell -- @1.6 request ruletext with existing spell  # features/get.description.feature:17
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 10.000s
+      Assertion Failed: Mycroft responded with:
+      Mycroft: unknown.dialog(UnknownSkill)
+      "I don't understand."
+      Mycroft: (Spellcastmanager)
+      "please try that again"
+
+AUTO-RETRY SCENARIO (attempt 1)
+
+  Scenario Outline: request ruletext with existing spell -- @1.6 request ruletext with existing spell  # features/get.description.feature:17
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 0.008s
+AUTO-RETRY SCENARIO PASSED (after 2 attempts)
+
+  Scenario Outline: request ruletext with existing spell -- @1.7 request ruletext with existing spell  # features/get.description.feature:18
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "description of the spell finger of death"                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "get.spell.description.dialog"         # features/steps/utterance_responses.py:146 1.109s
+
+  Scenario Outline: request ruletext with existing spell -- @1.8 request ruletext with existing spell  # features/get.description.feature:19
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 10.000s
+      Assertion Failed: Mycroft responded with:
+      Mycroft: unknown.dialog(UnknownSkill)
+      "Sorry, I don't understand."
+      Mycroft: (Spellcastmanager)
+      "please repeat yourself"
+
+AUTO-RETRY SCENARIO (attempt 1)
+
+  Scenario Outline: request ruletext with existing spell -- @1.8 request ruletext with existing spell  # features/get.description.feature:19
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "no"                                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "alright.dialog"                       # features/steps/utterance_responses.py:146 0.008s
+AUTO-RETRY SCENARIO PASSED (after 2 attempts)
+
+  Scenario Outline: request ruletext with invalid spells -- @1.1 request ruletext with invalid spell  # features/get.description.feature:31
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Give me the ruletext for the spell avocado"                                   # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.742s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.2 request ruletext with invalid spell  # features/get.description.feature:32
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Tell me the rules for the spell help"                                         # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.136s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.3 request ruletext with invalid spell  # features/get.description.feature:33
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Give me a description for the spell hass"                                     # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.321s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.4 request ruletext with invalid spell  # features/get.description.feature:34
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "description of the spell asdf"                                                # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.032s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.5 request ruletext with invalid spell  # features/get.description.feature:35
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "describe the spell schadenfreude"                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 0.959s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.6 request ruletext with invalid spell  # features/get.description.feature:36
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Read me the ruletext for the spell grünkohl"                                  # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.114s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.7 request ruletext with invalid spell  # features/get.description.feature:37
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "ruletext for the spell frodo"                                                 # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.065s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.8 request ruletext with invalid spell  # features/get.description.feature:38
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "rules for the spell hallo"                                                    # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 1.018s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.9 request ruletext with invalid spell  # features/get.description.feature:39
+    Given an english speaking user                                                                    # features/steps/utterance_responses.py:117 0.000s
+    When the user says "What does the spell morgenrot do"                                             # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"          # features/steps/utterance_responses.py:146 0.946s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.10 request ruletext with invalid spell  # features/get.description.feature:40
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "What does the spell wdvierzig do exactly"                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 1.020s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.11 request ruletext with invalid spell  # features/get.description.feature:41
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "What is the spell gelbfieber exactly"                                          # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 0.981s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.12 request ruletext with invalid spell  # features/get.description.feature:42
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "What is the spell alte zwiebeln"                                               # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 1.189s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.13 request ruletext with invalid spell  # features/get.description.feature:43
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Describe the spell purple bolt of hatred"                                      # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 0.974s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.14 request ruletext with invalid spell  # features/get.description.feature:44
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Explain the spell saurer regen"                                                # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 0.957s
+
+  Scenario Outline: request ruletext with invalid spells -- @1.15 request ruletext with invalid spell  # features/get.description.feature:45
+    Given an english speaking user                                                                     # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Tell me about the spell climate change"                                        # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "invalid.spell.error.dialog"           # features/steps/utterance_responses.py:146 1.046s
+
+  Scenario Outline: request ruletext without stating spell -- @1.1 request ruletext without stating spell  # features/get.description.feature:58
+    Given an english speaking user                                                                         # features/steps/utterance_responses.py:117 0.000s
+    When the user says "What does the spell do"                                                            # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"          # features/steps/utterance_responses.py:146 0.023s
+
+  Scenario Outline: request ruletext without stating spell -- @1.2 request ruletext without stating spell  # features/get.description.feature:59
+    Given an english speaking user                                                                         # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Explain the spell"                                                                 # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"          # features/steps/utterance_responses.py:146 0.063s
+
+  Scenario Outline: request ruletext without stating spell -- @1.3 request ruletext without stating spell  # features/get.description.feature:60
+    Given an english speaking user                                                                         # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Long ruletext for the spell"                                                       # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"          # features/steps/utterance_responses.py:146 0.063s
+
+  Scenario Outline: request ruletext without stating spell -- @1.4 request ruletext without stating spell  # features/get.description.feature:61
+    Given an english speaking user                                                                         # features/steps/utterance_responses.py:117 0.000s
+    When the user says "Tell me about the spell"                                                           # features/steps/utterance_responses.py:136 0.000s
+    Then "spellcastmanager-skill" should reply with dialog from "no.spell.specified.error.dialog"          # features/steps/utterance_responses.py:146 0.026s
+2022-02-06 20:06:37,008 | Voight Kampff | INFO | Result: passed (21.24s)
+
+1 feature passed, 0 failed, 0 skipped
+27 scenarios passed, 0 failed, 0 skipped
+81 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m21.239s

@@ -1,0 +1,3 @@
+you deal {value} damage to targets in a {aoe_size} feet {aoe_type}
+targets in a {aoe_size} feet {aoe_type} take {value} damage
+The targer area is {aoe_type} in shape and {aoe_size} feet large

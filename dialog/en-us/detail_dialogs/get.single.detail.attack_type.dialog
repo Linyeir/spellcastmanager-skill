@@ -1,0 +1,7 @@
+{attack_type}
+the attack type is {attack_type}
+{name} is of the type {attack_type}
+you execute a {attack_type} attack
+you maka a {attack_type} attack
+you execute a {attack_type} attack to cast {name}
+you maka a {attack_type} attack to cast {name}
