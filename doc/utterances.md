@@ -45,3 +45,12 @@
 - We cast the spell <spell>
 - I invoke the spell <spell>
 - I summon the spell <spell>
+
+## changeSettings
+
+- I want to change the settings for spellcastmanager
+- Change settings for spellcastmanager
+- Spellcastmanager change settings
+- Spellcastmanager I want to change the settings
+- I would like to change the spellcastmanager settings
+- I want to change my settings for the spellcastmanager

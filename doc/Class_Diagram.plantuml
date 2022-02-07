@@ -1,0 +1,147 @@
+@startuml SpellcastManager
+package src{
+    package intents{
+        class IntentBase {
+            execute(Spellcastmanager, message)
+            _extract_spell_name(self, message)
+        }
+        class IntentChangeSettings {
+            execute(self, Spellcastmanager, message)
+            execute_if_not_set(self, Spellcastmanager)
+            _validate_chosen_setting(self, response)
+            _validate_setting_value(self, response)
+        }
+        class IntentGetAllDetails {
+            execute(self, Spellcastmanager, message)
+            _continue(self, Spellcastmanager)
+            _validate_yes_no(self, response)
+            all_details_gui(self, Spellcastmanager, response)
+        }
+        class IntentGetHelp {
+            execute(self, Spellcastmanager, message)
+        }
+        class IntentGetSingleDetail {
+            execute(self, Spellcastmanager, message)
+            _continue(self, Spellcastmanager)
+            _validate_yes_no(self, response)
+            _fetch_detail(self, Spellcastmanager, spell_name_input, detail_valid)
+            _speak_error_message(self, Spellcastmanager, retry_counter)
+            _fetch_casting_level(self, Spellcastmanager, detail)
+            _casting_level_is_needed(self, detail)
+            _call_detail_dialog(self, Spellcastmanager, response)
+            _normalize_detail(self, Spellcastmanager, detail_input)
+        }
+        class IntentGetSpellDescription{
+            execute(self, Spellcastmanager, message)
+            _validate_yes_no(self, response)
+            _continue(self, Spellcastmanager)
+        }
+        class IntentInvokeCastingAssistant{
+            execute(self, Spellcastmanager, message)
+            _execute_dialog(self, Spellcastmanager, message)
+            _extract_casting_level(self, message)
+            _validate_casting_level_input(self, response)
+        }
+    }
+    package "response_builders"{
+        class ResponseBuilderBase{
+            get_response(detail: str, casting_level: str)
+        }
+        class ResponseBuilderGetAllDetails{
+            get_response(self)
+            spell(self)
+        }
+        class ResponseBuilderGetSingleDetail{
+            _get_damage_healing_at_casting_level(self, attribute_type, attribute_dict, casting_level)
+            _get_casting_min_max_dict(self, casting_level)
+            get_response(self, detail, casting_level = 'min')
+            spell(self)
+        }
+        class ResponseBuilderGetSpellDescription{
+            get_response(self)
+            spell(self):
+        }
+        class ResponseBuilderInvokeCastingAssistant{
+            get_response(self)
+            get_casting_level_type(self)
+            get_heal_or_unheal(self)
+            get_casting_level_limits(self)
+            get_value_at_casting_level(self, casting_level)
+        }
+    }
+    package "utils"{
+        class APIWrapper{
+            api_reachable(self)
+            api_request(self, query='')
+            get_detail(self, key)
+        }
+        class DetailNormalizer{
+            match_spoken_detail_to_attribute(self, detail_input)
+            get_spoken_attribute(self, attribute)
+        }
+        class SpellCategorizer{
+            get_categorie_from_details(self)
+        }
+        class Spell{
+            _clean_string(self, json_input)
+            _fill_attributes(self)
+            _rephrase_saving_throw_type(self, saving_throw_input)
+            _rephrase_effect_modifiers(self, input_string)
+        }
+    }
+}
+
+class Spellcastmanager{
+    initialize(self)
+    set_settings(self)
+    handle_change_settings(self, message)
+    handle_get_spell_description(self, message)
+    handle_get_all_details(self, message)
+    handle_invoke_casting_assistant(self, message)
+    handle_get_single_detail(self, message)
+    handle_get_help(self, message)
+    stop(self)
+}
+
+class "ABC"
+
+Spellcastmanager --> IntentChangeSettings
+Spellcastmanager --> IntentGetAllDetails
+Spellcastmanager --> IntentGetHelp
+Spellcastmanager --> IntentGetSingleDetail
+Spellcastmanager --> IntentGetSpellDescription
+Spellcastmanager --> IntentInvokeCastingAssistant
+
+IntentBase <|-- IntentChangeSettings
+IntentBase <|-- IntentGetAllDetails
+IntentBase <|-- IntentGetHelp
+IntentBase <|-- IntentGetSingleDetail
+IntentBase <|-- IntentGetSpellDescription
+IntentBase <|-- IntentInvokeCastingAssistant
+
+Spell --> APIWrapper
+
+ResponseBuilderBase --> ABC
+IntentBase --> ABC
+
+ResponseBuilderGetAllDetails <|-- ResponseBuilderBase
+ResponseBuilderGetSingleDetail <|-- ResponseBuilderBase
+ResponseBuilderGetSpellDescription <|-- ResponseBuilderBase
+ResponseBuilderInvokeCastingAssistant <|-- ResponseBuilderBase
+
+ResponseBuilderGetAllDetails -d--> Spell
+ResponseBuilderGetSingleDetail -d--> Spell 
+ResponseBuilderGetSpellDescription -d--> Spell
+ResponseBuilderInvokeCastingAssistant -d--> Spell
+
+IntentGetAllDetails --> ResponseBuilderGetAllDetails
+IntentGetAllDetails --> SpellCategorizer
+IntentGetAllDetails --> DetailNormalizer
+
+IntentGetSingleDetail --> ResponseBuilderGetSingleDetail
+IntentGetSingleDetail --> DetailNormalizer
+
+IntentGetSpellDescription --> ResponseBuilderGetSpellDescription
+
+IntentInvokeCastingAssistant --> ResponseBuilderInvokeCastingAssistant
+@enduml
